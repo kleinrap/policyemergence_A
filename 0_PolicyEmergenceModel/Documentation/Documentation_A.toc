@@ -11,13 +11,14 @@
 \contentsline {subsection}{\numberline {2.1}The process}{4}{subsection.2.1}
 \contentsline {subsection}{\numberline {2.2}The agents}{5}{subsection.2.2}
 \contentsline {paragraph}{Active agents}{5}{section*.6}
-\contentsline {paragraph}{Passive agents}{6}{section*.7}
-\contentsline {paragraph}{Belief hierarchy}{6}{section*.8}
-\contentsline {subsection}{\numberline {2.3}The actions and interactions}{7}{subsection.2.3}
-\contentsline {paragraph}{Preference calculation - deep core issues}{7}{section*.10}
-\contentsline {paragraph}{Preference calculation - policy core and secondary issues}{8}{section*.11}
-\contentsline {paragraph}{Agenda selection}{8}{section*.12}
-\contentsline {paragraph}{Policy instruments}{9}{section*.13}
-\contentsline {paragraph}{Preference calculation - policy instruments}{9}{section*.14}
-\contentsline {paragraph}{Policy instrument selection and implementation}{9}{section*.15}
-\contentsline {paragraph}{Electorate passive action on policy makers}{9}{section*.16}
+\contentsline {paragraph}{Coalitions}{6}{section*.7}
+\contentsline {paragraph}{Passive agents}{6}{section*.8}
+\contentsline {paragraph}{Belief hierarchy}{7}{section*.9}
+\contentsline {subsection}{\numberline {2.3}The actions and interactions}{8}{subsection.2.3}
+\contentsline {paragraph}{Preference calculation - deep core issues}{8}{section*.11}
+\contentsline {paragraph}{Preference calculation - policy core and secondary issues}{8}{section*.12}
+\contentsline {paragraph}{Agenda selection}{9}{section*.13}
+\contentsline {paragraph}{Policy instruments}{9}{section*.14}
+\contentsline {paragraph}{Preference calculation - policy instruments}{10}{section*.15}
+\contentsline {paragraph}{Policy instrument selection and implementation}{10}{section*.16}
+\contentsline {paragraph}{Electorate passive action on policy makers}{10}{section*.17}
