@@ -4,66 +4,40 @@
 \contentsline {subsection}{\numberline {1.3}The agents and the environment}{2}{subsection.1.3}
 \contentsline {subsection}{\numberline {1.4}The interactions}{3}{subsection.1.4}
 \contentsline {paragraph}{Policy learning}{3}{section*.2}
-\contentsline {paragraph}{Coalitions}{3}{section*.3}
+\contentsline {paragraph}{Coalitions}{4}{section*.3}
 \contentsline {paragraph}{Partial knowledge}{4}{section*.4}
 \contentsline {paragraph}{Partial information}{4}{section*.5}
-\contentsline {section}{\numberline {2}Model formalisation (+PL)}{5}{section.2}
+\contentsline {section}{\numberline {2}Model formalisation (SM)}{5}{section.2}
 \contentsline {subsection}{\numberline {2.1}The process}{5}{subsection.2.1}
-\contentsline {subsection}{\numberline {2.2}The agents}{6}{subsection.2.2}
-\contentsline {paragraph}{Active agents}{6}{section*.6}
-\contentsline {paragraph}{Passive agents}{7}{section*.7}
-\contentsline {paragraph}{Belief hierarchy}{7}{section*.8}
-\contentsline {subsection}{\numberline {2.3}The actions and interactions}{8}{subsection.2.3}
-\contentsline {paragraph}{Preference calculation - deep core issues}{8}{section*.10}
-\contentsline {paragraph}{Preference calculation - policy core and secondary issues}{9}{section*.11}
-\contentsline {paragraph}{Agenda selection}{9}{section*.12}
-\contentsline {paragraph}{Policy instruments}{9}{section*.13}
-\contentsline {paragraph}{Preference calculation - policy instruments}{10}{section*.14}
-\contentsline {paragraph}{Policy instrument selection and implementation}{10}{section*.15}
-\contentsline {paragraph}{Agent on agent interactions}{10}{section*.16}
-\contentsline {paragraph}{Electorate passive action on policy makers}{11}{section*.17}
-\contentsline {section}{\numberline {3}Model formalisation}{11}{section.3}
-\contentsline {subsection}{\numberline {3.1}The process}{11}{subsection.3.1}
-\contentsline {subsection}{\numberline {3.2}The agents}{13}{subsection.3.2}
-\contentsline {paragraph}{Active agents}{13}{section*.18}
-\contentsline {paragraph}{Coalitions}{14}{section*.19}
-\contentsline {paragraph}{Passive agents}{14}{section*.20}
-\contentsline {paragraph}{Belief hierarchy}{14}{section*.21}
-\contentsline {subsection}{\numberline {3.3}The actions and interactions}{15}{subsection.3.3}
-\contentsline {paragraph}{Preference calculation - deep core issues}{16}{section*.23}
-\contentsline {paragraph}{Preference calculation - policy core and secondary issues}{16}{section*.24}
-\contentsline {paragraph}{Agenda selection}{17}{section*.25}
-\contentsline {paragraph}{Policy instruments}{17}{section*.26}
-\contentsline {paragraph}{Preference calculation - policy instruments}{17}{section*.27}
-\contentsline {paragraph}{Policy instrument selection and implementation}{17}{section*.28}
-\contentsline {paragraph}{Electorate passive action on policy makers}{18}{section*.29}
-\contentsline {section}{\numberline {4}Model formalisation}{18}{section.4}
-\contentsline {subsection}{\numberline {4.1}The process}{18}{subsection.4.1}
-\contentsline {subsection}{\numberline {4.2}The agents}{19}{subsection.4.2}
-\contentsline {paragraph}{Active agents}{20}{section*.30}
-\contentsline {paragraph}{Coalitions}{20}{section*.31}
-\contentsline {paragraph}{Passive agents}{21}{section*.32}
-\contentsline {paragraph}{Belief hierarchy}{21}{section*.33}
-\contentsline {subsection}{\numberline {4.3}The actions and interactions}{22}{subsection.4.3}
-\contentsline {paragraph}{Preference calculation - deep core issues}{22}{section*.35}
-\contentsline {paragraph}{Preference calculation - policy core and secondary issues}{23}{section*.36}
-\contentsline {paragraph}{Agenda selection}{23}{section*.37}
-\contentsline {paragraph}{Policy instruments}{23}{section*.38}
-\contentsline {paragraph}{Preference calculation - policy instruments}{24}{section*.39}
-\contentsline {paragraph}{Policy instrument selection and implementation}{24}{section*.40}
-\contentsline {paragraph}{Electorate passive action on policy makers}{24}{section*.41}
-\contentsline {section}{\numberline {5}Model formalisation}{25}{section.5}
-\contentsline {subsection}{\numberline {5.1}The process}{25}{subsection.5.1}
-\contentsline {subsection}{\numberline {5.2}The agents}{26}{subsection.5.2}
-\contentsline {paragraph}{Active agents}{26}{section*.42}
-\contentsline {paragraph}{Coalitions}{27}{section*.43}
-\contentsline {paragraph}{Passive agents}{27}{section*.44}
-\contentsline {paragraph}{Belief hierarchy}{28}{section*.45}
-\contentsline {subsection}{\numberline {5.3}The actions and interactions}{29}{subsection.5.3}
-\contentsline {paragraph}{Preference calculation - deep core issues}{29}{section*.47}
-\contentsline {paragraph}{Preference calculation - policy core and secondary issues}{29}{section*.48}
-\contentsline {paragraph}{Agenda selection}{30}{section*.49}
-\contentsline {paragraph}{Policy instruments}{30}{section*.50}
-\contentsline {paragraph}{Preference calculation - policy instruments}{30}{section*.51}
-\contentsline {paragraph}{Policy instrument selection and implementation}{31}{section*.52}
-\contentsline {paragraph}{Electorate passive action on policy makers}{31}{section*.53}
+\contentsline {subsection}{\numberline {2.2}The agents}{5}{subsection.2.2}
+\contentsline {paragraph}{Active agents}{5}{section*.6}
+\contentsline {paragraph}{Passive agents}{6}{section*.7}
+\contentsline {paragraph}{Belief hierarchy}{6}{section*.8}
+\contentsline {subsection}{\numberline {2.3}The actions and interactions}{7}{subsection.2.3}
+\contentsline {paragraph}{Preference calculation - deep core issues}{7}{section*.10}
+\contentsline {paragraph}{Preference calculation - policy core and secondary issues}{8}{section*.11}
+\contentsline {paragraph}{Agenda selection}{8}{section*.12}
+\contentsline {paragraph}{Policy instruments}{8}{section*.13}
+\contentsline {paragraph}{Preference calculation - policy instruments}{9}{section*.14}
+\contentsline {paragraph}{Policy instrument selection and implementation}{9}{section*.15}
+\contentsline {paragraph}{Electorate passive action on policy makers}{9}{section*.16}
+\contentsline {section}{\numberline {3}Model formalisation (+PL)}{10}{section.3}
+\contentsline {subsection}{\numberline {3.1}The process}{10}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}The agents}{11}{subsection.3.2}
+\contentsline {subsection}{\numberline {3.3}The actions and interactions}{11}{subsection.3.3}
+\contentsline {paragraph}{Agent on agent interactions}{11}{section*.17}
+\contentsline {section}{\numberline {4}Model formalisation (+Co)}{12}{section.4}
+\contentsline {subsection}{\numberline {4.1}The process}{12}{subsection.4.1}
+\contentsline {subsection}{\numberline {4.2}The agents}{14}{subsection.4.2}
+\contentsline {paragraph}{Coalitions}{14}{section*.18}
+\contentsline {subsection}{\numberline {4.3}The actions and interactions}{14}{subsection.4.3}
+\contentsline {paragraph}{Coalition on agent interactions}{14}{section*.19}
+\contentsline {section}{\numberline {5}Model formalisation (+PK)}{15}{section.5}
+\contentsline {subsection}{\numberline {5.1}The actions and interactions}{15}{subsection.5.1}
+\contentsline {paragraph}{Agent on agent interactions}{15}{section*.20}
+\contentsline {section}{\numberline {6}Model formalisation (+PI)}{16}{section.6}
+\contentsline {subsection}{\numberline {6.1}The process}{16}{subsection.6.1}
+\contentsline {subsection}{\numberline {6.2}The agents}{17}{subsection.6.2}
+\contentsline {paragraph}{Active agents}{17}{section*.21}
+\contentsline {subsection}{\numberline {6.3}The actions and interactions}{17}{subsection.6.3}
+\contentsline {paragraph}{New actions}{17}{section*.22}
