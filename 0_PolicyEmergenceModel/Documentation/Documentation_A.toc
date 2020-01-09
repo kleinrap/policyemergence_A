@@ -17,7 +17,7 @@
 \contentsline {paragraph}{Preference calculation - deep core issues}{7}{section*.10}
 \contentsline {paragraph}{Preference calculation - policy core and secondary issues}{8}{section*.11}
 \contentsline {paragraph}{Agenda selection}{8}{section*.12}
-\contentsline {paragraph}{Policy instruments}{8}{section*.13}
+\contentsline {paragraph}{Policy instruments}{9}{section*.13}
 \contentsline {paragraph}{Preference calculation - policy instruments}{9}{section*.14}
 \contentsline {paragraph}{Policy instrument selection and implementation}{9}{section*.15}
 \contentsline {paragraph}{Electorate passive action on policy makers}{9}{section*.16}
@@ -31,7 +31,7 @@
 \contentsline {subsection}{\numberline {4.2}The agents}{14}{subsection.4.2}
 \contentsline {paragraph}{Coalitions}{14}{section*.18}
 \contentsline {subsection}{\numberline {4.3}The actions and interactions}{14}{subsection.4.3}
-\contentsline {paragraph}{Coalition on agent interactions}{14}{section*.19}
+\contentsline {paragraph}{Coalition on agent interactions}{15}{section*.19}
 \contentsline {section}{\numberline {5}Model formalisation (+PK)}{15}{section.5}
 \contentsline {subsection}{\numberline {5.1}The actions and interactions}{15}{subsection.5.1}
 \contentsline {paragraph}{Agent on agent interactions}{15}{section*.20}

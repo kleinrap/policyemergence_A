@@ -37,9 +37,9 @@ This report documents the conceptualisation and the formalisation of an agent ba
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Model conceptualisation}
 
-The policy process model is specified according to the four key elements that were outlined in the literature: time, policy arena, agents and interactions. The main choice that is left to the modeller is to decide how much complexity needs to be integrated to each of these elements to answer the research question. In the present case, only a limited amount of complexity is required. This leads to a relatively simple policymaking process model. It is detailed below.
+The policy process model is specified according to the four key elements that were outlined in the literature: time, policy arena, agents and interactions\footnote{Klein, R; Ashkenazy, A.; Nikolic, I.; Bots, P.W.G. "Developing a common language of the policy process for modellers", Policy Studies Journal (under review).}. The main choice that is left to the modeller is to decide how much complexity needs to be integrated to each of these elements to answer the research question. In the present case, only a limited amount of complexity is required. This leads to a relatively simple policymaking process model. It is detailed below.
 
-For the ACF approach, we consider the model in two different levels of complexity - policy learning (PL) and coalitions (Co), and two add-ons - partial knowledge (PK) and partial information (PI). The add-ons are model parts that can be introduced regardless of the level of complexity considered. Throughout this document, we will refer to these four different model parts through their acronyms. 
+For the ACF approach, we consider the model with two different levels of complexity - policy learning (PL) and coalitions (Co), and two add-ons - partial knowledge (PK) and partial information (PI). The add-ons are model parts that can be introduced regardless of the level of complexity considered. Throughout this document, we will refer to these four different model parts through their acronyms. This builds on the simplest implementation model\footnote{\url{https://github.com/kleinrap/policyemergence_SM}}.
 
 %%%%%%%%%%%%%%%%
 \subsection{Time}
@@ -60,40 +60,40 @@ This policy arena is defined in the same way as the simplest implementation as w
 
 Again we retain the policy makers, electorate and their belief system. The introduction of the ACF brings a slew of additional elements detailed below.
 
-To emulate policy learning, we introduce policy entrepreneurs. These are agents that have for goals to push their interests. They can do so using resources. These resources are defined based on political or economical resources that the actors might have in real life.
+To emulate policy learning, we introduce policy entrepreneurs. These are agents that have for goals to push forward their interests. They can do so using resources. These resources are defined based on political or economical resources that the actors might have in real life.
 
-To emulate coalitions, we introduce an aggregate agent that is the coalition. These coalitions are made of agents with similar policy core preferred states. They can pool their resources to be more effective throughout the policy process.
+To emulate coalitions, we introduce an aggregate agent that is the coalition. These coalitions are made of agents with similar policy core preferred states. They can pool their resources to be more effective throughout the policy process and to push their respective interests.
 
-Finally, the introduction of partial information requires the introduction of an additional agent type: the external party. These are agents that will communicate information from the environment to the rest of the agents in the policy process.
+Finally, the introduction of partial information requires the introduction of an additional agent type: the external party. They are representations of the media, international institutions, academic institutions and NGOs. These are agents that will communicate information from the environment to the rest of the agents in the policy process.
 
 %%%%%%%%%%%%%%%% end of the actors and environment subsection
 
 %%%%%%%%%%%%%%%%
 \subsection{The interactions}
 
-The interactions already mentioned for the simplest implementation are kept. For each additions related to the ACF, new interactions or changes in the current interactions happen. These are detailed here.
+The interactions already mentioned for the simplest implementation are kept the same. For each additions related to the ACF, new interactions or changes in the current interactions happen. These are detailed here.
 
 \paragraph{Policy learning}
 
-For policy learning, agent on agent interactions are introduced. Agents can influence one another by targeting other's preferred states and causal beliefs. In effect, this means that the agents can influence each other's goals or their understanding of how the environment works. Agents cannot influence each other's actual beliefs because we assume that the actual beliefs are linked directly to the state of the environment under the assumption of perfect information (this assumption is relaxed for the imperfect information aspects of the model). Agents can only perform one influencing actions at a time. To decide on which action to perform, agents consider all the actions they have at their disposal. They then select the action that is likely to have the most impact. Such assessment is affected by the average conflict level between agents amongst other things - agents with an average level of conflict are more likely to interact than with a high or low level of conflict according to the literature.
+For policy learning, agent on agent interactions are introduced. Agents can influence one another by targeting other's preferred states and causal beliefs. In effect, this means that the agents can influence each other's goals or their understanding of how the environment works. Agents cannot influence each other's actual beliefs because we assume that the actual beliefs are linked directly to the state of the environment under the assumption of perfect information (this assumption is relaxed for the imperfect information aspects of the model). Agents can only perform one influencing actions at a time. To decide on which action to perform, agents consider all the actions they have at their disposal. They then select the action that is likely to have the most impact based on the average conflict level between agents - agents with an average level of conflict are more likely to interact than with a high or low level of conflict according to the literature.
 
-The limit the amount of interactions and to weigh them depending on the agent's prominence, we introduce the concept of resources. These resources are spent by the agents when they want to influence other agents. When an agent has run out of resources, he is unable to continue influencing other agents. These resources are then replenished every round of the policy making process. Only one type of resource is considered, contrary to the literature. We assume that all resources mentioned in the literature, from political resources to public opinion, are conceptualised into one resource type for the model.
+To limit the amount of interactions and to weigh them depending on the agent's prominence, we introduce the concept of resources. These resources are spent by the agents when they want to influence other agents. When an agent has run out of resources, he is unable to continue influencing other agents. These resources are replenished every round of the policy making process. Only one type of resource is considered, contrary to the literature. We assume that all resources mentioned in the literature, from political resources to public opinion, are aggregated into one resource type for the model.
 
 \paragraph{Coalitions}
 
-The introduction of coalitions also adds new interactions, on top of the newly introduced agent on agent interactions. Coalitions can influence other agents in the same way as any agent would but with additional resources at their disposal. Such influence is aimed at furthering the interests of the coalition - for example achieving their preferred state for the issues around which the coalition has been assembled. This is done by the implementation of policies supported by the coalition. With this in mind, we assume that each coalition can influence either agents within the coalition itself in an effort to increase its cohesion or, agents that are outside the coalition in an effort to implement policies aligned with its interests. We assume that depending on the cohesion of the coalition, it will assign different amount of resources for either cohesion building influence of outside influence. 
+The introduction of coalitions also adds new interactions, on top of the newly introduced agent on agent interactions added for policy learning. Coalitions can influence other agents in the same way as any agent would but with additional resources at their disposal. Such influence is aimed at furthering the interests of the coalition - for example achieving their preferred state for the issues around which the coalition has been assembled. This is done by the implementation of policies supported by the coalition. With this in mind, we assume that each coalition can influence either agents within the coalition itself in an effort to increase its cohesion or, agents that are outside the coalition in an effort to implement policies aligned with its interests. We assume that depending on the cohesion of the coalition, it will assign different amount of resources for either cohesion building influence or outside influence. 
 
-Similarly to the agents, the coalition influence can be exercised on the preferred states of other agents or their causal beliefs. The difficulty when implementing such actions within in a simulation is to choose who exercises this influence and how the actions are selected. The approach considered is that the influence actions of each coalitions are based on the average of the preferred states or the causal beliefs - depending on the action considered - of the members of the coalition. The actions are then performed in a similar fashion as individual agents, by considering the conflict level. No leader or key figure is then needed.
+Similarly to the agents, the coalition influence can be exercised on the preferred states of other agents or their causal beliefs. The difficulty when implementing such actions within a simulation is to choose who exercises this influence and how the actions are selected. The assumption made is that the influence actions of each coalitions are based on the average of the preferred states or the causal beliefs - depending on the action considered - of the members of the coalition. The actions are then performed in a similar fashion as individual agents, by considering the conflict level. No leader or key figure is then needed.
 
 \paragraph{Partial knowledge}
 
-By considering partial knowledge, we assume that agents only have an approximate understanding of other's beliefs. The only way to gain more knowledge of other's beliefs is to interact with them. By interacting, agents become better aware of one another's beliefs. Overall, introducing partial knowledge means that agents will plan their interactions with a certain amount of uncertainty, leading to potentially ineffective influencing interactions. For example, an agent might try to influence another agent's causal beliefs while both agents have the same causal beliefs. This results in a waste of resources for the first agent, though a gain of knowledge so the mistake is not repeated.
+By considering partial knowledge, we assume that agents only have an approximate understanding of other's beliefs. The only way to gain more knowledge of other's beliefs is to interact with them. By interacting, agents become better aware of one another's beliefs. Overall, introducing partial knowledge means that agents will plan their interactions with a certain amount of uncertainty, leading to potentially ineffective influencing interactions. For example, an agent might try to influence another agent's causal beliefs while both agents have the same causal beliefs. This results in a waste of resources for the first agent. Agents increase their knowledge of other agents' beliefs through interactions to avoid such mistakes being repeated.
 
 \paragraph{Partial information}
 
-We so far assumed that information flowing from the environment into the policymaking process model was perfect. This meant that the actual beliefs of the agents reflect what is happening in the environment. For example, for a policy core issue of crime, if there are 300 crimes per year, this will be what agents consider when selecting policy instruments. However, in reality, agents often receive imperfect, or distorted, information. This can be due to the channels they use to inform themselves amongst. Aspect of imperfect information can be included in the model as well. We approach this inclusion through changes in the agents and agent interactions key elements.
+We so far assumed that information flowing from the environment into the policymaking process model was perfect. This meant that the actual beliefs of the agents reflect what is happening in the environment. For example, for a policy core issue of crime, if there are 300 crimes per year, this will be the information agents consider when selecting policy instruments. However, in reality, agents often receive imperfect or distorted information. This can be due to the channels they use to inform themselves amongst other things. Aspect of imperfect information can be included in the model as well. We approach this inclusion through the addition of external parties who come with specific new interactions.
 
-The external parties are the agents that can obtain the real states of the environment and will go on to inform all other agents in the model. They are representations of the media, international institutions, academic institutions and NGOs. Based on their own preferred goals, they will distort the information they are conveying to further their interests. The policy makers and policy entrepreneurs will inform their actual beliefs based on the information provided by these external parties.
+We assume that the external parties are the agents that can obtain the real states of the environment and will go on to inform all other agents in the model. Based on their own preferred goals, they will distort the information they are conveying to further their interests. The policy makers and policy entrepreneurs will inform their actual beliefs from the information provided by these external parties.
 
 
 %%%%%%%%%%%%%%%% end of the interactions subsection
@@ -114,7 +114,7 @@ The process changes for each of the complexity additions.
 %%%%%%%%%%%%%%%%
 \subsection{The agents}
 
-There are two main categories of agents in the model: the active agents that have a direct influence on the agenda and the passive agents that an indirect impact on the agenda and policy change.
+There are two main categories of agents in the model: the active agents that have a direct influence on the agenda and the passive agents that have an indirect impact on the agenda and policy change.
 
 %%%%%%
 \paragraph{Active agents}
@@ -123,7 +123,7 @@ The active agents are the policy makers. Their attributes are given as follows:
 
 \begin{enumerate}
 
-\item The \emph{active agent} is represented as an 6-tuple given by \texttt{agent = (coalition ID, lead, members, issue, resources)} where
+\item The \emph{active agent} is represented as an 6-tuple given by \texttt{agent = (ID, type, beliefHierarchy, affiliation, advocacy, resources)} where
 \texttt{ID} is the agent unique ID,
 \texttt{type} is the agent type, 
 \texttt{beliefHierarchy} is the agent's personalised belief hierarchy, 
@@ -133,9 +133,11 @@ The active agents are the policy makers. Their attributes are given as follows:
 
 \item A \emph{type} corresponds the agent type: policy maker. This will go on to define the actions possible for the agent.
 
+\item The \emph{affiliation} is used only when the electorate is considered as affiliations help differentiate different groups of agents according to their political leanings.
+
 \item The \emph{belief hierarchy} is made of the agent's own belief hierarchy structure and associated values.
 
-\item The \emph{advocacy} is represented as a 2-tuple \texttt{(issue\_as, issue\_pf)} where \texttt{policy\_pf} is the issue chosen by the agent during the agenda setting step, while the \texttt{policy\_pf} is the policy instrument selected by the agent in the policy formulation step.
+\item The \emph{advocacy} is represented as a 2-tuple \texttt{(issue\_as, issue\_pf)} where \texttt{policy\_as} is the issue chosen by the agent during the agenda setting step, while the \texttt{policy\_pf} is the policy instrument selected by the agent in the policy formulation step.
 
 \end{enumerate}
 
@@ -147,18 +149,18 @@ The active agents are the policy makers. Their attributes are given as follows:
 
 The passive agents are the truth agent and the electorate.
 
-\emph{The truth agent:} The truth agent is an agent included only for programming purposes. This agent provides a link between the environment and the policy agents. It is communicated all the states in the environment and uses them to inform the actual beliefs of the active agents. The only attribute of the truth agent is the belief hierarchy composed only of actual beliefs for each of the issues.
+\emph{The truth agent:} The truth agent is an agent included only for programming purposes. This agent provides a link between the environment and the policy agents. It is communicated all the states of the environment and informs the actual beliefs of the active agents using these states. The only attribute of the truth agent is the belief hierarchy composed only of actual beliefs for each of the issues.
 
 \emph{The electorate: } The electorate represents the different constituencies. There are as many electorate agents as there are political affiliations. The role of the electorate is to influence the policy makers in their aims. The following defines the attributes of the electorate:
 
-The \emph{electorate} can be given as a 3-tuple written as: \texttt{electorate = (ID, affiliation, beliefHierarchy)} where \texttt{ID} is the unique name of the electorate, \texttt{affiliation} is its associated affiliation and \texttt{beliefHierarchy} is the associated belief hierarchy of the electorate.  The belief hierarchy of the electorate is similar in structure to the one of the truth agent.
+The \emph{electorate} can be given as a 3-tuple written as: \texttt{electorate = (ID, affiliation, beliefHierarchy)} where \texttt{ID} is the unique name of the electorate, \texttt{affiliation} is its associated affiliation and \texttt{beliefHierarchy} is the associated belief hierarchy of the electorate.  The belief hierarchy of the electorate is similar in structure to the one of the truth agent but composed only of preferred states.
 
 %%%%%% end of the passive agents paragraph
 
 %%%%%%
 \paragraph{Belief hierarchy}
 
-The belief hierarchy is composed of two main parts: the issues and the causal beliefs. The issues are categorised in multiple layers: the deep core issues (the top layer), the policy core issues (the middle layers) and the secondary issues (the bottom layer). Secondary issues are linked to policy core issues through causal beliefs and similarly for policy core issues and deep core. The overall representation of this hierarchy structure is shown in \autoref{fig:Formalisation-04}.
+The belief hierarchy is composed of two main parts: the issues and the causal beliefs. The issues are categorised in multiple layers: the deep core issues (the top layer), the policy core issues (the middle layers) and the secondary issues (the bottom layer). Secondary issues are linked to policy core issues through causal beliefs and similarly for policy core issues and deep core issues. The overall representation of this hierarchy structure is shown in \autoref{fig:Formalisation-04}.
 
 \begin{figure}
 \centering
@@ -167,11 +169,11 @@ The belief hierarchy is composed of two main parts: the issues and the causal be
 \label{fig:Formalisation-04}
 \end{figure}
 
-Each issue is categorised by three parameters: the actual belief, the preferred state and the preference. The actual belief defines the view of the agent of a certain issue as it is in the environment. They can take values within the interval $[0, 1]$ and where a value of 0.5 means that the agent is satisfied with the issue.
+Each issue is categorised by three parameters: the actual belief, the preferred state and the preference. The actual belief defines the view of the agent of a certain issue as it is in the environment. They can take values within the interval $[0, 1]$.
 
-The preferred states shows where the agent would like the issue be in the future. They can also take values within the interval $[0, 1]$.
+The preferred states show where the agent would like the issue be in the future. They can also take values within the interval $[0, 1]$.
 
-The preference which is a calculated parameter, defines the urgency that the agent places on the each issues. It is obtained depending on the actual belief, the preferred state and the causal beliefs linked to the issue. The sum of all issue preferences on any single layer of the belief hierarchy have to be equal to 1.
+The preference is a calculated parameter that defines the urgency that the agent places on the each issues. It is obtained depending on the actual belief, the preferred state and the causal beliefs linked to the issue. Its calculation is detailed later. The sum of all issue preferences on any single layer of the belief hierarchy has to be equal to 1.
 
 The belief hierarchy structure also contains causal beliefs. These can be seen as causal relations. They represent the understanding of an agent about how a change in one issue will lead to a change in another on a different layer. The causal beliefs can take values within the interval $[-1, 1]$. A negative value means that an issue when growing will affect negatively another issue.
 
@@ -188,18 +190,18 @@ The belief hierarchy structure also contains causal beliefs. These can be seen a
 % policy instrument selection
 % electorate influence
 
-There are a number of actions and interactions that the agents can performed. We will first outline the actions that actors have to make for the system to work. This includes the calculation of the preferences. We will then outline the agenda and policy instrument selection for the entire policy arena. We then outline the agent on agent interaction process and actions themselves. Finally, we outline how we conceptualise that the electorate influence the policy makers.
+There are a number of actions and interactions that the agents can perform. We will first outline the actions that actors have to perform themselves including the calculation of the preferences. We will then outline the agenda and policy instrument selection for the entire policy arena. Finally, we outline how we conceptualise that the electorate influence the policy makers.
 
 %%%%%%
 \paragraph{Preference calculation - deep core issues}
 
-For the deep core issues, which are at the top of the belief system, the preference is calculated differently than for the policy core and secondary issues. The calculation of the preference for each issue is given by:
+For the deep core issues, which are at the top of the belief system, the preferences are calculated differently than for the policy core and secondary issues. The calculation of the preference for each issue is given by:
 
 \begin{equation}
 P_i = \frac{ |G_i - B_i|}{\sum_{j=1}^n |G_j - B_j|}
 \end{equation}
 
-where $P$ is the preference, $G$ is the preferred state - or goal, $B$ is the actual belief - or belief, $j$ is defined at the number of principle belief issues and $i$ is the deep core issue.
+where $P$ is the preference, $G$ is the preferred state - or Goal, $B$ is the actual belief - or Belief, $j$ is defined as the number of principle belief issues and $i$ is the deep core issue.
 
 %%%%%% end of the preference calculation DC issue paragraph
 
@@ -211,14 +213,14 @@ The preference calculations for the policy core and secondary issues are adapted
 To calculate the preference, the gap between aim and state for the issues is considered along with the impact of the causal relation on the gap of the issue on the above layers. The causal relations are not always helping bridge the gap between the aim and the state of issues on a higher layer. If this is the case, then the causal relations are not considered within the calculation as there effort is counter productive within the mind of the agent. The resulting equation that can be used to calculate the preference for these layers is given by:
 
 \begin{equation}\label{eq:preference2}
-P_k = \frac{ |G_k - B_k| + \sum_{j=1}^n |C_j \left( G_j - B_j \right)|}{\sum_{l=1}^p \left[ |G_l - B_l| + \sum_{j=1}^n \left|C_{j,l} \left( G_{j,l} - B_{j,l} \right) \right| \right]}
+P_k = \frac{ |G_k - B_k| + \sum_{j=1}^n |C_{k,j} \left( G_j - B_j \right)|}{\sum_{l=1}^p \left[ |G_l - B_l| + \sum_{j=1}^n \left|C_{l,j} \left( G_{j} - B_{j} \right) \right| \right]}
 \end{equation}
 
-The sums only include these terms if $C_j$ and $\left( G_j - B_j \right)$ have the same sign. If it is not the case, these terms are not considered.
+The sums only include the terms $|C \cdot \left( G - B \right)|$, if $C$ and $\left( G - B \right)$ have the same sign. If not, these terms are not considered.
 
-Where $p$ is defined at the number of issues on that layer, $k$ characterises the issue being selected for the calculation, $j$ specifies the issues above the layered considered and $C$ represents the causal belief between $k$ and whichever issue on the layer above is considered.
+Where $p$ is defined as the number of issues on that layer, $k$ characterises the issue being selected for the calculation, $j$ specifies the issues above the layer considered and $C$ represents the causal belief.
 
-Based on these preferences obtained, the agent will select one issue to advocate. In the agenda setting, the agent will select one policy core issue and for the policy formulation, the agent will select a secondary issue.
+Based on these preferences obtained, the agent will select one issue to advocate. In the agenda setting, the agent will select one policy core issue and for the policy formulation, the agent will select a secondary issue. The issue chosen is the one with the highest preference.
 
 %%%%%% end of the preference calculation PC and S issues paragraph
 
@@ -227,7 +229,9 @@ Based on these preferences obtained, the agent will select one issue to advocate
 
 The \emph{agenda} is a 1-tuple given by \texttt{agenda = (issue)} where \texttt{issue} is the policy core issue that is placed on the agenda by all agents.
 
-To constitute the agenda, an issue has to be chosen as a majority issue by all agents in the policy arena. If no majority is obtained on no issue, then the policy formulation cannot happen as now agenda has been selected.
+To constitute the agenda, an issue has to be chosen as a majority issue by all agents in the policy arena. If no majority is obtained on any issue, then the policy formulation cannot happen as no agenda has been selected.
+
+\textcolor{red}{Correction is here.}
 
 %%%%%% end of the agenda setting paragraph
 
