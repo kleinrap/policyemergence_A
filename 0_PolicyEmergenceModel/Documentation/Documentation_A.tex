@@ -231,14 +231,12 @@ The \emph{agenda} is a 1-tuple given by \texttt{agenda = (issue)} where \texttt{
 
 To constitute the agenda, an issue has to be chosen as a majority issue by all agents in the policy arena. If no majority is obtained on any issue, then the policy formulation cannot happen as no agenda has been selected.
 
-\textcolor{red}{Correction is here.}
-
 %%%%%% end of the agenda setting paragraph
 
 %%%%%%
 \paragraph{Policy instruments}
 
-The policy instruments are measures that can are chosen by the policy makers to impact the environment. To assess the different policy instruments, the different active agents assess the impact of these instruments on the secondary issues in their belief hierarchy. These instruments have an impact on the gap between the states and the aim of each of these issues. The policy instruments can be described as follows:
+The policy instruments are measures that are chosen by the policy makers to influence the environment. To select a policy instrument, the active agents assess the impact of each instrument on the secondary issues in their belief hierarchy. These instruments have an impact on the gap between the actual belief and the preferred state of each of these issues. The policy instruments can be described as follows:
 
 \begin{enumerate}
 \item A \emph{policy instrument} is represented as a 2-tuple \texttt{(ID, impact)} where \texttt{impact} is related to the impact of the policy on a specific issue.
@@ -255,12 +253,12 @@ The policy instruments are measures that can are chosen by the policy makers to 
 The policy makers have to select a policy instrument that they will advocate for. This is based on their preferences for which the calculation is detailed below:
 
 \begin{equation}
-P_k = \frac{\sum_{p = 0}^{n} | G_{p} - \left( B_{p} (1 + I_{k,p}) \right) |}{\sum_{q = 0}^{m} \sum_{p = 0}^{n} | G_{q} - \left( B_{q} (1 + I_{q,p}) \right) |}
+P_k = \frac{\sum_{p = 0}^{n} | G_{p} - \left( B_{p} (1 + I_{k,p}) \right) |}{\sum_{q = 0}^{m} \sum_{p = 0}^{n} | G_{p} - \left( B_{p} (1 + I_{q,p}) \right) |}
 \end{equation}
 
 where $k$ is the policy instrument for which the preference is calculated, $n$ is the number of secondary issues, $m$ is the number of policy instruments, $I$ is the impact of the instrument on a specific secondary issue.
 
-Once all the preferences have been calculated, the agent will select the instrument with the highest preference.
+Once all the preferences have been calculated, the agent will select the instrument with the highest preference as the instrument s/he will advocate for.
 
 %%%%%% end of the preference calculation policy instrument paragraph
 
@@ -274,13 +272,13 @@ The policy makers are the agents that can selected a policy instrument at the en
 %%%%%%
 \paragraph{Electorate passive action on policy makers}
 
-The policy makers are passively influenced by the electorate. Each electorate has a certain affiliation to which policy makers are also related. Each policy makers' issue aim will be influenced by their respective electorate. This happens as a passive effect where the issue aims of the policy makers slowly progress towards the issue aims of the electorate. The equation to calculate the change in the aim of the policy maker is given as follows:
+The policy makers are passively influenced by the electorate. Each electorate has a certain affiliation to which policy makers are also related. Each policy makers' issue preferred state will be influenced by their respective electorate. This happens as a passive effect where the preferred states of the policy makers slowly progress towards the issue aims of the electorate. The equation to calculate the change in the aim of the policy maker is given as follows:
 
 \begin{equation}
 G_{k} := G_{k} + \left(G_{El} - G_{k} \right) \cdot C_{i}
 \end{equation}
 
-where $El$ stands for electorate of same affiliation of the policy maker, $k$ is a policy maker, $C_i$ is a the constant influence that allows variation in the speed of the change of the goals of the actors.
+where $El$ stands for electorate of same affiliation of the policy maker, $k$ is a policy maker, $C_i$ is a the constant influence that allows variation in the speed of the change of the preferred states of the agents.
 
 %%%%%% end of the electorate action paragraph
 %%%%%%%%%%%%%%%% end of the actions and interactions subsection
@@ -295,7 +293,7 @@ In this section we present the model formalisation needed when the policy learni
 %%%%%%%%%%%%%%%%
 \subsection{The process}
 
-Through the introduction of policy learning, a number of addition need to be considered for the process followed. It remains a two-step process. First the agenda setting step is performed, then, if an agenda has bene agreed on, comes the policy formulation step. This does not include the environment simulation. This is detailed below:
+Through the introduction of policy learning, a number of additions need to be considered for the process followed. It remains a two-step process. First the agenda setting step is performed, then, if an agenda has been agreed on, comes the policy formulation step. This does not include the environment simulation. The process is detailed below:
 
 \begin{enumerate}
 \item Initialisation:
@@ -303,24 +301,24 @@ Through the introduction of policy learning, a number of addition need to be con
 	\begin{enumerate}
 	\item \emph{Trigger of external events:} Any event that the modeller decides to implement are activated at this stage of the model cycle.
 	\item \emph{Update of the truth agent:} Information from the environment is used to inform the truth agent actual beliefs.
-	\item \emph{Electorate actions on policy makers}
+	\item \emph{Electorate actions on policy makers} (when included)
 	\item \emph{Transmission of the actual beliefs:} The agents are informed about the environment from the truth agent.
 	\end{enumerate}
 	
 \item Agenda setting step:
 	\begin{enumerate}
-	\item \emph{Resources distribution:} The agents see their resources replenished.
-	\item \emph{Preferences calculation (issues):} Each agent calculates the preference for their deep core and policy core issues. Additionally, each agents selects an issue that (s)he will advocate for in his/her policy core issues based on the preferences.
+	\item \emph{Resources distribution}
+	\item \emph{Preferences calculation (issues):} Each agent calculates the preference for their deep core and policy core issues. Additionally, each agents selects an issue that s/he will advocate for in his/her policy core issues based on the preferences.
 	\item \emph{Agent interactions:} The agents influence one another to advance their interest relating to the policy core issues, spending all of their resources.
-	\item \emph{Preferences calculation - policy makers (issues):} Policy makers update their preferences before the selection of the agenda to take into account the agent interactions.
+	\item \emph{Preferences calculation - policy makers (issues):} Policy makers update their preferences before the selection of the agenda to take into account the changes related to the agent interactions.
 	\item \emph{Agenda selection}
 	\end{enumerate}
 	
 \item Policy formulation step:
 	\begin{enumerate}
-	\item \emph{Resources distribution:} The agents see their resources replenished.
-	\item \emph{Preferences calculation (policy instruments):} All agents update their preferences for their secondary beliefs based on the issue on the agenda. All agents then selects a policy instrument that (s)he will be advocating for.
-	\item \emph{Agent interactions:} The agents influence one another to advance their interest relating to the policy instruments, spending all of their resources.
+	\item \emph{Resources distribution}
+	\item \emph{Preferences calculation (policy instruments):} All agents update their preferences for their secondary issues and policy instruments based on the issue on the agenda. All agents then selects a policy instrument that s/he will be advocating for.
+	\item \emph{Agent interactions:} The agents influence one another to advance their interest relating to the secondary issues, spending all of their resources.
 	\item \emph{Preferences calculation - policy makers (policy instruments):} Policy makers update their preferences before the selection of the policy instrument to take into account the agent interactions.
 	\item \emph{Policy instrument implementation} 
 	\end{enumerate}
@@ -332,7 +330,7 @@ Through the introduction of policy learning, a number of addition need to be con
 %%%%%%%%%%%%%%%%
 \subsection{The agents}
 
-One category of active agents is added to the +PL model: the policy entrepreneur. It has the same attributes as the policy makers with the main difference that it is unable to choose a policy to implement. The rest remains unchanged.
+One category of active agents is added to the +PL model: the policy entrepreneur. It has the same attributes as the policy makers with the main difference that policy entrepreneurs have no say in the choice of the policy to implement. The rest remains unchanged.
 
 %%%%%%%%%%%%%%%% end of the agents subsection
 
@@ -342,17 +340,17 @@ One category of active agents is added to the +PL model: the policy entrepreneur
 
 % agent on agent interaction.
 
-Only agent on agent interactions are added through the +PL model. This is detailed here. The rest of the actions and interactions remain unchanged.
+Only agent on agent interactions are added through the +PL model. This is detailed here. The rest of the actions and interactions remain unchanged from the SM model.
 
 %%%%%%
 \paragraph{Agent on agent interactions}
 
-For every step, the agents can interact with one another. These interactions are focused on the causal beliefs and the preferred states. Agents can only interact on the issues they are advocating for and their related causal beliefs.
+For every step, the agents can interact with one another. These interactions are focused on the causal beliefs and the preferred states. Agents can only interact on the issues they are advocating for and their related causal beliefs. They spend 10\% of their resources for each action.
 
 
 First, each agent considers all of the actions that it can perform, grading them, and then deciding which actions will be performed depending on the expected impact of that action.
 
-This grade is obtained based on the conflict level between agents. Following the literature, it is assumed that agents with an average conflict level are most likely to interact, followed by a low and then high conflict level. These are established based on ranges of differences. For example, an average conflict level is when the beliefs of two agents are within 0.2 and 0.4 of one another. Low conflict level is when they are within 0.2 of one another and high conflict level is when they is a greater difference than 0.4. If there is more than one average conflict level in the possible interaction, an action is selected randomly to be performed. If there are none, then a low conflict level action is considered, and so on.
+This grade is obtained based on the conflict level between agents for each issue. Following the literature, it is assumed that agents with an average conflict level are most likely to interact, followed by a low and then high conflict level. These are established based on ranges of differences. For example, an average conflict level is when the beliefs of two agents are within 0.2 and 0.4 of one another. Low conflict level is when they are within 0.2 of one another and high conflict level is when there is a greater difference than 0.4. If there is more than one average conflict level in the possible interactions, an action is selected randomly to be performed. If there are none, then a low conflict level action is considered, and so on.
 
 Once the interaction has been selected, it needs to be performed. This is done using the following equation for a causal belief:
 
@@ -390,30 +388,30 @@ The introduction of coalitions add a few sub-steps to the process described in t
 \item Initialisation:
 	
 	\begin{enumerate}
-	\item \emph{Trigger of external events:} Any event that the modeller decides to implement are activated at this stage of the model cycle.
-	\item \emph{Update of the truth agent:} Information from the environment is used to inform the truth agent actual beliefs.
-	\item \emph{Electorate actions on policy makers}
-	\item \emph{Transmission of the actual beliefs:} The agents are informed about the environment from the truth agent.
-	\item \emph{Coalitions creation:} The agents are assigned to coalitions depending on their policy core preferred states.
+	\item \emph{Trigger of external events}
+	\item \emph{Update of the truth agent}
+	\item \emph{Electorate actions on policy makers} (when included)
+	\item \emph{Transmission of the actual beliefs}
+	\item \emph{Coalitions creation}
 	\end{enumerate}
 	
 \item Agenda setting step:
 	\begin{enumerate}
-	\item \emph{Resources distribution:} The agents see their resources replenished.
-	\item \emph{Preferences calculation (issues):} Each agent calculates the preference for their deep core and policy core issues. Additionally, each agents selects an issue that (s)he will advocate for in his/her policy core issues based on the preferences.
+	\item \emph{Resources distribution}
+	\item \emph{Preferences calculation (issues)}
 	\item \emph{Coalition interactions:} The coalitions perform their intra- and inter-influence actions one another to advance their interest relating to the policy core issues, spending all of their resources.
-	\item \emph{Agent interactions:} The agents influence one another to advance their interest relating to the policy core issues, spending all of their resources.
-	\item \emph{Preferences calculation - policy makers (issues):} Policy makers update their preferences before the selection of the agenda to take into account the agent interactions.
+	\item \emph{Agent interactions}
+	\item \emph{Preferences calculation - policy makers (issues)}
 	\item \emph{Agenda selection}
 	\end{enumerate}
 	
 \item Policy formulation step:
 	\begin{enumerate}
-	\item \emph{Resources distribution:} The agents see their resources replenished.
-	\item \emph{Preferences calculation (policy instruments):} All agents update their preferences for their secondary beliefs based on the issue on the agenda. All agents then selects a policy instrument that (s)he will be advocating for.
+	\item \emph{Resources distribution}
+	\item \emph{Preferences calculation (policy instruments)}
 	\item \emph{Coalition interactions:} The coalitions perform their intra- and inter-influence actions one another to advance their interest relating to the policy instruments, spending all of their resources.
-	\item \emph{Agent interactions:} The agents influence one another to advance their interest relating to the policy instruments, spending all of their resources.
-	\item \emph{Preferences calculation - policy makers (policy instruments):} Policy makers update their preferences before the selection of the policy instrument to take into account the agent interactions.
+	\item \emph{Agent interactions}
+	\item \emph{Preferences calculation - policy makers (policy instruments)}
 	\item \emph{Policy instrument implementation} 
 	\end{enumerate}
 
@@ -424,7 +422,7 @@ The introduction of coalitions add a few sub-steps to the process described in t
 %%%%%%%%%%%%%%%%
 \subsection{The agents}
 
-The agents are the same as in the +PL model. The main addition is that of the coalitions which can also be seen as an agent.
+The agents are the same as in the +PL model. The main addition is that of the coalitions. THey are also considered as active agents in the model.
 
 %%%%%%
 \paragraph{Coalitions}
@@ -435,7 +433,7 @@ The coalitions have the following attributes attributes:
 
 \item A \emph{coalition} is represented as an 5-tuple given by \texttt{agent = (coID, members, beliefHierarchy, advocacy, resources)} where
 \texttt{coID} is the coalition unique ID,
-\texttt{members} is the list of agents that are member of this specific coalition, 
+\texttt{members} is the list of agents that are member of the coalition, 
 \texttt{beliefHierarchy} is the coalition's aggregate belief hierarchy based on other agent's beliefs, 
 \texttt{advocacy} is the list of the issues the coalition is supporting,
 \texttt{resources} corresponds to the amount of resources the coalitions has.
@@ -444,7 +442,7 @@ The coalitions have the following attributes attributes:
 
 \item Similarly to agents, the \emph{advocacy} is represented as a 2-tuple \texttt{(issue\_as, issue\_pf)} where \texttt{policy\_pf} is the issue chosen by the agent during the agenda setting step, while the \texttt{policy\_pf} is the policy instrument selected by the agent in the policy formulation step.
 
-\item The \emph{resources} are pooled from the members of the 
+\item The \emph{resources} are pooled from the members. For the present formalisation, we will assume that each agent provide 50\% of his/her resources to the coalition to which it belongs. 
 
 \end{enumerate}
 
@@ -461,18 +459,28 @@ The coalitions have the following attributes attributes:
 The introduction of coalition leads to some additional interactions between coalitions and agents, they are detailed here.
 
 %%%%%%
+\paragraph{Coalition creation}
+
+The coalitions are created surrounding policy core issues where agents have similar preferred states. Often one policy core issue is considered to be critical, this does not change throughout the process. This issue can be chosen prior to the simulation by the modeller.
+
+In the present formalisation, we assume that agents have similar beliefs if they are within 0.3 of one another. Therefore, coalitions are created whenever a number of agents are within 0.3 of one another. Finally, we also assume that there cannot be more than three coalitions and there will often only be two coalitions.
+
+%%%%%% end of the coalition creation paragraph
+
+%%%%%%
 \paragraph{Coalition on agent interactions}
 
-In the present documentation, we assume the following:
+In the present formalisation, we assume the following:
 
 \begin{itemize}
-\item Coalitions behave like other agents and therefore perform the same interactions.
+\item Coalitions behave like other agents, therefore perform the same interactions.
 \item Coalitions can influence their own members.
-\item Coalitions can not influence other coalitions.
-\item Coalitions can influence agents that are not their members the same way agents would influence other agents.
+\item Coalitions can only influence agents individually and not coalitions as whole entities.
 \end{itemize}
 
-The coalitions spend some of their resources to increase the coherence between their members. This is only a small part of their resources. The rest of their resources is used to influence external agents. The interactions used are the same as the agent on agent interactions where the coalition is considered as an agent.
+The coalitions spend some of their resources to increase the coherence between their members. This means spending up to 30\% of their resources on members to make sure that their beliefs are within 0.2 of the coalition average for the issues advocated by the coalition.
+
+The rest of their resources is used to influence external agents. The interactions used are the same as the agent on agent interactions but where the coalition is considered as an agent. For each action, the coalition spends 1\% of its resources.
 
 %%%%%% end of the coalition on agent interactions paragraph
 %%%%%%%%%%%%%%%% end of the actions and interactions subsection
@@ -482,7 +490,7 @@ The coalitions spend some of their resources to increase the coherence between t
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Model formalisation (+PK)}
 
-The introduction of the partial information into the model has no impact on the process or the agents. It only impacts the agent on agent interactions. This is explained below. Note that the +PK model can be added to the SM, the +PL and the +Co models. It will only have an impact on the two latter as the SM model does not have any agent interaction to be influence by partial knowledge.
+The introduction of the partial knowledge into the model has no impact on the process or the agents. It only impacts the agent on agent interactions. This is explained below. Note that the +PK model can be added to the SM, the +PL and the +Co models. It will only have an impact on the two latter as the SM does not have any agent interaction to be influence by partial knowledge.
 
 %%%%%%%%%%%%%%%%
 \subsection{The actions and interactions}
@@ -492,7 +500,7 @@ Changes in the agent on agent interactions are detailed here.
 %%%%%%
 \paragraph{Agent on agent interactions}
 
-When considering partial knowledge, the actions between the agents are not changed. The main difference is that now the conflict level is calculated based on the knowledge of the agents of other agents' beliefs. This knowledge of other's beliefs is updated after every interaction based on the assumption that through their interactions, both agents have gained better knowledge of the beliefs of the other.
+When considering partial knowledge, the actions between the agents are not changed. The main difference is that now the conflict level is calculated based on the knowledge of the agents of other agents' beliefs. This knowledge of other's beliefs is updated after every interaction based on the assumption that through their interactions, both agents gain better knowledge of the beliefs of the other.
 
 The update of this knowledge is performed using the following equation:
 
