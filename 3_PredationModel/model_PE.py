@@ -62,19 +62,22 @@ class PolicyEmergenceSM(Model):
 	Simplest Model for the policy emergence model.
 	'''
 
-	def __init__(self, SM_inputs, height=20, width=20):
+	def __init__(self, PE_type, SM_inputs, height=20, width=20):
 
 		self.height = height # height of the canvas
 		self.width = width # width of the canvas
 
 		self.SM_inputs = SM_inputs # inputs for the entire model
+		self.PE_type = PE_type # model type (SM, A+PL, A+Co, A+PK, A+PI)
+
+		self.resources_aff = SM_inputs[2]  # resources per affiliation agent
 
 		self.stepCount = 0 # int - [-] - initialisation of step counter
 		self.agenda_PC = None # initialisation of agenda policy core issue tracker
 		self.policy_implemented_number = None # initialisation of policy number tracker
 		self.policy_formulation_run = False  # check value for running policy formulation
 
-		self.w_el_influence = self.SM_inputs[9]  # float - [-] - electorate influence weight constant
+		self.w_el_influence = self.SM_inputs[5]  # float - [-] - electorate influence weight constant
 
 		self.schedule = RandomActivation(self) # mesa random activation method
 		self.grid = SingleGrid(height, width, torus=True) # mesa grid creation method
@@ -174,10 +177,34 @@ class PolicyEmergenceSM(Model):
 		the agenda.
 		'''
 
+		# resources distribution
+		if self.PE_type == 'A+PL':
+			for agent in self.schedule.agent_buffer(shuffled=False):
+				if isinstance(agent, ActiveAgent):  # selecting only active agents
+					if agent.affiliation == 0: # affiliation 0
+						agent.resources = self.resources_aff[0]
+					if agent.affiliation == 1: # affiliation 1
+						agent.resources = self.resources_aff[1]
+
 		# active agent policy core selection
 		for agent in self.schedule.agent_buffer(shuffled=False):
 			if isinstance(agent, ActiveAgent):  # selecting only active agents
 				agent.selection_PC()
+
+
+		# active agent interactions
+		if self.PE_type == 'A+PL':
+			for agent in self.schedule.agent_buffer(shuffled=True):
+				if isinstance(agent, ActiveAgent):  # selecting only active agents
+					print('selected_PC', agent.selected_PC)
+					agent.interactions_AS_PL()
+
+		# active agent policy core selection (after agent interactions)
+		if self.PE_type == 'A+PL':
+			# active agent policy core selection
+			for agent in self.schedule.agent_buffer(shuffled=False):
+				if isinstance(agent, ActiveAgent):  # selecting only active agents
+					agent.selection_PC()
 
 		# for each agent, selection of their preferred policy core issue
 		selected_PC_list = []
@@ -214,6 +241,30 @@ class PolicyEmergenceSM(Model):
 		In the policy formulation step, the policy maker agents first select their policy core issue of preference and then
 		they select the policy that is to be implemented if there is a majority of them.
 		'''
+
+		# resources distribution
+		if self.PE_type == 'A+PL':
+			for agent in self.schedule.agent_buffer(shuffled=False):
+				if isinstance(agent, ActiveAgent):  # selecting only active agents
+					if agent.affiliation == 0: # affiliation 0
+						agent.resources = self.resources_aff[0]
+					if agent.affiliation == 1: # affiliation 1
+						agent.resources = self.resources_aff[1]
+
+		# todo - checking the policy formulation preferences calculations
+		# calculation of policy instruments preferences
+		if self.PE_type == 'A+PL':
+			for agent in self.schedule.agent_buffer(shuffled=False):
+				if isinstance(agent, ActiveAgent):
+					agent.selection_S()
+					agent.selection_PI()  # individual agent policy instrument selection
+
+		# active agent interactions
+		if self.PE_type == 'A+PL':
+			for agent in self.schedule.agent_buffer(shuffled=True):
+				if isinstance(agent, ActiveAgent):  # selecting only active agents
+					print(agent.unique_id)
+					# todo - missing the agent interactions here (for the policy formulation)
 
 		# calculation of policy instruments preferences
 		selected_PI_list = []

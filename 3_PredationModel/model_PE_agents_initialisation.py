@@ -29,20 +29,19 @@ def init_active_agents(self, len_S, len_PC, len_DC, len_CR, len_PF, len_ins, SM_
 
 	'''Creation of the active policy agents'''
 
-	SM_PMs = SM_inputs[0] # number of policy makers
-	SM_PMs_aff = SM_inputs[1]  # policy maker distribution per affiliation
-	SM_PEs = SM_inputs[2]  # number of policy entrepreneurs
-	SM_PEs_aff = SM_inputs[3]  # policy entrepreneur distribution per affiliation
-	SM_EPs = SM_inputs[4]  # number of external parties
-	SM_EPs_aff = SM_inputs[5]  # external parties distribution per affiliation
-	resources_aff = SM_inputs[6]  # resources per affiliation agent out of 100
-	goal_profiles = SM_inputs[8]  # goal profiles for active agents and electorate
+	SM_PMs = SM_inputs[0][0] # number of policy makers
+	SM_PEs = SM_inputs[0][1]  # number of policy entrepreneurs
+	SM_EPs = SM_inputs[0][2]  # number of external parties
 
-	aff_number = len(resources_aff) # initialising affiliation number
-	if aff_number!= len(SM_PMs_aff) or aff_number != len(SM_PMs_aff) or aff_number != len(SM_EPs_aff):
-		print("MISTAKE IN THE INPUTS on affiliation") # affiliation check
+	SM_PMs_aff = SM_inputs[1][0]  # policy maker distribution per affiliation
+	SM_PEs_aff = SM_inputs[1][1]  # policy entrepreneur distribution per affiliation
+	SM_EPs_aff = SM_inputs[1][2]  # external parties distribution per affiliation
 
-	self.number_activeagents = SM_EPs + SM_PMs + SM_PEs # agent global properties
+	goal_profiles = SM_inputs[4]  # goal profiles for active agents and electorate
+
+	aff_number = len(SM_PMs_aff) # initialising affiliation number
+
+	self.number_activeagents = SM_PMs + SM_PEs + SM_EPs # agent global properties
 
 	# model issue tree structure
 	issuetree0 = [None]
@@ -82,7 +81,7 @@ def init_active_agents(self, len_S, len_PC, len_DC, len_CR, len_PF, len_ins, SM_
 		while j < SM_PMs_aff[i]:
 			agent_type = 'policymaker'
 			affiliation = i
-			resources = resources_aff[i]
+			resources = 0
 			issuetree = copy.deepcopy(issuetree0)
 			# introducing the issues
 			for k in range(len_DC + len_PC + len_S):
@@ -106,7 +105,7 @@ def init_active_agents(self, len_S, len_PC, len_DC, len_CR, len_PF, len_ins, SM_
 		while jj < SM_PEs_aff[i]:
 			agent_type = 'policyentrepreneur'
 			affiliation = i
-			resources = resources_aff[i]
+			resources = 0
 			issuetree = copy.deepcopy(issuetree0)
 			# introducing the issues
 			for k in range(len_DC + len_PC + len_S):
@@ -129,7 +128,7 @@ def init_active_agents(self, len_S, len_PC, len_DC, len_CR, len_PF, len_ins, SM_
 		while jjj < SM_EPs_aff[i]:
 			agent_type = 'externalparty'
 			affiliation = i
-			resources = resources_aff[i]
+			resources = 0
 			issuetree = copy.deepcopy(issuetree0)
 			# introducing the issues
 			for k in range(len_DC + len_PC + len_S):
@@ -163,9 +162,9 @@ def init_electorate_agents(self, len_S, len_PC, len_DC, SM_inputs):
 	# This only contains the goals of the electorate.
 	issuetree0 = [0 for f in range(len_DC + len_PC + len_S)]
 
-	aff_number = len(SM_inputs[6])
-	representativeness_aff = SM_inputs[7]
-	goal_profiles = SM_inputs[8]
+	aff_number = len(SM_inputs[2])
+	representativeness_aff = SM_inputs[3]
+	goal_profiles = SM_inputs[4]
 
 	# creation of the agents
 	# electorate 1
