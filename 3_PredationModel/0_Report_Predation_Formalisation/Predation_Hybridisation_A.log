@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.5)  9 JAN 2020 16:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.5)  13 JAN 2020 14:15
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -750,18 +750,22 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[5] [6]
-Overfull \hbox (1.96776pt too wide) in paragraph at lines 311--311
+[5]
+
+LaTeX Warning: Text page 6 contains only floats.
+
+[6]
+Overfull \hbox (1.96776pt too wide) in paragraph at lines 293--293
 []\OT1/cmr/bx/n/17.28 Initialisation of the pol-icy emer-gence model 
  []
 
 No file Predation_Hybridisation_A.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 327.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 309.
 [7]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 327.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 309.
  (./Predation_Hybridisation_A.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 327.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 327.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 309.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 309.
 Package rerunfilecheck Info: File `Predation_Hybridisation_A.out' has not chang
 ed.
 (rerunfilecheck)             Checksum: 6563FB44D97C2F9E9424538A9A51BACC;742.
@@ -769,26 +773,26 @@ ed.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 327.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 309.
  ) 
 Here is how much of TeX's memory you used:
  8092 strings out of 492995
- 118454 string characters out of 6132705
- 223996 words of memory out of 5000000
+ 118462 string characters out of 6132705
+ 221123 words of memory out of 5000000
  11492 multiletter control sequences out of 15000+600000
  12919 words of font info for 50 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,9n,39p,629b,389s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,9n,39p,673b,389s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 ></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><
 /usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></u
 sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></us
 r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr
 /local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Predation_Hybridisation_A.pdf (7 pages, 84011 bytes).
+Output written on Predation_Hybridisation_A.pdf (7 pages, 84060 bytes).
 PDF statistics:
- 160 PDF objects out of 1000 (max. 8388607)
- 143 compressed objects within 2 object streams
+ 161 PDF objects out of 1000 (max. 8388607)
+ 144 compressed objects within 2 object streams
  50 named destinations out of 1000 (max. 500000)
  97 words of extra memory for PDF output out of 10000 (max. 10000000)
 

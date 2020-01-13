@@ -176,31 +176,19 @@ We differentiate the scenarios that will be run for the +PL and the +Co models w
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The +PL model}
 
-Six scenario are considered. All but one focus on a change in the preferred states of the agents or their causal beliefs. For each of the scenario, the preferred states of the agents are shown in \autoref{tab:preferredStates} and their causal relations are provided in \autoref{tab:causalBeliefs}.
+For now only the benchmark scenario and scenario 1 are considered. These basically test the different impact of a change of resources on policy learning and the associated effect on policy change, if any. For each of the scenario, the preferred states of the agents are shown in \autoref{tab:preferredStates}, their causal relations are provided in \autoref{tab:causalBeliefs} and the agents and resources distribution are provided in \autoref{tab:agentResourceDistribution}.
 
 
 \begin{itemize}
 \item Scenario 0 - Benchmark
 
-The benchmark scenario is to be used as a benchmark. It is a simulation of the predation model with the policy emergence model. The preferred states for the agents is provided in \autoref{tab:preferredStates}. The causal beliefs used as given in \autoref{tab:causalBeliefs}.
+The benchmark scenario is to be used as a benchmark. It is a simulation of the predation model with the policy emergence model. Two affiliations are considered. Affiliation 0 consists of two policy makers and four policy entrepreneurs (2 PM and 4 PE) with high resources and a preference for sheep favouring policies. Affiliation 1 consists of one policy maker and four policy entrepreneurs (1 PM and 4 PE) with low resources and a preference for wolf favouring policies. The preferred states for the agents are provided in \autoref{tab:preferredStates}. The causal beliefs used as given in \autoref{tab:causalBeliefs}.
 
 \item Scenario 1 - Demonstrating policy learning but not policy change
 
 The aim of this scenario is to demonstrate that policy learning does not always lead to policy change by having a resource rich set of agents not be the dominant set of agents for the agenda selection and the policy implementation.
 
-%Scenario 1 looks at what would change if the policy core issue preferred states of the policy makers were different. The new selection of preferred states is given in \autoref{tab:preferredStates}.
-
-\item Scenario 2 - Change in resource distribution
-
-Scenario 2 looks at what would change if the secondary issue preferred states of the policy makers were different. The new selection of preferred states is given in \autoref{tab:preferredStates}.
-
-\item Scenario 3 - Change in the causal beliefs
-
-For Scenario 3, we compare a difference in the understanding of how the system works and its impact on policy change. For this we create a different causal beliefs structure that is presented in \autoref{tab:causalBeliefs}. This is to be compared with results from the benchmark in scenario 0.
-
-\item Scenario 4 \& 5 - Electorate influence on the policy core and secondary issue preferred states
-
-For scenario 3, we also check what is the impact of different electorate influence weight values. The aim is to visualise the impact of the influence electorate on the overall system for this. We have the same scenario as for scenario 2 but this time the electorate is much more driven and has a quick impact on the policy makers (quadrupling to 0.20 their influence on policy makers). The weights considered are 0.20, 0.02 and 0.50.
+Two affiliations are considered. Affiliation 0 consists of two policy makers and four policy entrepreneurs (2 PM and 4 PE) with low resources and a preference for sheep favouring policies. Affiliation 1 consists of one policy maker and four policy entrepreneurs (1 PM and 4 PE) with high resources and a preference for wolf favouring policies. The preferred states for the agents are provided in \autoref{tab:preferredStates}. The causal beliefs used as given in \autoref{tab:causalBeliefs}.
 
 \end{itemize}
 
@@ -217,23 +205,22 @@ For scenario 3, we also check what is the impact of different electorate influen
 \begin{tabular}{ |c|c|c|c|c|c|c| } 
 \hline
 
-			& PC1	& PC2	& PC3	& S1		& S2		& S3  	\\ 
+			& {\bfseries PC1}
+					&  {\bfseries PC2}
+							&  {\bfseries PC3}
+									&  {\bfseries S1}	
+											&  {\bfseries S2}	
+													&  {\bfseries S3}  	\\ 
 			& Sheep	& Wolves	& Grass	& Sheep	& Wolves	& Grass 	\\
-			&		&		&		& growth	& growth	& growth	\\ \hline \hline
+			&		&		&		& growth	& growth	& growth	\\ \hline \hline \hline
+\multicolumn{7}{|c|}{ {\bfseries Scenario 0/1}}							\\ \hline \hline	
+\multicolumn{7}{|c|}{Affiliation 0 - Pro sheep}							\\ \hline 
+Value		& 400	& 50		& 2000	& 75		& -50	& 200	\\ \hline
+Norm.		& 0.80	& 0.10	& 0.80	& 0.88	& 0.25	& 0.70	\\ \hline
+\multicolumn{7}{|c|}{Affiliation 1 - Pro wolves}							\\ \hline 
+Value		& 400	& 50		& 2000	& 75		& -50	& 200	\\ \hline
+Norm.		& 0.80	& 0.10	& 0.80	& 0.88	& 0.25	& 0.70	\\ \hline
 			
-	 		& \multicolumn{6}{|c|}{Affiliation 0}						\\ \hline 
-Agents		& 300	& 300	& 2000	& 100	& 50		& 200	\\ \hline
-			& 0.60	& 0.60	& 0.80	& 1.00	& 0.75	& 0.70	\\ \hline
-	 		& \multicolumn{6}{|c|}{Affiliation 1}						\\ \hline 
-Agents		& 300	& 300	& 2000	& 100	& 50		& 200	\\ \hline
-			& 0.60	& 0.60	& 0.80	& 1.00	& 0.75	& 0.70	\\ \hline
-			
-\multicolumn{7}{|c|}{Scenario 1}										\\ \hline
-Policy makers	& 150	& 0		& 2000	& 100	& 50		& 200	\\ \hline
-			& 0.30	& 0.00	& 0.80	& 1.00	& 0.75	& 0.70	\\ \hline
-			
-
-
 \end{tabular}
 \end{center}
 \caption{Preferred states for the policy makers on a the interval [0,1] for scenarios 0 and 1.}
@@ -242,14 +229,15 @@ Policy makers	& 150	& 0		& 2000	& 100	& 50		& 200	\\ \hline
 
 \begin{table}[h!]
 \begin{center}
-\begin{tabular}{ |c|c|c|c| |c|c|c|c|}
- \hline
-\multicolumn{4}{|c||}{Scenario 0/1/2/4/5}	& \multicolumn{4}{|c|}{Scenario 3}		\\ \hline
-	& PC1	& PC2	& PC3		& 		& PC1	& PC2	& PC3	\\ \hline
--S1 	& 1.00	& 0.75	&-0.75		& -S1 	&-0.50	&-0.10	& 0.25	\\ \hline
--S2 	&-0.75	& 1.00	& 0.25 		& -S2 	& 0.05	&-0.50	&-0.25 	\\ \hline
--S3 	& 0.50	& 0.75	& 1.00		& -S3 	&-0.25	& 0.00	&-0.50	\\ 
- \hline
+\begin{tabular}{ |c|c|c|c|}
+\hline
+\multicolumn{4}{|c|}{ {\bfseries Scenario 0/1}}	
+								\\ \hline \hline
+	& PC1	& PC2	& PC3		\\ \hline
+-S1 	& 1.00	& 0.75	&-0.75		\\ \hline
+-S2 	&-0.75	& 1.00	& 0.25 		\\ \hline
+-S3 	& 0.50	& 0.75	& 1.00		\\ 
+\hline
 \end{tabular}
 \end{center}
 \caption{Causal beliefs for the policy makers. These causal relations can be read as: an increase of 1 in S2 will lead to a decrease of 0.75 in PC1. They are all given on the interval [-1,1].}
@@ -258,27 +246,21 @@ Policy makers	& 150	& 0		& 2000	& 100	& 50		& 200	\\ \hline
 
 \begin{table}[h!]
 \begin{center}
-\begin{tabular}{ |c|c|c|c|c|c|c|c|c|c|c|c|c| } 
+\begin{tabular}{ |l|c|c|c|c|c|c|c|c|c|c|c|c| } 
 \hline
-
-Scenarios		& \multicolumn{2}{|c|}{0}	
-					& \multicolumn{2}{|c|}{1}	
-							& \multicolumn{2}{|c|}{2}	
-									& \multicolumn{2}{|c|}{3}	
-											& \multicolumn{2}{|c|}{4}	
-													& \multicolumn{2}{|c|}{5}	 
-															\\ \hline \hline
-Affiliations		& 0	& 1	&  0	& 1	&  0	& 1	&  0	& 1 	&  0	& 1	&  0	& 1	\\ \hline
-Policy makers 	& 2	& 1	& 2	& 1	& 	&	&	&	&	&	&	& 	\\ \hline
-Policy entrepreneurs
-			& 4	& 4	& 4	& 4	& 	&	&	&	&	&	&	& 	\\ \hline
+ {\bfseries Scenarios}
+ 				& \multicolumn{2}{|c|}{ {\bfseries 0}}	
+					& \multicolumn{2}{|c|}{ {\bfseries 1}}	
+								\\ \hline \hline
+Affiliations			& 0	& 1	&  0	& 1	\\ \hline
+Policy makers 		& 2	& 1	& 2	& 1	\\ \hline
+Policy entrepreneurs	& 4	& 4	& 4	& 4	\\ \hline
+Resources		& 50	& 25	& 25	& 50	\\ \hline
 \end{tabular}
 \end{center}
-\caption{Agent distribution for each of the scenarios.}
-\label{tab:agentDistribution}
+\caption{Agents and resource distribution for each of the scenarios. \textcolor{red}{Resources values will have to be adjusted - the current values are only temporary.}}
+\label{tab:agentResourceDistribution}
 \end{table}
-
-
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The +Co model}
