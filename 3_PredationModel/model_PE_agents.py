@@ -165,12 +165,15 @@ class ActiveAgent(Agent):
         All of the actions are first graded based on conflict levels. Then the action that has the highest grade is
         selected. Finally, the action selected is implemented.
 
+        Note the agent strategy of performing the same action as long as the conflict level is not low and that the
+        agent still has resources.
+
         """
 
-        # len_PC = len(policy_core)
-        # len_ML = len(mid_level)
-        # len_S = len(secondary)
-        # total_issue_number = len_PC + len_ML + len_S
+        # saving the conflict level numbers
+
+
+        DC_inclusion = True # todo - change this
 
         len_DC = self.model.len_DC; len_PC = self.model.len_PC; len_S = self.model.len_S
         total_issue_number = len_DC + len_PC + len_S
@@ -178,27 +181,72 @@ class ActiveAgent(Agent):
         # todo - need the addition of a check that the DC are considered - if not,
         #  then the causal relations should not be considered either
         # selection of the cw of interest
-        cw_of_interest = []
-        # consider only the causal relations related to the problem on the agenda
-        for cw_choice in range(len_PC):
-            cw_of_interest.append(len_DC + len_PC + len_S + self.selected_PC * len_PC + cw_choice)
-        print(cw_of_interest)
+        if DC_inclusion == True:
+            cb_of_interest = []
+            # consider only the causal relations related to the problem on the agenda
+            for cb_choice in range(len_PC):
+                cb_of_interest.append(len_DC + len_PC + len_S + self.selected_PC * len_PC + cb_choice)
+            print(cb_of_interest)
 
-        # print(' ')
-        # print('Causal relations of interest: ' + str(cw_of_interest))
-
-        # Making sure there are enough resources
+        # making sure there are enough resources
         while self.resources > 0.001:
+
+            total_grade_list = [] # initialising the grade list
+            total_agent_list = [] # initialising the agent list
+
+            print(self.unique_id, '/n')
+            for target in self.model.schedule.agent_buffer(shuffled=True):  # going through the other agents
+                if isinstance(target, ActiveAgent) and target != self:  # making sure it is an active agent and not self
+
+                    # saving the agent considered (randomly selected)
+                    total_agent_list.append(target.unique_id)
+
+                    # looking at causal beliefs
+                    if DC_inclusion == True: # in case the model has deep core issues
+
+                        for i in range(len(cb_of_interest)): # go through all causal beliefs of interest
+                            cb = cb_of_interest[i] # selecting the causal belief
+                            value1 = self.issuetree[self.unique_id][cb][0]
+                            value2 = target.issuetree[target.unique_id][cb][0]
+                            conflict_level = self.conflict_level_calc(value1, value2)
+                            total_grade_list.append(conflict_level)
+
+                    else: # if the deep core issues are not considered
+                        for i in range(len_PC):
+                            conflict_level = 0 # nul value so that causal beliefs are not considered
+                            total_grade_list.append(conflict_level)
+
+                    # looking the preferred states (aka goal)
+                    print('self.selected_PC', self.selected_PC)
+                    goal = len_DC + self.selected_PC # selecting the right goal
+                    value1 = self.issuetree[self.unique_id][goal][1]
+                    value2 = target.issuetree[target.unique_id][goal][1]
+                    print(value1, value2)
+                    conflict_level = self.conflict_level_calc(value1, value2) # calculating the conflict level
+                    total_grade_list.append(conflict_level)
+
+            # todo - the current approach makes it a delicate task to have interaction between agents - this threshold
+            #  approach - there might be a need to find something else.
+
+
+            print(target.unique_id)
+            print(total_grade_list)
+            print(total_agent_list)
+
+            # creation of the grades
+            # selection of the action
+            # performing the action
+            # if resources are not exhausted:
+            #   check conflict level on that belief
+            #   if still not low, perform action and repeat until resources are exhausted or conflict level is now low
+            #   if conflict level not low, start from the beginning again
 
             # Going through all the links in the model
             # print(agents)
             total_grade_list = []
             total_grade_list_links = []
 
-            print(self.unique_id, '/n')
-            for agent in self.model.schedule.agent_buffer(shuffled=True): # going through the other agents
-                if isinstance(agent, ActiveAgent) and agent != self: # making sure it is an active agent and not self
-                    print(agent.unique_id)
+
 
             for links in link_list:
 
@@ -260,7 +308,8 @@ class ActiveAgent(Agent):
             best_action = best_action_index - (len(cw_of_interest) + 2) * int(
                 best_action_index / (len(cw_of_interest) + 2))
             # print('The impacted index is: ' + str(best_action))
-            # print('The would be index without the +1: ' + str((best_action_index - (len(cw_of_interest) + 2) * int(best_action_index/(len(cw_of_interest) + 2))) - 1))
+            # print('The would be index without the +1: ' + str((best_action_index - (len(cw_of_interest) + 2)
+            # * int(best_action_index/(len(cw_of_interest) + 2))) - 1))
             # print('   ')
 
             # 5. Performing the actual action
@@ -308,6 +357,30 @@ class ActiveAgent(Agent):
             agents.resources_actions -= agents.resources[0] * resources_weight_action
 
         return 0
+
+    def conflict_level_calc(self, value1, value2):
+
+        '''
+        Function used to calculate the conflict level
+        :param value1:
+        :param value2:
+        :return:
+        '''
+
+        conflict_level_low = self.model.conflict_level[0]
+        conflict_level_mid = self.model.conflict_level[1]
+        conflict_level_hig = self.model.conflict_level[2]
+
+        diff = abs(value1 - value2)
+
+        if diff < 0.2:
+            conflict_level = conflict_level_low
+        if 0.2 <= diff <= 0.40:
+            conflict_level = conflict_level_mid
+        if diff > 0.40:
+            conflict_level = conflict_level_hig
+
+        return conflict_level
 
     # def selection_PF(self):
     #

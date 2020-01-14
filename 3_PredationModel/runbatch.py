@@ -31,6 +31,10 @@ interval_tick = 100
 run_tick = int(total_ticks/interval_tick)
 warmup_tick = interval_tick
 
+# ACF + PL parameters
+con_lvl = [0.85, 0.95, 0.75] # conflict levels [low, mid, high]
+AplusPL_param = [con_lvl]
+
 # parameters of the policy context model
 '''
 Here go all the parameters that are needed to initialise the policy context model
@@ -67,6 +71,8 @@ PE_PEs_aff_0 = [4, 4]  # policy entrepreneur distribution per affiliation
 PE_EPs_aff_0 = [0, 0]  # external parties distribution per affiliation
 PE_aff[0] = [PE_PMs_aff_0, PE_PEs_aff_0, PE_EPs_aff_0] # for scenario 0
 PE_aff[1] = [PE_PMs_aff_0, PE_PEs_aff_0, PE_EPs_aff_0] # for scenario 1
+
+# todo - introduce a random aspect in the agents' preferred states and causal beliefs in the initialisation
 
 # input profile for preferred states
 '''
@@ -115,7 +121,7 @@ for sce_i in range (sce_number):
 			model_run_predation = WolfSheepPredation(50, 50, 100, 50, 0.04, 0.05, 30, True, 30, 4)
 
 			# initialisation of the policy emergence model
-			model_run_PE = PolicyEmergenceSM(PE_type, PE_inputs, 10, 10)
+			model_run_PE = PolicyEmergenceSM(PE_type, PE_inputs, AplusPL_param, 10, 10)
 
 			print("\n")
 			print("************************")

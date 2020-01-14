@@ -62,7 +62,7 @@ class PolicyEmergenceSM(Model):
 	Simplest Model for the policy emergence model.
 	'''
 
-	def __init__(self, PE_type, SM_inputs, height=20, width=20):
+	def __init__(self, PE_type, SM_inputs, AplusPL_param, height=20, width=20):
 
 		self.height = height # height of the canvas
 		self.width = width # width of the canvas
@@ -78,6 +78,10 @@ class PolicyEmergenceSM(Model):
 		self.policy_formulation_run = False  # check value for running policy formulation
 
 		self.w_el_influence = self.SM_inputs[5]  # float - [-] - electorate influence weight constant
+
+		# ACF+PL parameters
+		if PE_type == 'A+PL':
+			self.conflict_level = AplusPL_param[0]
 
 		self.schedule = RandomActivation(self) # mesa random activation method
 		self.grid = SingleGrid(height, width, torus=True) # mesa grid creation method
