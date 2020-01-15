@@ -1,6 +1,5 @@
 import random
 import copy
-import pandas as pd
 
 from model_PE_agents import ActiveAgent, ElectorateAgent, TruthAgent
 
@@ -85,7 +84,11 @@ def init_active_agents(self, len_S, len_PC, len_DC, len_CR, len_PF, len_ins, SM_
 			issuetree = copy.deepcopy(issuetree0)
 			# introducing the issues
 			for k in range(len_DC + len_PC + len_S):
-				issuetree[unique_id][k] = [0, goal_profiles[i][k + 1], 0]
+				issuetree[unique_id][k] = [0, goal_profiles[i][k + 1] + (2 * random.random() - 1) / 100, 0]
+				if issuetree[unique_id][k][1] > 1:
+					issuetree[unique_id][k][1] = 1
+				if issuetree[unique_id][k][1] < 0 or k == 0: # DC are not considered here so kept at 0
+					issuetree[unique_id][k][1] = 0
 			# introduction of the causal relations
 			for k in range(len_DC*len_PC + len_PC * len_S):
 				# print( goal_profiles[i][len_DC + len_PC + len_S + k+1], type( goal_profiles[i][len_DC + len_PC + len_S + k+1]))
@@ -109,7 +112,11 @@ def init_active_agents(self, len_S, len_PC, len_DC, len_CR, len_PF, len_ins, SM_
 			issuetree = copy.deepcopy(issuetree0)
 			# introducing the issues
 			for k in range(len_DC + len_PC + len_S):
-				issuetree[unique_id][k] = [0, goal_profiles[i][k+1], 0]
+				issuetree[unique_id][k] = [0, goal_profiles[i][k+1] + (2 * random.random() - 1) / 100, 0]
+				if issuetree[unique_id][k][1] > 1:
+					issuetree[unique_id][k][1] = 1
+				if issuetree[unique_id][k][1] < 0 or k == 0: # DC are not considered here so kept at 0
+					issuetree[unique_id][k][1] = 0
 			# introduction of the causal relations
 			for k in range(len_DC*len_PC + len_PC * len_S):
 				issuetree[unique_id][len_DC + len_PC + len_S + k][0] = goal_profiles[i][len_DC + len_PC + len_S + k + 1]
@@ -132,7 +139,11 @@ def init_active_agents(self, len_S, len_PC, len_DC, len_CR, len_PF, len_ins, SM_
 			issuetree = copy.deepcopy(issuetree0)
 			# introducing the issues
 			for k in range(len_DC + len_PC + len_S):
-				issuetree[unique_id][k] = [0, goal_profiles[i][k+1], 0]
+				issuetree[unique_id][k] = [0, goal_profiles[i][k+1] + (2 * random.random() - 1) / 100, 0]
+				if issuetree[unique_id][k][1] > 1:
+					issuetree[unique_id][k][1] = 1
+				if issuetree[unique_id][k][1] < 0 or k == 0: # DC are not considered here so kept at 0
+					issuetree[unique_id][k][1] = 0
 			# introduction of the causal relations
 			for k in range(len_DC*len_PC + len_PC * len_S):
 				issuetree[unique_id][len_DC + len_PC + len_S + k][0] = goal_profiles[i][len_DC + len_PC + len_S + k+1]

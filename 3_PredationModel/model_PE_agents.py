@@ -154,8 +154,6 @@ class ActiveAgent(Agent):
 
     def interactions_AS_PL(self):
 
-        # todo - missing the agent interactions here (for the agenda setting)
-
         """
         ACF+PL
         This function is used to perform the different agent interactions for the active agents during the
@@ -164,199 +162,171 @@ class ActiveAgent(Agent):
         The interactions that can be performed are on the preferred states and on the causal beliefs.
         All of the actions are first graded based on conflict levels. Then the action that has the highest grade is
         selected. Finally, the action selected is implemented.
-
-        Note the agent strategy of performing the same action as long as the conflict level is not low and that the
-        agent still has resources.
-
         """
 
-        # saving the conflict level numbers
-
-
-        DC_inclusion = True # todo - change this
-
         len_DC = self.model.len_DC; len_PC = self.model.len_PC; len_S = self.model.len_S
-        total_issue_number = len_DC + len_PC + len_S
+        action_number = len_DC + 1 # number of actions allowed in this step (causal beliefs, preferred states)
 
-        # todo - need the addition of a check that the DC are considered - if not,
-        #  then the causal relations should not be considered either
         # selection of the cw of interest
-        if DC_inclusion == True:
-            cb_of_interest = []
-            # consider only the causal relations related to the problem on the agenda
-            for cb_choice in range(len_PC):
-                cb_of_interest.append(len_DC + len_PC + len_S + self.selected_PC * len_PC + cb_choice)
-            print(cb_of_interest)
+        cb_of_interest = []
+        # consider only the causal relations related to the problem on the agenda
+        for cb_choice in range(len_DC):
+            cb_of_interest.append(len_DC + len_PC + len_S + self.selected_PC * len_PC + cb_choice)
+
+        # assigning resources for the actions
+        self.resources_action = self.resources
 
         # making sure there are enough resources
-        while self.resources > 0.001:
+        while self.resources_action > 0.001:
 
             total_grade_list = [] # initialising the grade list
             total_agent_list = [] # initialising the agent list
 
-            print(self.unique_id, '/n')
             for target in self.model.schedule.agent_buffer(shuffled=True):  # going through the other agents
                 if isinstance(target, ActiveAgent) and target != self:  # making sure it is an active agent and not self
-
-                    # saving the agent considered (randomly selected)
-                    total_agent_list.append(target.unique_id)
+                    total_agent_list.append(target.unique_id) # saving the agent considered (randomly selected)
 
                     # looking at causal beliefs
-                    if DC_inclusion == True: # in case the model has deep core issues
-
-                        for i in range(len(cb_of_interest)): # go through all causal beliefs of interest
-                            cb = cb_of_interest[i] # selecting the causal belief
-                            value1 = self.issuetree[self.unique_id][cb][0]
-                            value2 = target.issuetree[target.unique_id][cb][0]
-                            conflict_level = self.conflict_level_calc(value1, value2)
-                            total_grade_list.append(conflict_level)
-
-                    else: # if the deep core issues are not considered
-                        for i in range(len_PC):
-                            conflict_level = 0 # nul value so that causal beliefs are not considered
-                            total_grade_list.append(conflict_level)
+                    for i in range(len(cb_of_interest)): # go through all causal beliefs of interest
+                        cb = cb_of_interest[i] # selecting the causal belief
+                        value1 = self.issuetree[self.unique_id][cb][0]
+                        value2 = target.issuetree[target.unique_id][cb][0]
+                        conflict_level, diff = self.conflict_level_calc(value1, value2)
+                        total_grade_list.append(conflict_level*diff)
 
                     # looking the preferred states (aka goal)
-                    print('self.selected_PC', self.selected_PC)
                     goal = len_DC + self.selected_PC # selecting the right goal
                     value1 = self.issuetree[self.unique_id][goal][1]
                     value2 = target.issuetree[target.unique_id][goal][1]
-                    print(value1, value2)
-                    conflict_level = self.conflict_level_calc(value1, value2) # calculating the conflict level
-                    total_grade_list.append(conflict_level)
-
-            # todo - the current approach makes it a delicate task to have interaction between agents - this threshold
-            #  approach - there might be a need to find something else.
-
-
-            print(target.unique_id)
-            print(total_grade_list)
-            print(total_agent_list)
-
-            # creation of the grades
-            # selection of the action
-            # performing the action
-            # if resources are not exhausted:
-            #   check conflict level on that belief
-            #   if still not low, perform action and repeat until resources are exhausted or conflict level is now low
-            #   if conflict level not low, start from the beginning again
-
-            # Going through all the links in the model
-            # print(agents)
-            total_grade_list = []
-            total_grade_list_links = []
-
-
-
-            for links in link_list:
-
-                # Making sure that the link is attached to the agent and has a aware higher than 0
-                if (links.agent1 == agents or links.agent2 == agents) and links.aware > 0:
-                    total_grade_list_links.append(links)
-
-                    # 1. Grading all framing actions:
-                    # Checking through all possible framing - This is all based on partial knowledge!
-                    for cw in cw_of_interest:
-                        cw_grade = ActionFunctions.action_grade_calculator(links, cw, 0, agents, affiliation_weights)
-                        total_grade_list.append(cw_grade)
-
-                    # 2. Grading all individual actions - Aim change
-                    aim_grade = ActionFunctions.action_grade_calculator(links, agents.select_as_issue, 1, agents,
-                                                                        affiliation_weights)
-                    total_grade_list.append(aim_grade)
-
-                    # 3. Grading all individual actions - State change
-                    state_grade = ActionFunctions.action_grade_calculator(links, agents.select_as_issue, 0, agents,
-                                                                          affiliation_weights)
-                    total_grade_list.append(state_grade)
-
-            # print(' ')
-            # print('Number of actions: ' + str(len(total_grade_list)))
+                    conflict_level, diff = self.conflict_level_calc(value1, value2) # calculating the conflict level
+                    total_grade_list.append(conflict_level * diff)
+            # print(total_agent_list)
             # print(total_grade_list)
 
-            # 4. Choosing an action
-            # Check if several actions have the same grade
-            min_best_action = min(total_grade_list)
-            count_min_list = []
-            count = 0
-            for item in total_grade_list:
-                if item == min_best_action:
-                    count_min_list.append(count)
-                count += 1
-            # print('List of indexes: ' + str(count_min_list))
-            # print(' ')
+            # selecting the best graded interaction
+            max_best_action = max(total_grade_list)
+            best_action_index = total_grade_list.index(max(total_grade_list)) # index of interaction in the list
+            best_action_agent_id = total_agent_list[int(best_action_index/action_number)] # unique_id of interaction target
+            # print(max_best_action, best_action_index, int(best_action_index/action_number), best_action_agent_id)
 
-            # If there are several grades at the same level, then choose a random action from these grades:
-            if len(count_min_list) > 1:
-                best_action_index = random.choice(count_min_list)
-            # print('Randomly chosen best action: ' + str(best_action_index))
-            else:
-                best_action_index = total_grade_list.index(min(total_grade_list))
-            # print('Not randomly chosen: ' + str(best_action_index))
+            best_action_type = best_action_index - action_number * int(best_action_index / action_number)
+            # selecting the action type (0 is a causal belief action, 1 is a preferred state action)
 
-            # print(' ')
-            # print('----- New check for best action ------')
-            # print('Action value: ' + str(min(total_grade_list)))
-            # print('Index of the best action: ' + str(best_action_index))
-            # print('This is the grade of the action: ' + str(total_grade_list[best_action_index]))
-            # Make sure that we do not take into account the 0 from the list to perform the following calculations
-            # best_action_index += 1
-            # print('The total amount of links considered: ' + str(len(total_grade_list_links)))
-            # print('The number of actions per link considered: ' + str(len(cw_of_interest) + 2))
-            # print('The total amount of actions considered: ' + str(len(total_grade_list)))
-            # print('The link for the action is: ' + str(int(best_action_index/(len(cw_of_interest) + 2))))
-            best_action = best_action_index - (len(cw_of_interest) + 2) * int(
-                best_action_index / (len(cw_of_interest) + 2))
-            # print('The impacted index is: ' + str(best_action))
-            # print('The would be index without the +1: ' + str((best_action_index - (len(cw_of_interest) + 2)
-            # * int(best_action_index/(len(cw_of_interest) + 2))) - 1))
-            # print('   ')
+            # performing the interaction
+            for target in self.model.schedule.agent_buffer(shuffled=True):  # going through the other agents
+                if target.unique_id == best_action_agent_id:  # making sure it is an active agent and not self
+                    # print('Actor: #', self.unique_id, ', target: #', target.unique_id)
+                    if best_action_type <= action_number - 1 - 1: # action type: causal belief
+                        cb_choice = cb_of_interest[best_action_type]
+                        target.issuetree[target.unique_id][cb_choice][0] += \
+                        (self.issuetree[self.unique_id][cb_choice][0] -
+                         target.issuetree[target.unique_id][cb_choice][0]) * (self.resources * 0.1)
 
-            # 5. Performing the actual action
-            # Selecting the link:
-            for links in link_list:
-
-                if links == total_grade_list_links[int(best_action_index / (len(cw_of_interest) + 2))]:
-                    # print(links)
-
-                    # Update of the aware decay parameter
-                    links.aware_decay = 5
-
-                    # If the index is in the first part of the list, then the framing action is the best
-                    if best_action <= len(cw_of_interest) - 1:
+                    if best_action_type == action_number - 1: # action type: preferred state
+                        goal = len_DC + self.selected_PC
+                        # print('Acting:', self.issuetree[self.unique_id][goal][1])
+                        # print('Bf:', target.issuetree[target.unique_id][goal][1])
+                        # print('Change', (self.issuetree[self.unique_id][goal][1] -
+                        #      target.issuetree[target.unique_id][goal][1]) * (self.resources/100 * 0.1))
+                        target.issuetree[target.unique_id][goal][1] += \
+                            (self.issuetree[self.unique_id][goal][1] -
+                             target.issuetree[target.unique_id][goal][1]) * (self.resources/100 * 0.1)
+                        # print('Af:', target.issuetree[target.unique_id][goal][1])
                         # print(' ')
-                        # print('Framing action - causal relation')
-                        # print('best_action: ' + str(best_action))
-                        # print('cw_of_interest: ' + str(cw_of_interest))
-                        # print('cw_of_interest[best_action]: ' + str(cw_of_interest[best_action]))
 
-                        implemented_action = ActionFunctions.action_implementor(links, cw_of_interest[best_action], 0,
-                                                                                agents, agents, affiliation_weights,
-                                                                                resources_weight_action,
-                                                                                resources_potency, False, 1)
+                    self.resources_action -= self.resources * 0.1 # removing the action resources
 
-                    # If the index is in the second part of the list, then the aim influence action is the best
-                    if best_action == len(cw_of_interest):
-                        # print('Implementing a aim influence action:')
+    def interactions_PF_PL(self):
 
-                        implemented_action = ActionFunctions.action_implementor(links, agents.select_as_issue, 1,
-                                                                                agents, agents, affiliation_weights,
-                                                                                resources_weight_action,
-                                                                                resources_potency, False, 1)
+        # todo - just copied, not modified for the PF step - self.selected_PC is wrong
 
-                    # If the index is in the first part of the list, then the state influence action is the best
-                    if best_action == len(cw_of_interest) + 1:
-                        # print('Implementing a state influence action:')
+        """
+        ACF+PL
+        This function is used to perform the different agent interactions for the active agents during the
+        policy formulation step.
 
-                        implemented_action = ActionFunctions.action_implementor(links, agents.select_as_issue, 0,
-                                                                                agents, agents, affiliation_weights,
-                                                                                resources_weight_action,
-                                                                                resources_potency, False, 1)
+        The interactions that can be performed are on the preferred states and on the causal beliefs.
+        All of the actions are first graded based on conflict levels. Then the action that has the highest grade is
+        selected. Finally, the action selected is implemented.
+        """
 
-            # agents.resources_actions -= agents.resources
-            agents.resources_actions -= agents.resources[0] * resources_weight_action
+        len_DC = self.model.len_DC; len_PC = self.model.len_PC; len_S = self.model.len_S
+        action_number = len_PC + 1 # number of actions allowed in this step (causal beliefs, preferred states)
 
-        return 0
+        # selection of the cw of interest
+        cb_of_interest = []
+        # consider only the causal relations related to the problem on the agenda
+        for cb_choice in range(len_DC):
+            cb_of_interest.append(len_DC + len_PC + len_S + len_DC * len_PC + self.selected_S * len_S + cb_choice)
+        print(cb_of_interest)
+        print(' ')
+        # todo - not checked below
+
+        # assigning resources for the actions
+        self.resources_action = self.resources
+
+        # making sure there are enough resources
+        while self.resources_action > 0.001:
+
+            total_grade_list = [] # initialising the grade list
+            total_agent_list = [] # initialising the agent list
+
+            for target in self.model.schedule.agent_buffer(shuffled=True):  # going through the other agents
+                if isinstance(target, ActiveAgent) and target != self:  # making sure it is an active agent and not self
+                    total_agent_list.append(target.unique_id) # saving the agent considered (randomly selected)
+
+                    # looking at causal beliefs
+                    for i in range(len(cb_of_interest)): # go through all causal beliefs of interest
+                        cb = cb_of_interest[i] # selecting the causal belief
+                        value1 = self.issuetree[self.unique_id][cb][0]
+                        value2 = target.issuetree[target.unique_id][cb][0]
+                        conflict_level, diff = self.conflict_level_calc(value1, value2)
+                        total_grade_list.append(conflict_level * diff)
+                        # todo - maybe don't use diff here - or consider the negative/positive and the fact that its twice the CB
+                    print()
+
+                    # looking the preferred states (aka goal)
+                    goal = len_DC + self.selected_PC # selecting the right goal
+                    value1 = self.issuetree[self.unique_id][goal][1]
+                    value2 = target.issuetree[target.unique_id][goal][1]
+                    conflict_level, diff = self.conflict_level_calc(value1, value2) # calculating the conflict level
+                    total_grade_list.append(conflict_level * diff)
+            # print(total_agent_list)
+            # print(total_grade_list)
+
+            # selecting the best graded interaction
+            max_best_action = max(total_grade_list)
+            best_action_index = total_grade_list.index(max(total_grade_list)) # index of interaction in the list
+            best_action_agent_id = total_agent_list[int(best_action_index/action_number)] # unique_id of interaction target
+            # print(max_best_action, best_action_index, int(best_action_index/action_number), best_action_agent_id)
+
+            best_action_type = best_action_index - action_number * int(best_action_index / action_number)
+            # selecting the action type (0 is a causal belief action, 1 is a preferred state action)
+
+            # performing the interaction
+            for target in self.model.schedule.agent_buffer(shuffled=True):  # going through the other agents
+                if target.unique_id == best_action_agent_id:  # making sure it is an active agent and not self
+                    # print('Actor: #', self.unique_id, ', target: #', target.unique_id)
+                    if best_action_type <= action_number - 1 - 1: # action type: causal belief
+                        cb_choice = cb_of_interest[best_action_type]
+                        target.issuetree[target.unique_id][cb_choice][0] += \
+                        (self.issuetree[self.unique_id][cb_choice][0] -
+                         target.issuetree[target.unique_id][cb_choice][0]) * (self.resources * 0.1)
+
+                    if best_action_type == action_number - 1: # action type: preferred state
+                        goal = len_DC + self.selected_PC
+                        # print('Acting:', self.issuetree[self.unique_id][goal][1])
+                        # print('Bf:', target.issuetree[target.unique_id][goal][1])
+                        # print('Change', (self.issuetree[self.unique_id][goal][1] -
+                        #      target.issuetree[target.unique_id][goal][1]) * (self.resources/100 * 0.1))
+                        target.issuetree[target.unique_id][goal][1] += \
+                            (self.issuetree[self.unique_id][goal][1] -
+                             target.issuetree[target.unique_id][goal][1]) * (self.resources/100 * 0.1)
+                        # print('Af:', target.issuetree[target.unique_id][goal][1])
+                        # print(' ')
+
+                    self.resources_action -= self.resources * 0.1 # removing the action resources
+
 
     def conflict_level_calc(self, value1, value2):
 
@@ -380,7 +350,7 @@ class ActiveAgent(Agent):
         if diff > 0.40:
             conflict_level = conflict_level_hig
 
-        return conflict_level
+        return conflict_level, diff
 
     # def selection_PF(self):
     #

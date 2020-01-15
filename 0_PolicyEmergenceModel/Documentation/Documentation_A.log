@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.5)  14 JAN 2020 17:52
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.5)  15 JAN 2020 16:56
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -724,15 +724,14 @@ Overfull \hbox (2.22327pt too wide) in paragraph at lines 445--446
 T1/cmr/m/n/10.95 is rep-re-sented as a 2-tuple \OT1/cmtt/m/n/10.95 (issue[]as,
  []
 
-[14]
 LaTeX Font Info:    Try loading font information for OMS+cmr on input line 478.
 
- (/usr/local/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
+(/usr/local/texlive/2017/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 478.
- [15]
+ [14] [15]
 [16]
 No file Documentation_A.bbl.
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 605.
@@ -752,7 +751,7 @@ Here is how much of TeX's memory you used:
  11235 multiletter control sequences out of 15000+600000
  11754 words of font info for 43 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 36i,8n,39p,1009b,488s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 36i,8n,39p,1137b,488s stack positions out of 5000i,500n,10000p,200000b,80000s
 pdfTeX warning (dest): name{Hfootnote.2} has been referenced but does not exi
 st, replaced by a fixed one
 
@@ -774,7 +773,7 @@ e/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2
 17/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/201
 7/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2017
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on Documentation_A.pdf (17 pages, 234117 bytes).
+Output written on Documentation_A.pdf (17 pages, 233935 bytes).
 PDF statistics:
  383 PDF objects out of 1000 (max. 8388607)
  343 compressed objects within 4 object streams

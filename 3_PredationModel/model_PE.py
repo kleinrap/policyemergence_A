@@ -200,7 +200,7 @@ class PolicyEmergenceSM(Model):
 		if self.PE_type == 'A+PL':
 			for agent in self.schedule.agent_buffer(shuffled=True):
 				if isinstance(agent, ActiveAgent):  # selecting only active agents
-					print('selected_PC', agent.selected_PC)
+					# print('selected_PC', agent.selected_PC)
 					agent.interactions_AS_PL()
 
 		# active agent policy core selection (after agent interactions)
@@ -261,14 +261,18 @@ class PolicyEmergenceSM(Model):
 			for agent in self.schedule.agent_buffer(shuffled=False):
 				if isinstance(agent, ActiveAgent):
 					agent.selection_S()
+					print('Agent: #', agent.unique_id, 'S:', agent.selected_S)
 					agent.selection_PI()  # individual agent policy instrument selection
 
 		# active agent interactions
 		if self.PE_type == 'A+PL':
 			for agent in self.schedule.agent_buffer(shuffled=True):
 				if isinstance(agent, ActiveAgent):  # selecting only active agents
-					print(agent.unique_id)
-					# todo - missing the agent interactions here (for the policy formulation)
+					agent.interactions_PF_PL()
+					# todo - adjust the interactions
+					# todo - make sure that the right secondary issue is selected as preferred and
+					#  that the interactions are performed on them
+					# todo -
 
 		# calculation of policy instruments preferences
 		selected_PI_list = []

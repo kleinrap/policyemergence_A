@@ -32,7 +32,7 @@ run_tick = int(total_ticks/interval_tick)
 warmup_tick = interval_tick
 
 # ACF + PL parameters
-con_lvl = [0.85, 0.95, 0.75] # conflict levels [low, mid, high]
+con_lvl = [0.50, 0.75, 0.25] # conflict levels [low, mid, high]
 AplusPL_param = [con_lvl]
 
 # parameters of the policy context model
