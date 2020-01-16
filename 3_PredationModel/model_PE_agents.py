@@ -192,7 +192,7 @@ class ActiveAgent(Agent):
                         value1 = self.issuetree[self.unique_id][cb][0]
                         value2 = target.issuetree[target.unique_id][cb][0]
                         conflict_level, diff = self.conflict_level_calc(value1, value2)
-                        total_grade_list.append(conflict_level*diff)
+                        total_grade_list.append(conflict_level * abs(diff)/2)
 
                     # looking the preferred states (aka goal)
                     goal = len_DC + self.selected_PC # selecting the right goal
@@ -238,8 +238,6 @@ class ActiveAgent(Agent):
 
     def interactions_PF_PL(self):
 
-        # todo - just copied, not modified for the PF step - self.selected_PC is wrong
-
         """
         ACF+PL
         This function is used to perform the different agent interactions for the active agents during the
@@ -256,11 +254,10 @@ class ActiveAgent(Agent):
         # selection of the cw of interest
         cb_of_interest = []
         # consider only the causal relations related to the problem on the agenda
-        for cb_choice in range(len_DC):
+        for cb_choice in range(len_PC):
             cb_of_interest.append(len_DC + len_PC + len_S + len_DC * len_PC + self.selected_S * len_S + cb_choice)
-        print(cb_of_interest)
-        print(' ')
-        # todo - not checked below
+        # print(cb_of_interest)
+        # print(' ')
 
         # assigning resources for the actions
         self.resources_action = self.resources
@@ -281,12 +278,12 @@ class ActiveAgent(Agent):
                         value1 = self.issuetree[self.unique_id][cb][0]
                         value2 = target.issuetree[target.unique_id][cb][0]
                         conflict_level, diff = self.conflict_level_calc(value1, value2)
-                        total_grade_list.append(conflict_level * diff)
-                        # todo - maybe don't use diff here - or consider the negative/positive and the fact that its twice the CB
-                    print()
+                        total_grade_list.append(conflict_level * abs(diff)/2)
+                        # the abs is needed to take care of the causal belief range of [-1, 1]
+                        # the /2 is used also due to a range twice as large as for the other interactions
 
                     # looking the preferred states (aka goal)
-                    goal = len_DC + self.selected_PC # selecting the right goal
+                    goal = len_DC + len_PC + self.selected_S # selecting the right goal
                     value1 = self.issuetree[self.unique_id][goal][1]
                     value2 = target.issuetree[target.unique_id][goal][1]
                     conflict_level, diff = self.conflict_level_calc(value1, value2) # calculating the conflict level
@@ -314,7 +311,8 @@ class ActiveAgent(Agent):
                          target.issuetree[target.unique_id][cb_choice][0]) * (self.resources * 0.1)
 
                     if best_action_type == action_number - 1: # action type: preferred state
-                        goal = len_DC + self.selected_PC
+                        goal = len_DC + len_PC + self.selected_S
+                        # print('Aff.', self.affiliation)
                         # print('Acting:', self.issuetree[self.unique_id][goal][1])
                         # print('Bf:', target.issuetree[target.unique_id][goal][1])
                         # print('Change', (self.issuetree[self.unique_id][goal][1] -
@@ -326,7 +324,6 @@ class ActiveAgent(Agent):
                         # print(' ')
 
                     self.resources_action -= self.resources * 0.1 # removing the action resources
-
 
     def conflict_level_calc(self, value1, value2):
 

@@ -184,18 +184,26 @@ Note that for now we only allow the agents to influence one another on their pre
 \begin{itemize}
 \item Scenario 0 - No interactions
 
-Maybe have a scenario that does not have any interactions to show the potential changes from no interactions to interactions.
+Scenario 0 is a scenario where no interactions are taken into account. It is the SM simulation. This is used to compare with the results from the model with the interactions introduced.
 
 
-\item Scenario 0 - Benchmark
+\item Scenario 1 - Benchmark interactions
 
 The benchmark scenario is to be used as a benchmark. It is a simulation of the predation model with the policy emergence model. Two affiliations are considered. Affiliation 0 consists of two policy makers and four policy entrepreneurs (2 PM and 4 PE) with high resources and a preference for sheep favouring policies. Affiliation 1 consists of one policy maker and four policy entrepreneurs (1 PM and 4 PE) with low resources and a preference for wolf favouring policies. The preferred states for the agents are provided in \autoref{tab:preferredStates}. The causal beliefs used as given in \autoref{tab:causalBeliefs}.
 
-\item Scenario 1 - Demonstrating policy learning but not policy change
+\item Scenario 2 - Demonstrating policy learning but not policy change
 
 The aim of this scenario is to demonstrate that policy learning does not always lead to policy change by having a resource rich set of agents not be the dominant set of agents for the agenda selection and the policy implementation.
 
 Two affiliations are considered. Affiliation 0 consists of two policy makers and four policy entrepreneurs (2 PM and 4 PE) with low resources and a preference for sheep favouring policies. Affiliation 1 consists of one policy maker and four policy entrepreneurs (1 PM and 4 PE) with high resources and a preference for wolf favouring policies. The preferred states for the agents are provided in \autoref{tab:preferredStates}. The causal beliefs used as given in \autoref{tab:causalBeliefs}.
+
+\item Scenario 3 - Different resource distribution
+
+Have a simulation where the resources distribution is 10 to 100. This makes one affiliation dominating. Observe where the policy learning ends up
+
+\item Scenario 4 - External event on a preferred state
+
+Introduce an external event on one of the preferred states of all agents to influence their beliefs and observe whether that makes a difference in their choice of policy selection.
 
 \end{itemize}
 
@@ -220,13 +228,13 @@ Two affiliations are considered. Affiliation 0 consists of two policy makers and
 													&  {\bfseries S3}  	\\ 
 			& Sheep	& Wolves	& Grass	& Sheep	& Wolves	& Grass 	\\
 			&		&		&		& growth	& growth	& growth	\\ \hline \hline \hline
-\multicolumn{7}{|c|}{ {\bfseries Scenario 0/1}}							\\ \hline \hline	
+\multicolumn{7}{|c|}{ {\bfseries Scenario 0/1/2}}							\\ \hline \hline	
 \multicolumn{7}{|c|}{Affiliation 0 - Pro sheep}							\\ \hline 
 Value		& 400	& 50		& 2000	& 75		& -50	& 200	\\ \hline
 Norm.		& 0.80	& 0.10	& 0.80	& 0.88	& 0.25	& 0.70	\\ \hline
 \multicolumn{7}{|c|}{Affiliation 1 - Pro wolves}							\\ \hline 
-Value		& 200	& 100	& 1700	& 50		& 25		& 120	\\ \hline
-Norm.		& 0.40	& 0.20	& 0.68	& 0.75	& 0.63	& 0.62	\\ \hline
+Value		& 200	& 175	& 1700	& 50		& 25		& 120	\\ \hline
+Norm.		& 0.40	& 0.35	& 0.68	& 0.75	& 0.63	& 0.62	\\ \hline
 			
 \end{tabular}
 \end{center}
@@ -238,7 +246,7 @@ Norm.		& 0.40	& 0.20	& 0.68	& 0.75	& 0.63	& 0.62	\\ \hline
 \begin{center}
 \begin{tabular}{ |c|c|c|c|}
 \hline
-\multicolumn{4}{|c|}{ {\bfseries Scenario 0/1}}	
+\multicolumn{4}{|c|}{ {\bfseries Scenario 0/1/2}}	
 								\\ \hline \hline
 	& PC1	& PC2	& PC3		\\ \hline
 -S1 	& 1.00	& 0.75	&-0.75		\\ \hline
@@ -304,6 +312,20 @@ Note that the initial parameter as chosen such that if only the predation model 
 Conflict level thresholds ...
 
 Resources spent
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Results}
+\label{sec:}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+There are a number of results we can look at:
+
+\begin{enumerate}
+\item Predation model results (count of sheep and wolves)
+\item Policy selection
+\item Belief evolution (both policy core and secondary preferred states) per affiliation of course - This is the new part in this part of the simulation - This can be used to track the policy learning happening within the system.
+\end{enumerate}
 
 
 

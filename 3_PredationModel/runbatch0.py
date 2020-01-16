@@ -22,7 +22,7 @@ Model types
 
 
 # batch run parameters
-repetitions_runs = 5
+repetitions_runs = 50
 sce_number = 3
 
 PE_type = ['SM', 'A+PL', 'A+PL']
@@ -124,7 +124,7 @@ for sce_i in range (sce_number):
 	for rep_runs in range(repetitions_runs):
 
 		# for model run tailoring
-		if sce_i >= 1:
+		if sce_i == 0:
 
 			# initialisation of the policy context model
 			model_run_predation = WolfSheepPredation(50, 50, 100, 50, 0.04, 0.05, 30, True, 30, 4)
