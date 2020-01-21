@@ -191,19 +191,21 @@ Scenario 0 is a scenario where no interactions are taken into account. It is the
 
 The benchmark scenario is to be used as a benchmark. It is a simulation of the predation model with the policy emergence model. Two affiliations are considered. Affiliation 0 consists of two policy makers and four policy entrepreneurs (2 PM and 4 PE) with high resources and a preference for sheep favouring policies. Affiliation 1 consists of one policy maker and four policy entrepreneurs (1 PM and 4 PE) with low resources and a preference for wolf favouring policies. The preferred states for the agents are provided in \autoref{tab:preferredStates}. The causal beliefs used as given in \autoref{tab:causalBeliefs}.
 
-\item Scenario 2 - Demonstrating policy learning but not policy change
+\item Scenario 2 - Different resource distribution
 
-The aim of this scenario is to demonstrate that policy learning does not always lead to policy change by having a resource rich set of agents not be the dominant set of agents for the agenda selection and the policy implementation.
+Have a simulation where the resources distribution is 99 (affiliation 1) to 1 (affiliation 0). This makes one affiliation dominating, the minority one. Observe where the policy learning ends up and see whether that ends up affecting the policy instruments being selected.
 
-Two affiliations are considered. Affiliation 0 consists of two policy makers and four policy entrepreneurs (2 PM and 4 PE) with low resources and a preference for sheep favouring policies. Affiliation 1 consists of one policy maker and four policy entrepreneurs (1 PM and 4 PE) with high resources and a preference for wolf favouring policies. The preferred states for the agents are provided in \autoref{tab:preferredStates}. The causal beliefs used as given in \autoref{tab:causalBeliefs}.
+\item Scenario 3 - External event on a preferred state (policy core)
 
-\item Scenario 3 - Different resource distribution
+Introduce an external event on one of the preferred states of all agents to influence their beliefs and observe whether that makes a difference in their choice of policy selection. This external events happens after tick 4.
 
-Have a simulation where the resources distribution is 10 to 100. This makes one affiliation dominating. Observe where the policy learning ends up
+\item Scenario 4 - External event on a preferred state (secondary issue)
 
-\item Scenario 4 - External event on a preferred state
+Introduce an external event on one of the preferred states of all agents to influence their beliefs and observe whether that makes a difference in their choice of policy selection. This external events happens after tick 4.
 
-Introduce an external event on one of the preferred states of all agents to influence their beliefs and observe whether that makes a difference in their choice of policy selection.
+\item Scenario +
+
+Future scenarios could also explore the influence of the electorate on actors with more resources. It could look at how a change in the actor distribution might have an impact on the outcomes of the simulation.
 
 \end{itemize}
 
@@ -235,7 +237,15 @@ Norm.		& 0.80	& 0.10	& 0.80	& 0.88	& 0.25	& 0.70	\\ \hline
 \multicolumn{7}{|c|}{Affiliation 1 - Pro wolves}							\\ \hline 
 Value		& 200	& 175	& 1700	& 50		& 25		& 120	\\ \hline
 Norm.		& 0.40	& 0.35	& 0.68	& 0.75	& 0.63	& 0.62	\\ \hline
-			
+\multicolumn{7}{|c|}{ {\bfseries Scenario 3 (after)}}						\\ \hline \hline	
+\multicolumn{7}{|c|}{Affiliation 0 - Pro sheep}							\\ \hline 
+Value		& 50	 	& 50		& 250	& 75		& -50	& 200	\\ \hline
+Norm.		& 0.10	& 0.10	& 0.10	& 0.88	& 0.25	& 0.70	\\ \hline
+\multicolumn{7}{|c|}{ {\bfseries Scenario 4 (after)}}						\\ \hline \hline	
+\multicolumn{7}{|c|}{Affiliation 0 - Pro sheep}							\\ \hline 
+Value		& 400	& 50		& 2000	& -80	& -50	& 200	\\ \hline
+Norm.		& 0.80	& 0.10	& 0.80	& 0.10	& 0.25	& 0.70	\\ \hline
+
 \end{tabular}
 \end{center}
 \caption{Preferred states for the policy makers on a the interval [0,1] for scenarios 0 and 1.}
@@ -261,19 +271,22 @@ Norm.		& 0.40	& 0.35	& 0.68	& 0.75	& 0.63	& 0.62	\\ \hline
 
 \begin{table}[h!]
 \begin{center}
-\begin{tabular}{ |l|c|c|c|c|c|c|c|c|c|c|c|c| } 
+\begin{tabular}{ |l||c|c||c|c||c|c||c|c||c|c| } 
 \hline
  {\bfseries Scenarios}
- 				& \multicolumn{2}{|c|}{ {\bfseries 0}}	
-					& \multicolumn{2}{|c|}{ {\bfseries 1}}	
-								\\ \hline \hline
-Affiliations			& 0	& 1	&  0	& 1	\\ \hline
-Policy makers 		& 2	& 1	& 2	& 1	\\ \hline
-Policy entrepreneurs	& 4	& 4	& 4	& 4	\\ \hline
-Resources		& 50	& 25	& 25	& 50	\\ \hline
+ 				& \multicolumn{2}{|c||}{ {\bfseries 0}}	
+						& \multicolumn{2}{|c||}{ {\bfseries 1}}	
+								& \multicolumn{2}{|c||}{ {\bfseries 2}}	
+										& \multicolumn{2}{|c||}{ {\bfseries 3}}	
+												& \multicolumn{2}{|c|}{ {\bfseries 4}}	
+														\\ \hline \hline
+Affiliations			& 0	& 1	& 0	& 1	& 0	& 1	& 0	& 1	& 0	& 1	\\ \hline
+Policy makers 		& 2	& 1	& 2	& 1	& 2	& 1	& 2	& 1	& 2	& 1	\\ \hline
+Policy entrepr.		& 4	& 4	& 4	& 4	& 4	& 4	& 4	& 4	& 4	& 4	\\ \hline
+Resources		& 75	& 25	& 75	& 25	& 10	&100	& 75	& 25	& 75	& 25	\\ \hline
 \end{tabular}
 \end{center}
-\caption{Agents and resource distribution for each of the scenarios. \textcolor{red}{Resources values will have to be adjusted - the current values are only temporary.}}
+\caption{Agents and resource distribution for each of the scenarios.}
 \label{tab:agentResourceDistribution}
 \end{table}
 
@@ -326,6 +339,50 @@ There are a number of results we can look at:
 \item Policy selection
 \item Belief evolution (both policy core and secondary preferred states) per affiliation of course - This is the new part in this part of the simulation - This can be used to track the policy learning happening within the system.
 \end{enumerate}
+
+The figures are presented in an order that builds the model with first the preferred state evolution and then selection of the policy core issues. This is followed by the preferred state evolution and then selection of the secondary issues. This is followed by the policy instrument selection, and then the outcome changes in the predation model.
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.95\linewidth, angle = 0]{figures/PE_PL_PCGoals}
+\caption{Policy core issue goals.}
+\label{fig:PE_PL_PCGoals}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.95\linewidth, angle = 0]{figures/PE_PL_PCSelected}
+\caption{Policy core issues selected.}
+\label{fig:PE_PL_PCSelected}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.95\linewidth, angle = 0]{figures/PE_PL_SGoals}
+\caption{Secondary issue goals.}
+\label{fig:PE_PL_SGoals}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.95\linewidth, angle = 0]{figures/PE_PL_SSelected}
+\caption{Secondary issue selected.}
+\label{fig:PE_PL_SSelected}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.95\linewidth, angle = 0]{figures/PE_PI_selection}
+\caption{Policy instruments selected.}
+\label{fig:PE_PI_selection}
+\end{figure}
+
+\begin{figure}
+\centering
+\includegraphics[width = 0.95\linewidth, angle = 0]{figures/Predation_Q1_pops}
+\caption{Predation model results.}
+\label{fig:Predation_Q1_pops}
+\end{figure}
 
 
 

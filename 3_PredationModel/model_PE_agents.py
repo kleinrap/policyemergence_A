@@ -272,13 +272,17 @@ class ActiveAgent(Agent):
                 if isinstance(target, ActiveAgent) and target != self:  # making sure it is an active agent and not self
                     total_agent_list.append(target.unique_id) # saving the agent considered (randomly selected)
 
+                    agent_type_bonus = 1 # making sure policymakers are preferred for the PF interactions
+                    if target.agent_type == 'policymaker':
+                        agent_type_bonus = 1.1
+
                     # looking at causal beliefs
                     for i in range(len(cb_of_interest)): # go through all causal beliefs of interest
                         cb = cb_of_interest[i] # selecting the causal belief
                         value1 = self.issuetree[self.unique_id][cb][0]
                         value2 = target.issuetree[target.unique_id][cb][0]
                         conflict_level, diff = self.conflict_level_calc(value1, value2)
-                        total_grade_list.append(conflict_level * abs(diff)/2)
+                        total_grade_list.append(conflict_level * abs(diff)/2 * agent_type_bonus)
                         # the abs is needed to take care of the causal belief range of [-1, 1]
                         # the /2 is used also due to a range twice as large as for the other interactions
 
@@ -287,7 +291,7 @@ class ActiveAgent(Agent):
                     value1 = self.issuetree[self.unique_id][goal][1]
                     value2 = target.issuetree[target.unique_id][goal][1]
                     conflict_level, diff = self.conflict_level_calc(value1, value2) # calculating the conflict level
-                    total_grade_list.append(conflict_level * diff)
+                    total_grade_list.append(conflict_level * diff * agent_type_bonus)
             # print(total_agent_list)
             # print(total_grade_list)
 
