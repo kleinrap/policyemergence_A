@@ -62,7 +62,7 @@ class PolicyEmergenceSM(Model):
 	Simplest Model for the policy emergence model.
 	'''
 
-	def __init__(self, PE_type, SM_inputs, AplusPL_param, height=20, width=20):
+	def __init__(self, PE_type, SM_inputs, AplusPL_param, PC_interest, height=20, width=20):
 
 		self.height = height # height of the canvas
 		self.width = width # width of the canvas
@@ -80,8 +80,13 @@ class PolicyEmergenceSM(Model):
 		self.w_el_influence = self.SM_inputs[5]  # float - [-] - electorate influence weight constant
 
 		# ACF+PL parameters
-		if PE_type == 'A+PL':
+		if PE_type == 'A+PL' or PE_type == 'A+Co':
 			self.conflict_level = AplusPL_param[0]
+
+		# ACF+Co parameters
+		if PE_type == 'A+Co':
+			self.PC_interest = PC_interest
+			self.coalition_list = []
 
 		self.schedule = RandomActivation(self) # mesa random activation method
 		self.grid = SingleGrid(height, width, torus=True) # mesa grid creation method
@@ -127,6 +132,10 @@ class PolicyEmergenceSM(Model):
 		# 0. initialisation
 		self.module_interface_input(self.KPIs) # communicating the beliefs (indicators)
 		self.electorate_influence(self.w_el_influence) # electorate influence actions
+		# todo - add coalition creation [incomplete]
+		if self.PE_type == 'A+Co':
+			self.coalition_creation()
+
 
 		# 1. agenda setting
 		self.agenda_setting()
@@ -182,7 +191,7 @@ class PolicyEmergenceSM(Model):
 		'''
 
 		# resources distribution
-		if self.PE_type == 'A+PL':
+		if self.PE_type == 'A+PL' or self.PE_type == 'A+Co':
 			for agent in self.schedule.agent_buffer(shuffled=False):
 				if isinstance(agent, ActiveAgent):  # selecting only active agents
 					if agent.affiliation == 0: # affiliation 0
@@ -195,16 +204,19 @@ class PolicyEmergenceSM(Model):
 			if isinstance(agent, ActiveAgent):  # selecting only active agents
 				agent.selection_PC()
 
+		if self.PE_type == 'A+Co':
+			# todo - add coalition interactions (policy core issues)
+			print('missing')
 
 		# active agent interactions
-		if self.PE_type == 'A+PL':
+		if self.PE_type == 'A+PL' or self.PE_type == 'A+Co':
 			for agent in self.schedule.agent_buffer(shuffled=True):
 				if isinstance(agent, ActiveAgent):  # selecting only active agents
 					# print('selected_PC', agent.selected_PC)
 					agent.interactions_AS_PL()
 
 		# active agent policy core selection (after agent interactions)
-		if self.PE_type == 'A+PL':
+		if self.PE_type == 'A+PL' or self.PE_type == 'A+Co':
 			# active agent policy core selection
 			for agent in self.schedule.agent_buffer(shuffled=False):
 				if isinstance(agent, ActiveAgent):  # selecting only active agents
@@ -247,7 +259,7 @@ class PolicyEmergenceSM(Model):
 		'''
 
 		# resources distribution
-		if self.PE_type == 'A+PL':
+		if self.PE_type == 'A+PL' or self.PE_type == 'A+Co':
 			for agent in self.schedule.agent_buffer(shuffled=False):
 				if isinstance(agent, ActiveAgent):  # selecting only active agents
 					if agent.affiliation == 0: # affiliation 0
@@ -256,14 +268,18 @@ class PolicyEmergenceSM(Model):
 						agent.resources = self.resources_aff[1]
 
 		# calculation of policy instruments preferences
-		if self.PE_type == 'A+PL':
+		if self.PE_type == 'A+PL' or self.PE_type == 'A+Co':
 			for agent in self.schedule.agent_buffer(shuffled=False):
 				if isinstance(agent, ActiveAgent):
 					agent.selection_S()
 					agent.selection_PI()  # individual agent policy instrument selection
 
+		if self.PE_type == 'A+Co':
+			# todo - add coalition interactions (secondary issues)
+			print('missing')
+
 		# active agent interactions
-		if self.PE_type == 'A+PL':
+		if self.PE_type == 'A+PL' or self.PE_type == 'A+Co':
 			for agent in self.schedule.agent_buffer(shuffled=True):
 				if isinstance(agent, ActiveAgent):  # selecting only active agents
 					agent.interactions_PF_PL()
@@ -476,3 +492,10 @@ class PolicyEmergenceSM(Model):
 		for agent in self.schedule.agent_buffer(shuffled=True):
 			if isinstance(agent, ElectorateAgent):
 				agent.electorate_influence(w_el_influence)
+
+
+	def coalition_creation(self):
+
+
+
+		return 0

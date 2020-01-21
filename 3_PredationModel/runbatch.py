@@ -20,13 +20,11 @@ Model types
 		+PI: Partial information	['A+PI']
 '''
 
-# todo rerun 2, 3, 4
-
 # batch run parameters
 repetitions_runs = 50
 sce_number = 5
 
-PE_type = ['SM', 'A+PL', 'A+PL', 'A+PL', 'A+PL']
+PE_type = ['SM', 'A+Co', 'A+PL', 'A+PL', 'A+PL']
 
 # running parameters
 total_ticks = 1600
@@ -37,6 +35,9 @@ warmup_tick = interval_tick
 # ACF + PL parameters
 con_lvl = [0.50, 0.75, 0.25] # conflict levels [low, mid, high]
 AplusPL_param = [con_lvl]
+
+# ACF + Co parameters
+PC_interest = 0
 
 # parameters of the policy context model
 '''
@@ -152,13 +153,13 @@ for sce_i in range (sce_number):
 	for rep_runs in range(repetitions_runs):
 
 		# for model run tailoring
-		if sce_i >= 3:
+		if sce_i >= 1:
 
 			# initialisation of the policy context model
 			model_run_predation = WolfSheepPredation(50, 50, 100, 50, 0.04, 0.05, 30, True, 30, 4)
 
 			# initialisation of the policy emergence model
-			model_run_PE = PolicyEmergenceSM(PE_type[sce_i], PE_inputs, AplusPL_param, 10, 10)
+			model_run_PE = PolicyEmergenceSM(PE_type[sce_i], PE_inputs, AplusPL_param, PC_interest, 10, 10)
 
 			print("\n")
 			print("************************")
