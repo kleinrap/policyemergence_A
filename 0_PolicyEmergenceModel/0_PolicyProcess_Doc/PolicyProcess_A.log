@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.5)  21 JAN 2020 16:07
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.5)  3 FEB 2020 14:03
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -743,10 +743,6 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 607.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 607.
 Package rerunfilecheck Info: File `PolicyProcess_A.out' has not changed.
 (rerunfilecheck)             Checksum: FE57B5C20C9AA0ECE89A54FACC5F78C1;1504.
-
-
-LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
-
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 607.
  ) 
 Here is how much of TeX's memory you used:
@@ -778,7 +774,7 @@ e/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2
 17/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/201
 7/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2017
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on PolicyProcess_A.pdf (17 pages, 233989 bytes).
+Output written on PolicyProcess_A.pdf (17 pages, 234160 bytes).
 PDF statistics:
  383 PDF objects out of 1000 (max. 8388607)
  343 compressed objects within 4 object streams

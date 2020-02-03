@@ -1,6 +1,32 @@
 from mesa import Agent
 import copy
 
+
+class Coalition(Agent):
+
+    # todo - adapt the coalition class
+    '''
+    Active agents, including policy makers, policy entrepreneurs and external parties.
+    '''
+    def __init__(self, pos, unique_id, model, agent_type, resources, affiliation, issuetree, policytree):
+
+        '''
+         Args:
+            unique_id: Unique identifier for the agent.
+            x, y: Agent initial location.
+            agent_type: Indicator for the agent's type (minority=1, majority=0)
+        '''
+        super().__init__(unique_id, model)
+        self.pos = pos  # defines the position of the agent on the grid
+        self.unique_id = unique_id  # unique_id of the agent used for algorithmic reasons
+        self.agent_type = agent_type  # defines the type of agents from policymaker, policyentrepreneur and externalparty
+        self.resources = resources  # resources used for agents to perform actions
+        self.affiliation = affiliation  # political affiliation affecting agent interactions
+        self.issuetree = issuetree  # issue tree of the agent (including partial issue of other agents)
+        self.policytree = policytree # policy tree for future models
+
+        self.selected_PC = None; self.selected_S = None; self.selected_PI = None  # selected issues and policies
+
 class ActiveAgent(Agent):
     '''
     Active agents, including policy makers, policy entrepreneurs and external parties.

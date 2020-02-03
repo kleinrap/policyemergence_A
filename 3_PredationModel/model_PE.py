@@ -7,7 +7,7 @@ import copy
 from collections import defaultdict
 
 from model_PE_agents_initialisation import init_active_agents, init_electorate_agents, init_truth_agent
-from model_PE_agents import ActiveAgent, ElectorateAgent, TruthAgent
+from model_PE_agents import ActiveAgent, ElectorateAgent, TruthAgent, Coalition
 from model_module_interface import policy_instrument_input, belief_tree_input
 
 # Data collector function
@@ -86,6 +86,7 @@ class PolicyEmergenceSM(Model):
 		# ACF+Co parameters
 		if PE_type == 'A+Co':
 			self.PC_interest = PC_interest
+			self.coa_thresh = 0.15 # todo move to the input of ACF (make a list or something)
 			self.coalition_list = []
 
 		self.schedule = RandomActivation(self) # mesa random activation method
@@ -496,6 +497,84 @@ class PolicyEmergenceSM(Model):
 
 	def coalition_creation(self):
 
+		'''
+		Sort the agents in the order of their beliefs (for the policy core preferred state selected by the modeller)
+		Find the biggest group possible for the first coalition - scroll through all actors and see actor could form biggest group
+		Check for a second coalition if there is possibility for one
 
+		:return:
+		'''
+
+		# saving the agents in a list with their belief values
+		list_agents_1 = [] # active agent list
+
+		for agent in self.schedule.agent_buffer(shuffled=False):
+			if isinstance(agent, ActiveAgent):
+				list_agents_1.append((agent, agent.issuetree[agent.unique_id][self.len_DC + self.PC_interest][1]))
+
+
+		print(list_agents_1)
+		list_agents_1.sort(key = lambda x: x[1]) # sorting the list based on the goals
+		print(' ')
+		print(list_agents_1)
+
+		# checking for groups for first coalition
+		list_coalition_number = []
+		for i in range(len(list_agents_1)):
+			count = 0
+			print(' ')
+			print(list_agents_1[i][1])
+			for j in range(len(list_agents_1)):
+				if list_agents_1[i][1] - self.coa_thresh <= list_agents_1[j][1] <= list_agents_1[i][1] + self.coa_thresh:
+					print(list_agents_1[j][1])
+					count += 1
+			list_coalition_number.append(count)
+
+		print(list_coalition_number)
+
+		index = list_coalition_number.index(max(list_coalition_number))
+
+		list_coalition_members = []
+		list_agents_2 = copy.copy(list_agents_1)
+		for i in range(len(list_agents_1)):
+			if list_agents_1[index][1] - self.coa_thresh <= list_agents_1[i][1] <= list_agents_1[index][1] + self.coa_thresh:
+				list_coalition_members.append(list_agents_1[i][0])
+				list_agents_2.remove(list_agents_1[i])
+
+		print(index, list_coalition_members)
+		print(len(list_agents_2), list_agents_2)
+
+		print(' ')
+
+
+		# todo - below is incomplete
+		if len(list_agents_2) > 2: #check if there are enough agents left:
+
+			# checking for groups for second coalition
+			list_coalition_number = []
+			for i in range(len(list_agents_2)):
+				count = 0
+				print(' ')
+				print(list_agents_2[i][1])
+				for j in range(len(list_agents_2)):
+					if list_agents_2[i][1] - self.coa_thresh <= list_agents_2[j][1] <= list_agents_2[i][1] + self.coa_thresh:
+						print(list_agents_2[j][1])
+						count += 1
+				list_coalition_number.append(count)
+
+				print(list_coalition_number)
+
+			return 0
+
+
+
+
+
+
+		# for agent in list_agents:
+		# 	print(agent.issuetree[agent.unique_id][self.len_DC + self.PC_interest][1])
+		print(list_agents.unique_id)
+
+		self.coa_thresh
 
 		return 0
