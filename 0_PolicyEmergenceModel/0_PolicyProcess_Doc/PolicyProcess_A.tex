@@ -396,7 +396,7 @@ The introduction of coalitions add a few sub-steps to the process described in t
 	\item \emph{Update of the truth agent}
 	\item \emph{Electorate actions on policy makers} (when included)
 	\item \emph{Transmission of the actual beliefs}
-	\item \emph{Coalitions creation}
+	\item \emph{Coalitions creation:} The coalitions from previous round are deleted and recreated based on the updated beliefs of the agents. \footnote{Note that this is one approach, others are also possible. One where coalitions are just updated and not remade every round would make as much sense and might be closer to the theories.}
 	\end{enumerate}
 	
 \item Agenda setting step:
@@ -426,7 +426,7 @@ The introduction of coalitions add a few sub-steps to the process described in t
 %%%%%%%%%%%%%%%%
 \subsection{The agents}
 
-The agents are the same as in the +PL model. The main addition is that of the coalitions. THey are also considered as active agents in the model.
+The agents are the same as in the +PL model. The main addition is that of the coalitions. They are also considered as active agents in the model.
 
 %%%%%%
 \paragraph{Coalitions}
@@ -468,6 +468,8 @@ The introduction of coalition leads to some additional interactions between coal
 The coalitions are created surrounding policy core issues where agents have similar preferred states. Often one policy core issue is considered to be critical, this does not change throughout the process. This issue can be chosen prior to the simulation by the modeller.
 
 In the present formalisation, we assume that agents have similar beliefs if they are within 0.3 of one another. Therefore, coalitions are created whenever a number of agents are within 0.3 of one another. Finally, we also assume that there cannot be more than three coalitions and there will often only be two coalitions.
+
+Members of the coalition provide 50\% of their resources to the coalition's effort. This is a number that could be changed in the future or even made dynamic based on coalition coherence.
 
 %%%%%% end of the coalition creation paragraph
 
