@@ -87,7 +87,7 @@ class PolicyEmergenceSM(Model):
 	Simplest Model for the policy emergence model.
 	'''
 
-	def __init__(self, PE_type, SM_inputs, AplusPL_param, PC_interest, height=20, width=20):
+	def __init__(self, PE_type, SM_inputs, AplusPL_inputs, AplusCo_inputs, height=20, width=20):
 
 		self.height = height # height of the canvas
 		self.width = width # width of the canvas
@@ -106,12 +106,17 @@ class PolicyEmergenceSM(Model):
 
 		# ACF+PL parameters
 		if PE_type == 'A+PL' or PE_type == 'A+Co':
-			self.conflict_level = AplusPL_param[0]
+			self.conflict_level = AplusPL_inputs[0]
+			self.resources_spend_incr_agents = AplusPL_inputs[1]
 
 		# ACF+Co parameters
 		if PE_type == 'A+Co':
-			self.PC_interest = PC_interest
-			self.coa_thresh = 0.15 # todo move to the input of ACF (make a list or something)
+			self.PC_interest = AplusCo_inputs[0]
+			self.coa_creation_thresh = AplusCo_inputs[1]
+			self.coa_coherence_thresh = AplusCo_inputs[2]
+			self.coa_resources_share = AplusCo_inputs[3]
+			self.resources_spend_incr_coal = AplusCo_inputs[4]
+
 			self.coalition_list = []
 
 		self.schedule = RandomActivation(self) # mesa random activation method
@@ -228,6 +233,27 @@ class PolicyEmergenceSM(Model):
 					agent.issuetree[agent.unique_id][issue][0] = truth_issuetree[issue]
 				self.preference_update(agent, agent.unique_id) # updating the preferences
 
+	def resources_distribution(self):
+
+		if self.PE_type == 'A+PL' or self.PE_type == 'A+Co':
+			for agent in self.schedule.agent_buffer(shuffled=False):
+				if isinstance(agent, ActiveAgent):  # selecting only active agents
+					if agent.affiliation == 0: # affiliation 0
+						agent.resources = 0.01 * self.number_activeagents * self.resources_aff[0]/100
+					if agent.affiliation == 1: # affiliation 1
+						agent.resources = 0.01 * self.number_activeagents * self.resources_aff[1]/100
+					agent.resources_action = agent.resources  # assigning resources for the actions for both
+		if self.PE_type == 'A+Co': # attribution of the resources to coalitions
+			for coalition in self.schedule.agent_buffer(shuffled=False):
+				if isinstance(coalition, Coalition):
+					resources = 0
+					for agent_mem in coalition.members:
+						resources += agent_mem.resources * self.coa_resources_share
+						agent_mem.resources -= self.coa_resources_share * agent_mem.resources
+						agent.resources_action = agent.resources  # assigning resources for the actions for both
+					coalition.resources = resources
+					coalition.resources_action = coalition.resources  # assigning resources for the actions for both
+
 	def agenda_setting(self):
 
 		'''
@@ -236,21 +262,7 @@ class PolicyEmergenceSM(Model):
 		'''
 
 		# resources distribution
-		if self.PE_type == 'A+PL' or self.PE_type == 'A+Co':
-			for agent in self.schedule.agent_buffer(shuffled=False):
-				if isinstance(agent, ActiveAgent):  # selecting only active agents
-					if agent.affiliation == 0: # affiliation 0
-						agent.resources = self.resources_aff[0]
-					if agent.affiliation == 1: # affiliation 1
-						agent.resources = self.resources_aff[1]
-		if self.PE_type == 'A+Co': # attribution of the resources to coalitions
-			for coalition in self.schedule.agent_buffer(shuffled=False):
-				if isinstance(coalition, Coalition):
-					resources = 0
-					for agent_mem in coalition.members:
-						resources += agent_mem.resources * 0.5
-						agent_mem.resources -= 0.5 * agent_mem.resources
-					coalition.resources = resources
+		self.resources_distribution()
 
 		# active agent policy core selection
 		for agent in self.schedule.agent_buffer(shuffled=False):
@@ -258,20 +270,15 @@ class PolicyEmergenceSM(Model):
 				agent.selection_PC()
 
 		if self.PE_type == 'A+Co':
-			# todo - add coalition interactions (policy core issues)
-			print('missing coalition interactions')
 			for coalition in self.schedule.agent_buffer(shuffled=True):
-				if isinstance(coalition, Coalition): # selecting only active agents
-					# print('selected_PC', agent.selected_PC)
-					coalition.interactions_AS_intra_coalition()
-					coalition.interactions_AS_inter_coalition()
+				if isinstance(coalition, Coalition): # selecting only coalitions
+					coalition.interactions_intra_coalition('AS') # intra-coalition interactions
 
-		# active agent interactions
+		# active agent interactions (including coalitions)
 		if self.PE_type == 'A+PL' or self.PE_type == 'A+Co':
 			for agent in self.schedule.agent_buffer(shuffled=True):
-				if isinstance(agent, ActiveAgent) and not isinstance(agent, Coalition):  # selecting only active agents
-					# print('selected_PC', agent.selected_PC)
-					agent.interactions_AS()
+				if isinstance(agent, ActiveAgent):  # selecting only active agents
+					agent.interactions('AS')
 
 		# active agent policy core selection (after agent interactions)
 		if self.PE_type == 'A+PL' or self.PE_type == 'A+Co':
@@ -317,21 +324,7 @@ class PolicyEmergenceSM(Model):
 		'''
 
 		# resources distribution
-		if self.PE_type == 'A+PL' or self.PE_type == 'A+Co':
-			for agent in self.schedule.agent_buffer(shuffled=False):
-				if isinstance(agent, ActiveAgent):  # selecting only active agents
-					if agent.affiliation == 0: # affiliation 0
-						agent.resources = self.resources_aff[0]
-					if agent.affiliation == 1: # affiliation 1
-						agent.resources = self.resources_aff[1]
-		if self.PE_type == 'A+Co': # attribution of the resources to coalitions
-			for coalition in self.schedule.agent_buffer(shuffled=False):
-				if isinstance(coalition, Coalition):
-					resources = 0
-					for agent_mem in coalition.members:
-						resources += agent_mem.resources * 0.5
-						agent_mem.resources -= 0.5 * agent_mem.resources
-					coalition.resources = resources
+		self.resources_distribution()
 
 		# calculation of policy instruments preferences
 		if self.PE_type == 'A+PL' or self.PE_type == 'A+Co':
@@ -341,19 +334,17 @@ class PolicyEmergenceSM(Model):
 					agent.selection_PI()  # individual agent policy instrument selection
 
 		if self.PE_type == 'A+Co':
-			# todo - add coalition interactions (secondary issues)
-			print('missing coalition interactions')
 			for coalition in self.schedule.agent_buffer(shuffled=True):
 				if isinstance(coalition, Coalition): # selecting only active agents
 					# print('selected_PC', agent.selected_PC)
-					coalition.interactions_PF_intra_coalition()
-					coalition.interactions_PF_inter_coalition()
+					coalition.interactions_intra_coalition('PF')
+					# coalition.interactions('PF')
 
 		# active agent interactions
 		if self.PE_type == 'A+PL' or self.PE_type == 'A+Co':
 			for agent in self.schedule.agent_buffer(shuffled=True):
-				if isinstance(agent, ActiveAgent) and not isinstance(agent, Coalition):  # selecting only active agents
-					agent.interactions_PF()
+				if isinstance(agent, ActiveAgent):  # selecting only active agents
+					agent.interactions('PF')
 
 		# calculation of policy instruments preferences
 		selected_PI_list = []
@@ -597,7 +588,7 @@ class PolicyEmergenceSM(Model):
 		for i in range(len(list_agents_1)):
 			count = 0
 			for j in range(len(list_agents_1)):
-				if list_agents_1[i][1] - self.coa_thresh <= list_agents_1[j][1] <= list_agents_1[i][1] + self.coa_thresh:
+				if list_agents_1[i][1] - self.coa_creation_thresh <= list_agents_1[j][1] <= list_agents_1[i][1] + self.coa_creation_thresh:
 					count += 1
 			list_coalition_number.append(count)
 
@@ -606,7 +597,7 @@ class PolicyEmergenceSM(Model):
 		list_coalition_members = []
 		list_agents_2 = copy.copy(list_agents_1)
 		for i in range(len(list_agents_1)):
-			if list_agents_1[index][1] - self.coa_thresh <= list_agents_1[i][1] <= list_agents_1[index][1] + self.coa_thresh:
+			if list_agents_1[index][1] - self.coa_creation_thresh <= list_agents_1[i][1] <= list_agents_1[index][1] + self.coa_creation_thresh:
 				list_coalition_members.append(list_agents_1[i][0])
 				list_agents_2.remove(list_agents_1[i])
 
@@ -619,14 +610,14 @@ class PolicyEmergenceSM(Model):
 			for i in range(len(list_agents_2)):
 				count = 0
 				for j in range(len(list_agents_2)):
-					if list_agents_2[i][1] - self.coa_thresh <= list_agents_2[j][1] <= list_agents_2[i][1] + self.coa_thresh:
+					if list_agents_2[i][1] - self.coa_creation_thresh <= list_agents_2[j][1] <= list_agents_2[i][1] + self.coa_creation_thresh:
 						count += 1
 				list_coalition_number.append(count)
 			index = list_coalition_number.index(max(list_coalition_number)) # finding the grouping with the most member index
 
 			list_coalition_members = []
 			for i in range(len(list_agents_2)):
-				if list_agents_2[index][1] - self.coa_thresh <= list_agents_2[i][1] <= list_agents_2[index][1] + self.coa_thresh:
+				if list_agents_2[index][1] - self.coa_creation_thresh <= list_agents_2[i][1] <= list_agents_2[index][1] + self.coa_creation_thresh:
 					list_coalition_members.append(list_agents_2[i][0])
 
 			self.coalition_creation(1002, list_coalition_members) # creating the coalition with selected members

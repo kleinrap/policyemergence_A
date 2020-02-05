@@ -34,10 +34,17 @@ warmup_tick = interval_tick
 
 # ACF + PL parameters
 con_lvl = [0.50, 0.75, 0.25] # conflict levels [low, mid, high]
-AplusPL_param = [con_lvl]
+resources_spend_incr_agents = 0.10 # percentage of the resources spent by the agents for interactions
+AplusPL_param = [con_lvl, resources_spend_incr_agents]
 
 # ACF + Co parameters
-PC_interest = 0
+PC_interest = 0 # issue number around which coalitions assemble
+coa_creation_thresh = 0.15 # threshold belief difference to create coalitions
+coa_coherence_thresh = 0.10 # threshold belief difference to trigger coalition intra-actions
+coa_resources_share = 0.50 # amount of resources assigned to coalitions from agents in coalitions
+resources_spend_incr_coal = 0.05 # percentage of the resources spent by the coalition for interactions
+
+AplusCo_inputs = [PC_interest, coa_creation_thresh, coa_coherence_thresh, coa_resources_share, resources_spend_incr_coal]
 
 # parameters of the policy context model
 '''
@@ -159,7 +166,7 @@ for sce_i in range (sce_number):
 			model_run_predation = WolfSheepPredation(50, 50, 100, 50, 0.04, 0.05, 30, True, 30, 4)
 
 			# initialisation of the policy emergence model
-			model_run_PE = PolicyEmergenceSM(PE_type[sce_i], PE_inputs, AplusPL_param, PC_interest, 10, 10)
+			model_run_PE = PolicyEmergenceSM(PE_type[sce_i], PE_inputs, AplusPL_param, AplusCo_inputs, 10, 10)
 
 			print("\n")
 			print("************************")

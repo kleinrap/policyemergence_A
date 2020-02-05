@@ -484,9 +484,11 @@ In the present formalisation, we assume the following:
 \item Coalitions can only influence agents individually and not coalitions as whole entities.
 \end{itemize}
 
-The coalitions spend some of their resources to increase the coherence between their members. This means spending up to 30\% of their resources on members to make sure that their beliefs are within 0.2 of the coalition average for the issues advocated by the coalition.
+The coalitions spend some of their resources to increase the coherence between their members. This means spending up to 30\% of their resources in tranches of 5\% on members to make sure that their beliefs are within 0.2 of the coalition average for the issues advocated by the coalition. The coalitions focus on the policy core issue they have selected and on the causal relations related to this policy core issue. They also prioritise actions that re-establish coherence for the preferred states over the causal beliefs.
 
-The rest of their resources is used to influence external agents. The interactions used are the same as the agent on agent interactions but where the coalition is considered as an agent. For each action, the coalition spends 1\% of its resources.
+The rest of their resources is used to influence external agents. The interactions used are the same as the agent on agent interactions but where the coalition is considered as an agent. For each action, the coalition spends 5\% of its resources.
+
+The resources are important to balance. We assume that for every step, each agent can affect 0.01 of the beliefs of other agents. This would if there were provided with 100\% of resources. To obtain the amount of resources for the agents, this needs to be multiplied by the total number of active agents and the power percentage of the concerned agent. This can be tweaked but if the agents have too many resources, then everyone ends up in one single coalition after only one or two steps.
 
 %%%%%% end of the coalition on agent interactions paragraph
 %%%%%%%%%%%%%%%% end of the actions and interactions subsection
