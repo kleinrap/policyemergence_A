@@ -555,7 +555,6 @@ class ElectorateAgent(Agent):
         self.issuetree_elec = issuetree_elec  # issue tree of the agent (including partial issue of other agents)
         self.representativeness = representativeness
 
-
     def electorate_influence(self, w_el_influence):
 
         '''
