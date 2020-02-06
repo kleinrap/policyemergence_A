@@ -10,9 +10,9 @@
 \contentsline {subsection}{\numberline {5.2}The +Co model}{6}{subsection.5.2}
 \contentsline {section}{\numberline {6}Model scenarios}{6}{section.6}
 \contentsline {subsection}{\numberline {6.1}The +PL model}{6}{subsection.6.1}
-\contentsline {subsection}{\numberline {6.2}The +Co model}{9}{subsection.6.2}
-\contentsline {section}{\numberline {7}Initialisation of the model}{9}{section.7}
-\contentsline {subsection}{\numberline {7.1}The predation model}{9}{subsection.7.1}
-\contentsline {subsection}{\numberline {7.2}The policy process model}{10}{subsection.7.2}
-\contentsline {subsection}{\numberline {7.3}The hybrid model}{10}{subsection.7.3}
-\contentsline {section}{\numberline {8}Results}{10}{section.8}
+\contentsline {subsection}{\numberline {6.2}The +Co model}{7}{subsection.6.2}
+\contentsline {section}{\numberline {7}Initialisation of the model}{10}{section.7}
+\contentsline {subsection}{\numberline {7.1}The predation model}{10}{subsection.7.1}
+\contentsline {subsection}{\numberline {7.2}The policy process model}{11}{subsection.7.2}
+\contentsline {subsection}{\numberline {7.3}The hybrid model}{11}{subsection.7.3}
+\contentsline {section}{\numberline {8}Results}{11}{section.8}

@@ -9,6 +9,16 @@ from model_predation import WolfSheepPredation
 # import other packages
 import pandas as pd
 
+def read_inputs_beliefs(res_aff, number, time):
+
+	input_goalProfiles_file = 'input_goalProfiles_Ex' + str(number) + str(time)
+	goal_input = pd.read_csv(input_goalProfiles_file, sep=',')
+	goal_profiles = []
+	for i in range(len(res_aff[0]) * 2):
+		goal_profiles.append(goal_input.iloc[i].tolist())  # goal profiles for active agents and electorate
+
+	return goal_profiles
+
 # policy emergence model selection
 '''	
 Model types
@@ -20,31 +30,32 @@ Model types
 		+PI: Partial information	['A+PI']
 '''
 
-# batch run parameters
-repetitions_runs = 50
-sce_number = 5
-
-PE_type = ['SM', 'A+Co', 'A+PL', 'A+PL', 'A+PL']
-
 # running parameters
 total_ticks = 1600
 interval_tick = 100
 run_tick = int(total_ticks/interval_tick)
 warmup_tick = interval_tick
+sce_number = 9 # total number of scenarios
+
+# batch run parameters
+repetitions_runs = 50
+
+PE_type = ['SM', 'A+PL', 'A+PL', 'A+PL', 'A+PL', 'A+Co', 'A+Co', 'A+Co', 'A+Co']
 
 # ACF + PL parameters
-con_lvl = [0.50, 0.75, 0.25] # conflict levels [low, mid, high]
-resources_spend_incr_agents = 0.10 # percentage of the resources spent by the agents for interactions
+con_lvl = [0.50, 0.75, 0.25]  # conflict levels [low, mid, high]
+resources_spend_incr_agents = 0.10  # percentage of the resources spent by the agents for interactions
 AplusPL_param = [con_lvl, resources_spend_incr_agents]
 
 # ACF + Co parameters
-PC_interest = 0 # issue number around which coalitions assemble
-coa_creation_thresh = 0.15 # threshold belief difference to create coalitions
-coa_coherence_thresh = 0.10 # threshold belief difference to trigger coalition intra-actions
-coa_resources_share = 0.50 # amount of resources assigned to coalitions from agents in coalitions
-resources_spend_incr_coal = 0.05 # percentage of the resources spent by the coalition for interactions
 
-AplusCo_inputs = [PC_interest, coa_creation_thresh, coa_coherence_thresh, coa_resources_share, resources_spend_incr_coal]
+PC_interest = [0 for p in range(sce_number)] # issue number around which coalitions assemble
+PC_interest[6] = 1
+PC_interest[7] = 2
+coa_creation_thresh = 0.15  # threshold belief difference to create coalitions
+coa_coherence_thresh = 0.10  # threshold belief difference to trigger coalition intra-actions
+coa_resources_share = 0.50  # amount of resources assigned to coalitions from agents in coalitions
+resources_spend_incr_coal = 0.05  # percentage of the resources spent by the coalition for interactions
 
 # parameters of the policy context model
 '''
@@ -53,106 +64,43 @@ Here go all the parameters that are needed to initialise the policy context mode
 
 # parameters of the policy emergence model
 '''for all scenarios'''
-res_aff = [0 for p in range(sce_number)]
+
 # resources per affiliation agent out of 100
-res_aff[0] = [75, 25] # for scenario 0
-res_aff[1] = [75, 25] # for scenario 1
-res_aff[2] = [10,100] # for scenario 2
-res_aff[3] = [75, 25] # for scenario 3
-res_aff[4] = [75, 25] # for scenario 4
+res_aff = [[75, 25] for p in range(sce_number)]
+res_aff[2] = [10, 100]  # changed for scenario 2
 
 # electorate representativeness per affiliation
-repr = [0 for p in range(sce_number)]
-repr[0] = [25, 75] # for scenario 0
-repr[1] = [25, 75] # for scenario 1
-repr[2] = [25, 75] # for scenario 2
-repr[3] = [25, 75] # for scenario 3
-repr[4] = [25, 75] # for scenario 4
+repr = [[25, 75] for p in range(sce_number)]
 
 # list - [-] - electorate influence weight constant [per scenario]
 w_el_inf = [0 for p in range(sce_number)]
-w_el_inf[0] = 0 # for scenario 0
-w_el_inf[1] = 0 # for scenario 1
-w_el_inf[2] = 0 # for scenario 2
-w_el_inf[3] = 0 # for scenario 3
-w_el_inf[4] = 0 # for scenario 4
 
 '''actor distribution'''
-PE_agents = [0 for p in range(sce_number)]
 PE_PMs_0 = 3  # number of policy makers
 PE_PEs_0 = 8  # number of policy entrepreneurs
 PE_EPs_0 = 0  # number of external parties
-PE_agents[0] = [PE_PMs_0, PE_PEs_0, PE_EPs_0] # for scenario 0
-PE_agents[1] = [PE_PMs_0, PE_PEs_0, PE_EPs_0] # for scenario 1
-PE_agents[2] = [PE_PMs_0, PE_PEs_0, PE_EPs_0] # for scenario 2
-PE_agents[3] = [PE_PMs_0, PE_PEs_0, PE_EPs_0] # for scenario 3
-PE_agents[4] = [PE_PMs_0, PE_PEs_0, PE_EPs_0] # for scenario 4
+PE_agents = [[PE_PMs_0, PE_PEs_0, PE_EPs_0] for p in range(sce_number)]
 
-
-PE_aff = [0 for p in range(sce_number)]
 PE_PMs_aff_0 = [2, 1]  # policy maker distribution per affiliation
 PE_PEs_aff_0 = [4, 4]  # policy entrepreneur distribution per affiliation
 PE_EPs_aff_0 = [0, 0]  # external parties distribution per affiliation
-PE_aff[0] = [PE_PMs_aff_0, PE_PEs_aff_0, PE_EPs_aff_0] # for scenario 0
-PE_aff[1] = [PE_PMs_aff_0, PE_PEs_aff_0, PE_EPs_aff_0] # for scenario 1
-PE_aff[2] = [PE_PMs_aff_0, PE_PEs_aff_0, PE_EPs_aff_0] # for scenario 2
-PE_aff[3] = [PE_PMs_aff_0, PE_PEs_aff_0, PE_EPs_aff_0] # for scenario 3
-PE_aff[4] = [PE_PMs_aff_0, PE_PEs_aff_0, PE_EPs_aff_0] # for scenario 4
+PE_aff = [[PE_PMs_aff_0, PE_PEs_aff_0, PE_EPs_aff_0] for p in range(sce_number)]
 
 # input profile for preferred states
 '''
 This can be used for different scenarios for the preferred states (goals) of the policy emergence agents
 '''
-input_goalProfiles_file_Ex0Be = 'input_goalProfiles_Ex0Be'
-input_goalProfiles_file_Ex1Be = 'input_goalProfiles_Ex1Be'
-input_goalProfiles_file_Ex2Be = 'input_goalProfiles_Ex2Be'
-input_goalProfiles_file_Ex3Be = 'input_goalProfiles_Ex3Be'
-input_goalProfiles_file_Ex4Be = 'input_goalProfiles_Ex4Be'
-goal_input_Ex0Be = pd.read_csv(input_goalProfiles_file_Ex0Be, sep=',')
-goal_input_Ex1Be = pd.read_csv(input_goalProfiles_file_Ex1Be, sep=',')
-goal_input_Ex2Be = pd.read_csv(input_goalProfiles_file_Ex2Be, sep=',')
-goal_input_Ex3Be = pd.read_csv(input_goalProfiles_file_Ex3Be, sep=',')
-goal_input_Ex4Be = pd.read_csv(input_goalProfiles_file_Ex4Be, sep=',')
-goal_profiles_Ex0Be = []
-goal_profiles_Ex1Be = []
-goal_profiles_Ex2Be = []
-goal_profiles_Ex3Be = []
-goal_profiles_Ex4Be = []
-for i in range(len(res_aff[0]) * 2):
-	goal_profiles_Ex0Be.append(goal_input_Ex0Be.iloc[i].tolist())  # goal profiles for active agents and electorate
-	goal_profiles_Ex1Be.append(goal_input_Ex1Be.iloc[i].tolist())  # goal profiles for active agents and electorate
-	goal_profiles_Ex2Be.append(goal_input_Ex2Be.iloc[i].tolist())  # goal profiles for active agents and electorate
-	goal_profiles_Ex3Be.append(goal_input_Ex3Be.iloc[i].tolist())  # goal profiles for active agents and electorate
-	goal_profiles_Ex4Be.append(goal_input_Ex4Be.iloc[i].tolist())  # goal profiles for active agents and electorate
 
-# first goal input profile (after change)
-input_goalProfiles_file_Ex0Af = 'input_goalProfiles_Ex0Af'
-input_goalProfiles_file_Ex3Af = 'input_goalProfiles_Ex3Af'
-input_goalProfiles_file_Ex4Af = 'input_goalProfiles_Ex4Af'
-goal_input_Ex0Af = pd.read_csv(input_goalProfiles_file_Ex0Af, sep=',')
-goal_input_Ex3Af = pd.read_csv(input_goalProfiles_file_Ex3Af, sep=',')
-goal_input_Ex4Af = pd.read_csv(input_goalProfiles_file_Ex4Af, sep=',')
-goal_profiles_Ex0Af = []
-goal_profiles_Ex3Af = []
-goal_profiles_Ex4Af = []
-for i in range(len(res_aff[0]) * 2):
-	goal_profiles_Ex0Af.append(goal_input_Ex0Af.iloc[i].tolist())  # goal profiles for active agents and electorate
-	goal_profiles_Ex3Af.append(goal_input_Ex3Af.iloc[i].tolist())  # goal profiles for active agents and electorate
-	goal_profiles_Ex4Af.append(goal_input_Ex4Af.iloc[i].tolist())  # goal profiles for active agents and electorate
+goal_prof = []
+goal_prof_after = []
+for i in range(sce_number):
+	goal_prof.append(read_inputs_beliefs(res_aff, i, 'Be'))
+	goal_prof_after.append(read_inputs_beliefs(res_aff, i, 'Af'))
 
-# putting all of the profiles into two list for the different experiments (one for initial goals and one for the goals
-# after the mid-change)
-goal_prof = [goal_profiles_Ex0Be, goal_profiles_Ex1Be, goal_profiles_Ex2Be, goal_profiles_Ex3Be, goal_profiles_Ex4Be]
-goal_prof_after = [goal_profiles_Ex0Af, goal_profiles_Ex0Af, goal_profiles_Ex0Af, goal_profiles_Ex3Af, goal_profiles_Ex4Af]
-
-
+print("\n")
 # running a number of scenarios
 ''' changes in the agent distribution '''
 for sce_i in range (sce_number):
-
-	# creating the agents for the policy emergence model
-	# PE_inputs = [PE_PMs, PE_PMs_aff, PE_PEs, PE_PEs_aff, PE_EPs, PE_EPs_aff, res_aff, repr,
-	# 			 goal_profiles[sce_i], w_el_inf[sce_i]]
 
 	PE_inputs = [PE_agents[sce_i], PE_aff[sce_i], res_aff[sce_i], repr[sce_i], goal_prof[sce_i], w_el_inf[sce_i]]
 
@@ -160,13 +108,22 @@ for sce_i in range (sce_number):
 	for rep_runs in range(repetitions_runs):
 
 		# for model run tailoring
-		if sce_i >= 1:
+		if sce_i == 8:
 
 			# initialisation of the policy context model
 			model_run_predation = WolfSheepPredation(50, 50, 100, 50, 0.04, 0.05, 30, True, 30, 4)
 
+			AplusCo_inputs = [PC_interest[sce_i], coa_creation_thresh, coa_coherence_thresh, coa_resources_share,
+							  resources_spend_incr_coal]
+
 			# initialisation of the policy emergence model
 			model_run_PE = PolicyEmergenceSM(PE_type[sce_i], PE_inputs, AplusPL_param, AplusCo_inputs, 10, 10)
+
+			print("PE_type:", PE_type[sce_i])
+			print('sce.:', sce_i)
+			print('run:', rep_runs)
+			print('w_el', w_el_inf[sce_i])
+			print('PC_interest:', PC_interest[sce_i])
 
 			print("\n")
 			print("************************")
@@ -175,8 +132,7 @@ for sce_i in range (sce_number):
 
 				print(" ")
 				print("************************")
-				print("PE_type:", PE_type[sce_i], ", tick: ", i, ', sce.:', sce_i,
-					  ', w_el', w_el_inf[sce_i], ', run:', rep_runs)
+				print( "Tick: ", i)
 
 				# warm up time
 				# this is also used as a warmup time
@@ -231,12 +187,7 @@ for sce_i in range (sce_number):
 			# 		agent.issuetree[agent.unique_id], '\n',
 				# 		agent.policytree[agent.unique_id])
 
-
 			# output of the data
-			# policy context model
-			output_policyContext_model = model_run_predation.datacollector.get_model_vars_dataframe()
-			output_policyContext_model.to_csv('O_Pre_model_Sce' + str(sce_i) + '_Run' + str(rep_runs)
-											  + '_type'  + str(PE_type[sce_i]) +'.csv')
 
 			# policy emergence model
 			output_PE_model = model_run_PE.datacollector.get_model_vars_dataframe()
@@ -245,3 +196,16 @@ for sce_i in range (sce_number):
 			output_PE_agents = model_run_PE.datacollector.get_agent_vars_dataframe()
 			output_PE_agents.to_csv('O_PE_agents_Sce' + str(sce_i) + '_Run' + str(rep_runs)
 									+ '_type' + str(PE_type[sce_i]) + '.csv')
+
+			# policy context model
+			if PE_type != 'A+Co':
+				output_policyContext_model = model_run_predation.datacollector.get_model_vars_dataframe()
+				output_policyContext_model.to_csv('O_Pre_model_Sce' + str(sce_i) + '_Run' + str(rep_runs)
+												  + '_type'  + str(PE_type[sce_i]) +'.csv')
+			if PE_type == 'A+Co':
+				output_policyContext_model = model_run_predation.datacollector.get_model_vars_dataframe()
+				output_policyContext_model.to_csv('O_Pre_model_Sce' + str(sce_i) + '_Run' + str(rep_runs)
+												  + '_type' + str(PE_type[sce_i]) + '_res_share'
+												  + str(coa_resources_share)+ '.csv')
+
+

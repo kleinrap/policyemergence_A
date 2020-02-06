@@ -193,7 +193,8 @@ The main research question that we want to answer with this model is:
 Several hypotheses are considered to answer this question:
 
 \begin{itemize}
-\item H1: 
+\item H1: Broader coalitions will normalise all of the beliefs around its dominant belief.
+\item H2: Powerful but restrictive coalition will influence strongly other agents until they are in the same coalition.
 \end{itemize}
 
 
@@ -234,9 +235,33 @@ Introduce an external event on one of the preferred states of all agents to infl
 
 Introduce an external event on one of the preferred states of all agents to influence their beliefs and observe whether that makes a difference in their choice of policy selection. This external events happens after tick 4.
 
-\item Scenario +
+\item Scenario + (for the +PL scenario) - not discussed here
 
 Future scenarios could also explore the influence of the electorate on actors with more resources. It could look at how a change in the actor distribution might have an impact on the outcomes of the simulation.
+
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{The +Co model}
+
+The coalitions introduce three new parameters mainly: a creation coherence parameters that defines the threshold of belief difference for the creation of new coalitions, a parameter that defines the amount of resources that agents provide to coalitions they are joining, and a parameter that defines which policy core issue is the issue that coalitions assemble around. These are all varied in the following scenarios. 
+
+\begin{itemize}
+\item Scenario 5 - Coalition benchmark
+
+The first scenario considered for the +Co model is seen as a benchmark and will be used to check it against the model without coalitions. The policy core issue of interest is the sheep one (PC0), the threshold for coalition creation is set at 0.15 and the amount of resources shared with a coalition is set to 50\% for agents that join coalitions.
+
+\item Scenario 6 - Coalition different PC interest
+
+The second coalition scenario changes the policy core issue of interest to the wolf one (PC1). The rest of the parameters stay the same: the threshold for coalition creation is set at 0.15 and the amount of resources shared with a coalition is set to 50\% for agents that join coalitions.
+
+\item Scenario 7 - Coalition different PC interest
+
+The third coalition scenario changes the policy core issue of interest to the grass one (PC2). The rest of the parameters stay the same: the threshold for coalition creation is set at 0.15 and the amount of resources shared with a coalition is set to 50\% for agents that join coalitions.
+
+\item Scenario 8 - Coalition LHS
+
+For this last scenario, the two coalition parameters are jumbled with a LHS algorithm. The range for the coalition creation threshold is between 0.01 and 0.25 while the range for the resources shared is set between 5\% and 75\%. A LHS algorithm is used to create 50 different inputs normally distributed. This simulation will then be repeated only 10 times to generate a total of 500 runs.
 
 \end{itemize}
 
@@ -261,7 +286,7 @@ Future scenarios could also explore the influence of the electorate on actors wi
 													&  {\bfseries S3}  	\\ 
 			& Sheep	& Wolves	& Grass	& Sheep	& Wolves	& Grass 	\\
 			&		&		&		& growth	& growth	& growth	\\ \hline \hline \hline
-\multicolumn{7}{|c|}{ {\bfseries Scenario 0/1/2}}							\\ \hline \hline	
+\multicolumn{7}{|c|}{ {\bfseries Scenario 0/1/2/5/6/7/8}}					\\ \hline \hline	
 \multicolumn{7}{|c|}{Affiliation 0 - Pro sheep}							\\ \hline 
 Value		& 400	& 50		& 2000	& 75		& -50	& 200	\\ \hline
 Norm.		& 0.80	& 0.10	& 0.80	& 0.88	& 0.25	& 0.70	\\ \hline
@@ -287,7 +312,7 @@ Norm.		& 0.80	& 0.10	& 0.80	& 0.10	& 0.25	& 0.70	\\ \hline
 \begin{center}
 \begin{tabular}{ |c|c|c|c|}
 \hline
-\multicolumn{4}{|c|}{ {\bfseries Scenario 0/1/2}}	
+\multicolumn{4}{|c|}{ {\bfseries Scenario 0/1/2/3/4/5/6/7/8}}	
 								\\ \hline \hline
 	& PC1	& PC2	& PC3		\\ \hline
 -S1 	& 1.00	& 0.75	&-0.75		\\ \hline
@@ -305,24 +330,18 @@ Norm.		& 0.80	& 0.10	& 0.80	& 0.10	& 0.25	& 0.70	\\ \hline
 \begin{tabular}{ |l||c|c||c|c||c|c||c|c||c|c| } 
 \hline
  {\bfseries Scenarios}
- 				& \multicolumn{2}{|c||}{ {\bfseries 0}}	
+ 				& \multicolumn{2}{|c||}{ {\bfseries 0/1/3/4/5/6/7/8}}	
 						& \multicolumn{2}{|c||}{ {\bfseries 1}}	
-								& \multicolumn{2}{|c||}{ {\bfseries 2}}	
-										& \multicolumn{2}{|c||}{ {\bfseries 3}}	
-												& \multicolumn{2}{|c|}{ {\bfseries 4}}	
 														\\ \hline \hline
-Affiliations			& 0	& 1	& 0	& 1	& 0	& 1	& 0	& 1	& 0	& 1	\\ \hline
-Policy makers 		& 2	& 1	& 2	& 1	& 2	& 1	& 2	& 1	& 2	& 1	\\ \hline
-Policy entrepr.		& 4	& 4	& 4	& 4	& 4	& 4	& 4	& 4	& 4	& 4	\\ \hline
-Resources		& 75	& 25	& 75	& 25	& 10	&100	& 75	& 25	& 75	& 25	\\ \hline
+Affiliations			& 0	& 1	& 0	& 1		\\ \hline
+Policy makers 		& 2	& 1	& 2	& 1		\\ \hline
+Policy entrepr.		& 4	& 4	& 4	& 4		\\ \hline
+Resources		& 75	& 25	& 10	& 100	\\ \hline
 \end{tabular}
 \end{center}
 \caption{Agents and resource distribution for each of the scenarios.}
 \label{tab:agentResourceDistribution}
 \end{table}
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{The +Co model}
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
