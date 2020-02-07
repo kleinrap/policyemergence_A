@@ -97,6 +97,14 @@ for i in range(sce_number):
 	goal_prof.append(read_inputs_beliefs(res_aff, i, 'Be'))
 	goal_prof_after.append(read_inputs_beliefs(res_aff, i, 'Af'))
 
+# LHS related inputs
+# coa_resources_share, coa_creation_thresh
+input_LHS = pd.read_csv('inputs_LHS_8.data')
+print(input_LHS)
+test = input_LHS.iloc[2][" creation"]
+print(test)
+# print(len(input_LHS))
+
 print("\n")
 # running a number of scenarios
 ''' changes in the agent distribution '''
@@ -105,13 +113,15 @@ for sce_i in range (sce_number):
 	PE_inputs = [PE_agents[sce_i], PE_aff[sce_i], res_aff[sce_i], repr[sce_i], goal_prof[sce_i], w_el_inf[sce_i]]
 
 	# running a number of repetitions per experiment
-	for rep_runs in range(repetitions_runs):
+	for rep_runs in range(len(input_LHS)):
 
 		# for model run tailoring
 		if sce_i == 8:
 
 			# initialisation of the policy context model
 			model_run_predation = WolfSheepPredation(50, 50, 100, 50, 0.04, 0.05, 30, True, 30, 4)
+
+			# print(input_LHS[rep_runs])
 
 			AplusCo_inputs = [PC_interest[sce_i], coa_creation_thresh, coa_coherence_thresh, coa_resources_share,
 							  resources_spend_incr_coal]
