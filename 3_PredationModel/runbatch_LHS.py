@@ -126,7 +126,7 @@ for sce_i in range (sce_number):
 							  resources_spend_incr_coal]
 
 			# initialisation of the policy emergence model
-			model_run_PE = PolicyEmergenceSM(input_LHS, PE_type[sce_i], PE_inputs, AplusPL_param, AplusCo_inputs, 10, 10)
+			model_run_PE = PolicyEmergenceSM(PE_type[sce_i], PE_inputs, AplusPL_param, AplusCo_inputs, 10, 10, input_LHS)
 
 			print("PE_type:", PE_type[sce_i])
 			print('sce.:', sce_i)
