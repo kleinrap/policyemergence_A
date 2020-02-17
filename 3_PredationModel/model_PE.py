@@ -53,7 +53,8 @@ def get_coalitions_attributes(model):
 			resources = copy.deepcopy(coalition.resources)
 
 			coalition_attributes.append(
-				[coalition.unique_id, selected_PC, selected_S, selected_PI, issuetree, resources, members])
+				[model.coa_resources_share, model.coa_creation_thresh, coalition.unique_id, selected_PC, selected_S,
+				 selected_PI, issuetree, resources, members])
 
 	return coalition_attributes
 
@@ -87,7 +88,7 @@ class PolicyEmergenceSM(Model):
 	Simplest Model for the policy emergence model.
 	'''
 
-	def __init__(self, PE_type, SM_inputs, AplusPL_inputs, AplusCo_inputs, height=20, width=20):
+	def __init__(self, input_LHS, PE_type, SM_inputs, AplusPL_inputs, AplusCo_inputs, height=20, width=20):
 
 		self.height = height # height of the canvas
 		self.width = width # width of the canvas
@@ -104,6 +105,9 @@ class PolicyEmergenceSM(Model):
 
 		self.w_el_influence = self.SM_inputs[5]  # float - [-] - electorate influence weight constant
 
+		# batchrunner inputs
+		self.input_LHS = input_LHS
+
 		# ACF+PL parameters
 		if PE_type == 'A+PL' or PE_type == 'A+Co':
 			self.conflict_level = AplusPL_inputs[0]
@@ -112,10 +116,13 @@ class PolicyEmergenceSM(Model):
 		# ACF+Co parameters
 		if PE_type == 'A+Co':
 			self.PC_interest = AplusCo_inputs[0]
-			self.coa_creation_thresh = AplusCo_inputs[1]
+			# self.coa_creation_thresh = AplusCo_inputs[1]
+			self.coa_creation_thresh = self.input_LHS[1] # LHS inputs
 			self.coa_coherence_thresh = AplusCo_inputs[2]
-			self.coa_resources_share = AplusCo_inputs[3]
+			# self.coa_resources_share = AplusCo_inputs[3]
+			self.coa_resources_share = self.input_LHS[0] # LHS inputs
 			self.resources_spend_incr_coal = AplusCo_inputs[4]
+			print('red. share:', round(self.coa_resources_share,3), ', coa. threshold:', round(self.coa_creation_thresh,3))
 
 			self.coalition_list = []
 
