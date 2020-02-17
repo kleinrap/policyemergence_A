@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.5)  7 FEB 2020 16:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.5)  17 FEB 2020 19:16
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -936,18 +936,12 @@ Package epstopdf Info: Source file: <figures/PE_PL_PCSelected_+Co.eps>
 (epstopdf)                    size: 127376 bytes
 (epstopdf)             Output file: <figures/PE_PL_PCSelected_+Co-eps-converted
 -to.pdf>
-(epstopdf)                    date: 2020-02-07 15:55:44
-(epstopdf)                    size: 18215 bytes
+(epstopdf)                    date: 2020-02-07 16:43:54
+(epstopdf)                    size: 18134 bytes
 (epstopdf)             Command: <repstopdf --outfile=figures/PE_PL_PCSelected_+
 Co-eps-converted-to.pdf figures/PE_PL_PCSelected_+Co.eps>
 (epstopdf)             \includegraphics on input line 457.
-runsystem(repstopdf --outfile=figures/PE_PL_PCSelected_+Co-eps-converted-to.pdf
- figures/PE_PL_PCSelected_+Co.eps)...executed safely (allowed).
-
-Package epstopdf Info: Result file: <figures/PE_PL_PCSelected_+Co-eps-converted
--to.pdf>
-(epstopdf)                    date: 2020-02-07 16:43:54
-(epstopdf)                    size: 18134 bytes.
+Package epstopdf Info: Output file is already uptodate.
 
 <figures/PE_PL_PCSelected_+Co-eps-converted-to.pdf, id=179, 1084.05pt x 939.51p
 t>
@@ -981,18 +975,12 @@ Package epstopdf Info: Source file: <figures/PE_PL_SSelected_+Co.eps>
 (epstopdf)                    size: 127929 bytes
 (epstopdf)             Output file: <figures/PE_PL_SSelected_+Co-eps-converted-
 to.pdf>
-(epstopdf)                    date: 2020-02-07 15:55:51
-(epstopdf)                    size: 15455 bytes
+(epstopdf)                    date: 2020-02-07 16:43:55
+(epstopdf)                    size: 15473 bytes
 (epstopdf)             Command: <repstopdf --outfile=figures/PE_PL_SSelected_+C
 o-eps-converted-to.pdf figures/PE_PL_SSelected_+Co.eps>
 (epstopdf)             \includegraphics on input line 471.
-runsystem(repstopdf --outfile=figures/PE_PL_SSelected_+Co-eps-converted-to.pdf 
-figures/PE_PL_SSelected_+Co.eps)...executed safely (allowed).
-
-Package epstopdf Info: Result file: <figures/PE_PL_SSelected_+Co-eps-converted-
-to.pdf>
-(epstopdf)                    date: 2020-02-07 16:43:55
-(epstopdf)                    size: 15473 bytes.
+Package epstopdf Info: Output file is already uptodate.
 
 <figures/PE_PL_SSelected_+Co-eps-converted-to.pdf, id=181, 1084.05pt x 867.24pt
 >
@@ -1103,7 +1091,7 @@ Here is how much of TeX's memory you used:
 sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></us
 r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr
 /local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Predation_Hybridisation_A.pdf (25 pages, 50131684 bytes).
+Output written on Predation_Hybridisation_A.pdf (25 pages, 50131685 bytes).
 PDF statistics:
  771 PDF objects out of 1000 (max. 8388607)
  317 compressed objects within 4 object streams
