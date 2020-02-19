@@ -35,12 +35,13 @@ total_ticks = 1600
 interval_tick = 100
 run_tick = int(total_ticks/interval_tick)
 warmup_tick = interval_tick
-sce_number = 10 # total number of scenarios
+sce_number = 11 # total number of scenarios
 
 # batch run parameters
 repetitions_runs = 50
 
-PE_type = [['SM'], ['A+PL'], ['A+PL'], ['A+PL'], ['A+PL'], ['A+Co'], ['A+Co'], ['A+Co'], ['A+Co'], ['A+Co', '+PK']]
+PE_type = [['SM'], ['A+PL'], ['A+PL'], ['A+PL'], ['A+PL'], ['A+Co'], ['A+Co'], ['A+Co'], ['A+Co'],
+		   ['A+PL', '+PK'], ['A+Co', '+PK']]
 
 # ACF + PL parameters
 con_lvl = [0.50, 0.75, 0.25]  # conflict levels [low, mid, high]
@@ -111,7 +112,7 @@ for sce_i in range (sce_number):
 	for rep_runs in range(repetitions_runs):
 
 		# for model run tailoring
-		if sce_i == 9:
+		if sce_i == 10:
 
 			print("PE_type:", PE_type[sce_i])
 			print('sce.:', sce_i)
@@ -193,22 +194,25 @@ for sce_i in range (sce_number):
 			# output of the data
 
 			# policy emergence model
+			PE_save = PE_type[sce_i][0]
+			if len(PE_type[sce_i]) > 0:
+				for i in range(len(PE_type[sce_i])-1):
+					PE_save += PE_type[sce_i][i+1]
+
 			output_PE_model = model_run_PE.datacollector.get_model_vars_dataframe()
 			output_PE_model.to_csv('O_PE_model_Sce' + str(sce_i) + '_Run' + str(rep_runs)
-								   + '_type' + str(PE_type[sce_i]) + '.csv')
+								   + '_type' + str(PE_save) + '.csv')
 			output_PE_agents = model_run_PE.datacollector.get_agent_vars_dataframe()
 			output_PE_agents.to_csv('O_PE_agents_Sce' + str(sce_i) + '_Run' + str(rep_runs)
-									+ '_type' + str(PE_type[sce_i]) + '.csv')
+									+ '_type' + str(PE_save) + '.csv')
 
 			# policy context model
 			if PE_type != 'A+Co':
 				output_policyContext_model = model_run_predation.datacollector.get_model_vars_dataframe()
 				output_policyContext_model.to_csv('O_Pre_model_Sce' + str(sce_i) + '_Run' + str(rep_runs)
-												  + '_type'  + str(PE_type[sce_i]) +'.csv')
+												  + '_type'  + str(PE_save) +'.csv')
 			if PE_type == 'A+Co':
 				output_policyContext_model = model_run_predation.datacollector.get_model_vars_dataframe()
 				output_policyContext_model.to_csv('O_Pre_model_Sce' + str(sce_i) + '_Run' + str(rep_runs)
-												  + '_type' + str(PE_type[sce_i]) + '_res_share'
+												  + '_type' + str(PE_save) + '_res_share'
 												  + str(coa_resources_share)+ '.csv')
-
-
