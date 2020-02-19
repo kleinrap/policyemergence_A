@@ -175,7 +175,7 @@ class ActiveAgent(Agent):
         self.selected_PI = PI_pref_list.index(min(PI_pref_list))
         self.selected_PI = self.model.PF_indices[self.model.agenda_PF][self.selected_PI]
 
-    def interactions(self, step):
+    def interactions(self, step, PK=False):
 
         """
         ACF+PL+Co
@@ -189,6 +189,9 @@ class ActiveAgent(Agent):
         # print('Actions for', self.unique_id, step, self.resources, self.resources_action)
 
         len_DC = self.model.len_DC; len_PC = self.model.len_PC; len_S = self.model.len_S
+
+        if PK == True:
+            PK_catchup = self.model.PK_catchup
 
         # number of actions allowed in this step (causal beliefs, preferred states)
         if step == 'AS':
@@ -252,17 +255,13 @@ class ActiveAgent(Agent):
 
                 # looking at causal beliefs
                 for cb in cb_of_interest: # go through all causal beliefs of interest
-                    value1 = self.issuetree[self_id][cb][0]
-                    value2 = target.issuetree[target.unique_id][cb][0]
-                    conflict_level, diff = self.conflict_level_calc(value1, value2)
+                    conflict_level, diff = self.conflict_level_calc('cb', cb, 0, target, PK)
                     total_grade_list.append(conflict_level * abs(diff)/2 * agent_type_bonus)
                     # the abs is needed to take care of the causal belief range of [-1, 1]
                     # the /2 is used also due to a range twice as large as for the other interactions
 
                 # looking the preferred states (aka goal)
-                value1 = self.issuetree[self_id][issue][1]
-                value2 = target.issuetree[target.unique_id][issue][1]
-                conflict_level, diff = self.conflict_level_calc(value1, value2) # calculating the conflict level
+                conflict_level, diff = self.conflict_level_calc('belief', issue, 1, target, PK) # calculating the conflict level
                 total_grade_list.append(conflict_level * diff * agent_type_bonus)
             # print('agents', total_agent_list)
             # print('grades', total_grade_list)
@@ -278,29 +277,63 @@ class ActiveAgent(Agent):
 
             # performing the interaction
             for target in agent_targets:  # going through the other agents
-                if target.unique_id == best_action_agent_id:  # making sure it is an active agent and not self
-                    # print('Actor: #', self_id, ', target: #', target.unique_id)
+                tar_id = target.unique_id
+                if tar_id == best_action_agent_id:  # making sure it is an active agent and not self
+                    # print('Actor: #', self_id, ', target: #', tar_id)
                     if best_action_type <= action_number - 1 - 1: # action type: causal belief
                         cb_choice = cb_of_interest[best_action_type]
-                        target.issuetree[target.unique_id][cb_choice][0] += (self.issuetree[self_id][cb_choice][0] -
-                         target.issuetree[target.unique_id][cb_choice][0]) * (self.resources * resources_spend_incr)
+                        target.issuetree[tar_id][cb_choice][0] += (self.issuetree[self_id][cb_choice][0] -
+                         target.issuetree[tar_id][cb_choice][0]) * (self.resources * resources_spend_incr)
+                        # -1+1 checks
+                        self.one_minus_one_check(target.issuetree[tar_id][cb_choice][0], 'cb')
+
+                        if PK == True: # updating the partial knowledge of the agents
+                            self.issuetree[tar_id][cb_choice][0] += \
+                                (target.issuetree[tar_id][cb_choice][0] - self.issuetree[tar_id][cb_choice][0]) * PK_catchup
+                            self.one_minus_one_check(self.issuetree[tar_id][cb_choice][0], 'cb')
 
                     if best_action_type == action_number - 1: # action type: preferred state
                         # print('Aff.', self.affiliation)
                         # print('Acting:', self.issuetree[self_id][issue][1])
-                        # print('Bf:', target.issuetree[target.unique_id][issue][1])
+                        # print('Bf:', target.issuetree[tar_id][issue][1])
                         # print('Change', (self.issuetree[self_id][issue][1] -
-                        #      target.issuetree[target.unique_id][issue][1]) * (self.resources/100 * 0.1))
-                        target.issuetree[target.unique_id][issue][1] += (self.issuetree[self_id][issue][1] -
-                             target.issuetree[target.unique_id][issue][1]) * (self.resources * resources_spend_incr)
-                        # print('Af:', target.issuetree[target.unique_id][issue][1])
+                        #      target.issuetree[tar_id][issue][1]) * (self.resources/100 * 0.1))
+                        target.issuetree[tar_id][issue][1] += (self.issuetree[self_id][issue][1] -
+                             target.issuetree[tar_id][issue][1]) * (self.resources * resources_spend_incr)
+                        self.one_minus_one_check(target.issuetree[tar_id][issue][1], 'PS')
+                        # print('Af:', target.issuetree[tar_id][issue][1])
                         # print(' ')
+
+                        if PK == True: # updating the partial knowledge of the agents
+                            self.issuetree[tar_id][issue][1] += \
+                                (target.issuetree[tar_id][issue][1] - self.issuetree[tar_id][issue][1]) * PK_catchup
+                            self.one_minus_one_check(self.issuetree[tar_id][issue][1], 'PS')
 
                     self.resources_action -= self.resources * resources_spend_incr # removing the action resources
 
         # print('End act for', self.unique_id, step, self.resources, self.resources_action)
 
-    def conflict_level_calc(self, value1, value2):
+    def one_minus_one_check (self, value, belief_type):
+
+        '''
+        Function used to make sure that the belief system parameters remains within bounds.
+        :param value:
+        :param belief_type:
+        :return:
+        '''
+
+        if belief_type == 'cb':
+            if value > 1:
+                value = 1
+            if value < -1:
+                value = -1
+        else:
+            if value > 1:
+                value = 1
+            if value < 0:
+                value = 0
+
+    def conflict_level_calc(self, operation, issue, operand, target, PK):
 
         '''
         Function used to calculate the conflict level
@@ -308,6 +341,25 @@ class ActiveAgent(Agent):
         :param value2:
         :return:
         '''
+
+        if isinstance(self, Coalition):
+            self_id = self.model.number_activeagents
+        else:
+            self_id = self.unique_id
+
+        if operation == 'cb':
+            value1 = self.issuetree[self_id][issue][operand]
+            if PK == False:
+                value2 = target.issuetree[target.unique_id][issue][operand]
+            if PK == True:
+                value2 = self.issuetree[target.unique_id][issue][operand]
+
+        if operation == 'belief':
+            value1 = self.issuetree[self_id][issue][operand]
+            if PK == False:
+                value2 = target.issuetree[target.unique_id][issue][operand]
+            if PK == True:
+                value2 = self.issuetree[target.unique_id][issue][operand]
 
         conflict_level_low = self.model.conflict_level[0]
         conflict_level_mid = self.model.conflict_level[1]

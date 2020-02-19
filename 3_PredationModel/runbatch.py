@@ -26,8 +26,8 @@ Model types
 	A: ACF
 		+PL: Policy learning 		['A+PL']
 		+Co: Coalition				['A+Co']
-		+PK: Partial knowledge		['A+PK']
-		+PI: Partial information	['A+PI']
+		+PK: Partial knowledge		['+PK'] - Add-on
+		+PI: Partial information	['+PI'] - Add-on
 '''
 
 # running parameters
@@ -35,12 +35,12 @@ total_ticks = 1600
 interval_tick = 100
 run_tick = int(total_ticks/interval_tick)
 warmup_tick = interval_tick
-sce_number = 9 # total number of scenarios
+sce_number = 10 # total number of scenarios
 
 # batch run parameters
 repetitions_runs = 50
 
-PE_type = ['SM', 'A+PL', 'A+PL', 'A+PL', 'A+PL', 'A+Co', 'A+Co', 'A+Co', 'A+Co']
+PE_type = [['SM'], ['A+PL'], ['A+PL'], ['A+PL'], ['A+PL'], ['A+Co'], ['A+Co'], ['A+Co'], ['A+Co'], ['A+Co', '+PK']]
 
 # ACF + PL parameters
 con_lvl = [0.50, 0.75, 0.25]  # conflict levels [low, mid, high]
@@ -48,7 +48,6 @@ resources_spend_incr_agents = 0.10  # percentage of the resources spent by the a
 AplusPL_param = [con_lvl, resources_spend_incr_agents]
 
 # ACF + Co parameters
-
 PC_interest = [0 for p in range(sce_number)] # issue number around which coalitions assemble
 PC_interest[6] = 1
 PC_interest[7] = 2
@@ -56,6 +55,10 @@ coa_creation_thresh = 0.15  # threshold belief difference to create coalitions
 coa_coherence_thresh = 0.10  # threshold belief difference to trigger coalition intra-actions
 coa_resources_share = 0.50  # amount of resources assigned to coalitions from agents in coalitions
 resources_spend_incr_coal = 0.05  # percentage of the resources spent by the coalition for interactions
+
+# ACF + PK parameters
+PK_catchup = 0.20
+AplusPK_inputs = [PK_catchup]
 
 # parameters of the policy context model
 '''
@@ -108,7 +111,13 @@ for sce_i in range (sce_number):
 	for rep_runs in range(repetitions_runs):
 
 		# for model run tailoring
-		if sce_i == 8:
+		if sce_i == 9:
+
+			print("PE_type:", PE_type[sce_i])
+			print('sce.:', sce_i)
+			print('run:', rep_runs)
+			print('w_el', w_el_inf[sce_i])
+			print('PC_interest:', PC_interest[sce_i])
 
 			# initialisation of the policy context model
 			model_run_predation = WolfSheepPredation(50, 50, 100, 50, 0.04, 0.05, 30, True, 30, 4)
@@ -117,13 +126,7 @@ for sce_i in range (sce_number):
 							  resources_spend_incr_coal]
 
 			# initialisation of the policy emergence model
-			model_run_PE = PolicyEmergenceSM(PE_type[sce_i], PE_inputs, AplusPL_param, AplusCo_inputs, 10, 10)
-
-			print("PE_type:", PE_type[sce_i])
-			print('sce.:', sce_i)
-			print('run:', rep_runs)
-			print('w_el', w_el_inf[sce_i])
-			print('PC_interest:', PC_interest[sce_i])
+			model_run_PE = PolicyEmergenceSM(PE_type[sce_i], PE_inputs, AplusPL_param, AplusCo_inputs, AplusPK_inputs, 10, 10)
 
 			print("\n")
 			print("************************")

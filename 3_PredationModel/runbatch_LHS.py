@@ -40,7 +40,7 @@ sce_number = 9 # total number of scenarios
 # batch run parameters
 repetitions_runs = 50
 
-PE_type = ['SM', 'A+PL', 'A+PL', 'A+PL', 'A+PL', 'A+Co', 'A+Co', 'A+Co', 'A+Co']
+PE_type = [['SM'], ['A+PL'], ['A+PL'], ['A+PL'], ['A+PL'], ['A+Co'], ['A+Co'], ['A+Co'], ['A+Co']]
 
 # ACF + PL parameters
 con_lvl = [0.50, 0.75, 0.25]  # conflict levels [low, mid, high]

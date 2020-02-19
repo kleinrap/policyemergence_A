@@ -82,6 +82,14 @@ def init_active_agents(self, len_S, len_PC, len_DC, len_CR, len_PF, len_ins, SM_
 			affiliation = i
 			resources = 0
 			issuetree = copy.deepcopy(issuetree0)
+
+			# populating the partial knowledge (preferred states only)
+			for p in range(self.number_activeagents):
+				for k in range(len_DC + len_PC + len_S):
+					issuetree[p][k][1] = random.random()
+				for k in range(len_DC * len_PC + len_PC * len_S):
+					issuetree[p][len_DC + len_PC + len_S + k][0] = random.random() * 2 - 1
+
 			# introducing the issues
 			for k in range(len_DC + len_PC + len_S):
 				issuetree[unique_id][k] = [0, goal_profiles[i][k + 1] + (2 * random.random() - 1) / 100, 0]
@@ -110,6 +118,14 @@ def init_active_agents(self, len_S, len_PC, len_DC, len_CR, len_PF, len_ins, SM_
 			affiliation = i
 			resources = 0
 			issuetree = copy.deepcopy(issuetree0)
+
+			# populating the partial knowledge (preferred states only)
+			for p in range(self.number_activeagents):
+				for k in range(len_DC + len_PC + len_S):
+					issuetree[p][k][1] = random.random()
+				for k in range(len_DC * len_PC + len_PC * len_S):
+					issuetree[p][len_DC + len_PC + len_S + k][0] = random.random() * 2 - 1
+
 			# introducing the issues
 			for k in range(len_DC + len_PC + len_S):
 				issuetree[unique_id][k] = [0, goal_profiles[i][k+1] + (2 * random.random() - 1) / 100, 0]
@@ -137,6 +153,14 @@ def init_active_agents(self, len_S, len_PC, len_DC, len_CR, len_PF, len_ins, SM_
 			affiliation = i
 			resources = 0
 			issuetree = copy.deepcopy(issuetree0)
+
+			# populating the partial knowledge (preferred states only)
+			for p in range(self.number_activeagents):
+				for k in range(len_DC + len_PC + len_S):
+					issuetree[p][k][1] = random.random()
+				for k in range(len_DC * len_PC + len_PC * len_S):
+					issuetree[p][len_DC + len_PC + len_S + k][0] = random.random() * 2 - 1
+
 			# introducing the issues
 			for k in range(len_DC + len_PC + len_S):
 				issuetree[unique_id][k] = [0, goal_profiles[i][k+1] + (2 * random.random() - 1) / 100, 0]
