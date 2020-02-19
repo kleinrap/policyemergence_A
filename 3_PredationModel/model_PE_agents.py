@@ -349,16 +349,16 @@ class ActiveAgent(Agent):
 
         if operation == 'cb':
             value1 = self.issuetree[self_id][issue][operand]
-            if PK == False:
+            if not PK:
                 value2 = target.issuetree[target.unique_id][issue][operand]
-            if PK == True:
+            if PK:
                 value2 = self.issuetree[target.unique_id][issue][operand]
 
         if operation == 'belief':
             value1 = self.issuetree[self_id][issue][operand]
-            if PK == False:
+            if not PK:
                 value2 = target.issuetree[target.unique_id][issue][operand]
-            if PK == True:
+            if PK:
                 value2 = self.issuetree[target.unique_id][issue][operand]
 
         conflict_level_low = self.model.conflict_level[0]
