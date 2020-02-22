@@ -13,9 +13,9 @@
 \contentsline {subsection}{\numberline {7.2}Growth demand}{12}{subsection.7.2}
 \contentsline {section}{\numberline {8}Initialisation of the model}{12}{section.8}
 \contentsline {subsection}{\numberline {8.1}The policy process model}{12}{subsection.8.1}
-\contentsline {paragraph}{The affiliations}{12}{section*.5}
+\contentsline {paragraph}{The affiliations}{13}{section*.5}
 \contentsline {paragraph}{The actor distribution}{13}{section*.6}
 \contentsline {paragraph}{The actor preferred states}{13}{section*.7}
-\contentsline {subsection}{\numberline {8.2}The policy process model}{13}{subsection.8.2}
-\contentsline {subsection}{\numberline {8.3}The hybrid model}{13}{subsection.8.3}
+\contentsline {subsection}{\numberline {8.2}The policy process model}{14}{subsection.8.2}
+\contentsline {subsection}{\numberline {8.3}The hybrid model}{14}{subsection.8.3}
 \contentsline {section}{\numberline {9}Results}{14}{section.9}
