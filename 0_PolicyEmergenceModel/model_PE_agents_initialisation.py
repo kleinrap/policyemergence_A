@@ -53,7 +53,7 @@ def init_active_agents(self, len_S, len_PC, len_DC, len_CR, len_PF, len_ins, SM_
 	# [causal relations] = [[DC1-PC1],...,[DC1-PCn],...,[DCn-PCn],[PC1-S1],...,[PC1-Sn],...,[PCn-Sn],]
 	# the format of the issue is: [X] = [0, 0, 0] = [beliefs, goals, preferences]
 	issuetree0[0] = issuetree_creation(len_DC, len_PC, len_S, len_CR) # using the newly made function
-	for r in range(self.number_activeagents):
+	for r in range(self.number_activeagents - 1):
 		issuetree0.append(issuetree_creation(len_DC, len_PC, len_S, len_CR))
 
 	# model policy tree structure
@@ -65,7 +65,7 @@ def init_active_agents(self, len_S, len_PC, len_DC, len_CR, len_PF, len_ins, SM_
 	# [PI1.1] = [S1,...,Sn, Preference]
 	policytree0 = [None]
 	policytree0[0] = policytree_creation(len_PC, len_S, len_PF, len_ins)
-	for r in range(self.number_activeagents):
+	for r in range(self.number_activeagents - 1):
 		policytree0.append(policytree_creation(len_PC, len_S, len_PF, len_ins))
 
 	# initialisation of a number of standard inputs
@@ -82,6 +82,14 @@ def init_active_agents(self, len_S, len_PC, len_DC, len_CR, len_PF, len_ins, SM_
 			affiliation = i
 			resources = 0
 			issuetree = copy.deepcopy(issuetree0)
+
+			# populating the partial knowledge (preferred states only)
+			for p in range(self.number_activeagents):
+				for k in range(len_DC + len_PC + len_S):
+					issuetree[p][k][1] = random.random()
+				for k in range(len_DC * len_PC + len_PC * len_S):
+					issuetree[p][len_DC + len_PC + len_S + k][0] = random.random() * 2 - 1
+
 			# introducing the issues
 			for k in range(len_DC + len_PC + len_S):
 				issuetree[unique_id][k] = [0, goal_profiles[i][k + 1] + (2 * random.random() - 1) / 100, 0]
@@ -110,6 +118,14 @@ def init_active_agents(self, len_S, len_PC, len_DC, len_CR, len_PF, len_ins, SM_
 			affiliation = i
 			resources = 0
 			issuetree = copy.deepcopy(issuetree0)
+
+			# populating the partial knowledge (preferred states only)
+			for p in range(self.number_activeagents):
+				for k in range(len_DC + len_PC + len_S):
+					issuetree[p][k][1] = random.random()
+				for k in range(len_DC * len_PC + len_PC * len_S):
+					issuetree[p][len_DC + len_PC + len_S + k][0] = random.random() * 2 - 1
+
 			# introducing the issues
 			for k in range(len_DC + len_PC + len_S):
 				issuetree[unique_id][k] = [0, goal_profiles[i][k+1] + (2 * random.random() - 1) / 100, 0]
@@ -137,6 +153,14 @@ def init_active_agents(self, len_S, len_PC, len_DC, len_CR, len_PF, len_ins, SM_
 			affiliation = i
 			resources = 0
 			issuetree = copy.deepcopy(issuetree0)
+
+			# populating the partial knowledge (preferred states only)
+			for p in range(self.number_activeagents):
+				for k in range(len_DC + len_PC + len_S):
+					issuetree[p][k][1] = random.random()
+				for k in range(len_DC * len_PC + len_PC * len_S):
+					issuetree[p][len_DC + len_PC + len_S + k][0] = random.random() * 2 - 1
+
 			# introducing the issues
 			for k in range(len_DC + len_PC + len_S):
 				issuetree[unique_id][k] = [0, goal_profiles[i][k+1] + (2 * random.random() - 1) / 100, 0]
