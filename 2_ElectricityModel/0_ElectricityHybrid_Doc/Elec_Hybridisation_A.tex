@@ -364,7 +364,7 @@ Can the goals of the Swiss energy transition in the electricity market be met wi
 
 Scenarios are built to answer the research question. Similarly to what was done for the simplest implementation, the scenarios for the electricity market model need to take into account scenarios for the electricity model and for the policy process model as both models are complex and are needed to answer the research question.
 
-Before the scenarios are decided, it is important to decide which ACF implementation model should be used. Four versions were presented at different levels of complexity included two add-ons. Unlike for the predation model, the aim is not to test the potential of the policy process but instead to answer a question specific to the electricity model. It is therefore needed to decide which version of the policy model should be used to answer that question without using each of the version unnecessarily. Considering the electricity market model and the Swiss conditions, it is possible to assume that agents have perfect information and full knowledge with the policy subsystem considered here. This is because electricity is not that much of a polarising issue in Switzerland as other issues might be. Furthermore, a lot of the data on the electricity sector is obtained from the government and available online freely. It is therefore harder to distort such realities. Of course this assumption is a little optimistic but it should not affect the outcomes of the model materially. This means that add-ons for partial knowledge and partial information do not need to be considered. Coalitions on the other hands are needed as was shown in \cite{markard2016socio}. Two prominent coalitions exists within the subsystem: a pro-environment coalition and a pro-economy coalition. Therefore the coalition model will be used, which includes the policy learning aspects of the model. Furthermore, the initialisation of the model will be made along two affiliations that do not necessarily represent the parties but that represent the coalition beliefs.
+Before the scenarios are decided, it is important to decide which ACF implementation model should be used. Four versions were presented at different levels of complexity included two add-ons. Unlike for the predation model, the aim is not to test the potential of the policy process but instead to answer a question specific to the electricity model. It is therefore needed to decide which version of the policy model should be used to answer that question without using each of the version unnecessarily. Considering the electricity market model and the Swiss conditions, it is possible to assume that agents have perfect information and full knowledge with the policy subsystem considered here. This is because electricity is not that much of a polarising issue in Switzerland as other issues might be. Furthermore, a lot of the data on the electricity sector is obtained from the government and available online freely. It is therefore harder to distort such realities. Of course this assumption is a little optimistic but it should not affect the outcomes of the model materially. This means that add-ons for partial knowledge and partial information do not need to be considered. Coalitions on the other hands are needed as was shown in \cite{markard2016socio}. Two prominent coalitions exists within the subsystem: a pro-ecology coalition and a pro-economy coalition. Therefore the coalition model will be used, which includes the policy learning aspects of the model. Furthermore, the initialisation of the model will be made along two affiliations that do not necessarily represent the parties but that represent the coalition beliefs.
 
 For the electricity market model, the scenarios considered are kept simple. They reflect the drive for electrification that were already looked at for the simplest implementation model. This include electricity demand growth of 0\%, 1.5\% and 3\%.
 
@@ -377,7 +377,7 @@ Also ... consider the power distribution ... how does the number of agents affec
 The scenarios are therefore given as follows:
 
 \begin{itemize}
-\item Scenario 0 - Benchmark - run without changes in the beliefs or resources of the agents
+\item Scenario 0 - Benchmark - run without changes in the beliefs or resources of the agents.
 \item Scenario 1 - Run with changes in the preferred states of the agents midway.
 \item Scenario 2 - Run with changes in the resources of the agents from the start.
 \end{itemize}
@@ -389,17 +389,18 @@ The scenarios are therefore given as follows:
 \hline
 			& PC1 	& PC2	& S1		& S2			& S3		& S4			& S5			\\ 
 			&Eco	& Env	& RES	& Price		& REI	& Dom. em.	& Imp. em.	\\
-			& [-]		& [-]		& [\%]	& [CHF/MWh]	& [\%]	& [tons]		& [tons]		\\ \hline
-\multicolumn{8}{|l|}{2016 preferred states}													\\ \hline
-Coal. Eco.		& 		& 		& 60		& 50 			& 70		& 4 000 000	& 60 000 		\\ \hline
-			& 		& 		& 0.60	& 0.75 		& 0.70	& 0.80		& 0.33 		\\ \hline
-Coal. Env. 	& 		& 		& 100	& 75			& 100	& 0			& 5 000		\\ \hline
-			& 		& 		& 1.00	& 0.63		& 1.00	& 1.00		& 0.94 		\\ \hline
-\multicolumn{8}{|l|}{2021 conditions}														\\ \hline
-Coal. Eco.		& 		& 		& 95		& 55 			& 95		& 500 000		& 7 500 		\\ \hline
-			& 		& 		& 0.95	& 0.73		& 0.95 	& 0.98		& 0.99 		\\ \hline
-Coal. Env. 	& 		& 		& 100	& 75			& 100	& 0			& 5 000		\\ \hline
-			& 		& 		& 1.00	& 0.63		& 1.00	& 1.00		& 0.94 		\\ \hline
+Coalitions		& [-]		& [-]		& [\%]	& [CHF/MWh]	& [\%]	& [tons]		& [tons]		\\ \hline
+\multicolumn{8}{|l|}{2016 preferred states (Scenarios 0-2)}										\\ \hline
+Economy		& -		& -		& 60		& 50 			& 70		& 4 000 000	& 6 000 000 	\\ \hline
+			& 0.74	& 0.61	& 0.60	& 0.75 		& 0.70	& 0.80		& 0.33 		\\ \hline
+Ecology 		& -		& -		& 100	& 75			& 100	& 0			& 5 000		\\ \hline
+			& 0.81	& 0.99	& 1.00	& 0.63		& 1.00	& 1.00		& 0.99 		\\ \hline
+\hline
+\multicolumn{8}{|l|}{2021 conditions (Scenario 1)}											\\ \hline
+Economy		& -		& -		& 95		& 55 			& 95		& 500 000		& 750 000		\\ \hline
+			& 0.79	& 0.95	& 0.95	& 0.73		& 0.95 	& 0.98		& 0.95 		\\ \hline
+Ecology		& -		& -		& 100	& 75			& 100	& 0			& 5 000		\\ \hline
+			& 0.72	& 0.99	& 1.00	& 0.63		& 1.00	& 1.00		& 0.99 		\\ \hline
 \end{tabular}
 \end{center}
 \caption{Preferred states for the policy makers and the electorate on a the interval [0,1] for all scenarios..}
@@ -410,18 +411,18 @@ Coal. Env. 	& 		& 		& 100	& 75			& 100	& 0			& 5 000		\\ \hline
 \begin{center}
 \begin{tabular}{ |c|c|c|c| |c|c|c|c|}
  \hline
-\multicolumn{3}{|c|}{Coalition eco.}
-					& \multicolumn{3}{|c|}{Coalition env.}	\\ \hline \hline
+\multicolumn{3}{|c|}{Coalition econ.}
+					& \multicolumn{3}{|c|}{Coalition ecol.}	\\ \hline \hline
 	& PC1	& PC2	&		& PC1	& PC2	\\ \hline
--S1 	& 0.00	& 0.25	& -S1 	& 0.00	& 0.25	\\ \hline
--S2 	& 0.75	& 0.00	& -S2 	& 0.75	& 0.00	\\ \hline
--S3 	& 0.25	& 0.25	& -S3 	& 0.25	& 0.25	\\ \hline
--S4 	& 0.00	& 0.25	& -S4 	& 0.00	& 0.25	\\ \hline
--S5 	& 0.00	& 0.25	& -S5 	& 0.00	& 0.25	\\
+-S1 	& 0.00	& 0.25	& -S1 	& 0.35	& 0.45	\\ \hline
+-S2 	& 0.75	& 0.00	& -S2 	& 0.75	& 0.15	\\ \hline
+-S3 	& 0.25	& 0.25	& -S3 	& 0.35	& 0.55	\\ \hline
+-S4 	& 0.00	& 0.25	& -S4 	& 0.25	& 0.45	\\ \hline
+-S5 	& 0.00	& 0.25	& -S5 	& 0.25	& 0.45	\\
  \hline
 \end{tabular}
 \end{center}
-\caption{Causal beliefs for the policy makers for all scenarios. They are all given on the interval [-1,1]. \textcolor{red}{Change this, not yet adjusted.}}
+\caption{Causal beliefs for the policy makers for all scenarios. They are all given on the interval [-1,1].}
 \label{tab:si_elec_causalBeliefs}
 \end{table}
 
@@ -458,7 +459,7 @@ The policy makers do not represent the proportions that the parties have in parl
 
 For the model, the agent distribution will be the same as in the paper. For the pro-economy coalition, this will be four policy makers and fifteen policy entrepreneurs while the pro-environment coalition will have three policy makers and eight policy entrepreneurs.
 
-
+The resources for the scenarios are not specified in \cite{markard2016socio}. Instead it is left as a further work aspect. Assumptions therefore need to be made for this model. For scenario 0 and 1, the resources distribution are the same. We assume that the pro-economy coalition have more resources than the pro-ecology coalition to the tune of 100-75. For scenario 2, we consider a somewhat extreme reversal with the pro-economy/pro-ecology resources distribution at 50-100. The goal with such a new distribution is to see whether this might offset the policy learning advantage of the pro-economy coalition as a result of its actor dominance. It could also reflect the resources of the pro-ecology coalition that they are gaining through an empowered electorate.
 
 A PC needs to be chosen for the +Co model. The other +Co parameters also need to be considered.
 
@@ -557,6 +558,10 @@ The model simulation last 27 years in total with a warmup time of three years. T
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \textcolor{red}{This section needs to be adjusted for the ACF+PL, +Co, +PK, +PI.}
+
+The discussion in \cite{markard2016socio} mentions that there is an increase in belief heterogeneity for the pro-economy actors while the pro-ecology actors remain at the same point.  This is something that can be addressed in the model but for that the model would need to be more tailored.
+
+Furthermore, \cite{markard2016socio} also seems to say that actors from different coalitions had almost similar beliefs and yet were in different coalitions. This would suggest that there is another criteria than belief to create coalitions, something that is not present in the model. On the secondary belief level, the actors seem to be much closer than on the policy core beliefs. All actors come back closer together as time passes by.
 
 %%%%%%%%%%%%%%%%%%%%%%%
 \bibliographystyle{apalike} 

@@ -1,13 +1,14 @@
 # imports for the policy emergence model
 from model_PE import PolicyEmergenceSM
 from model_PE_policyImpact import policy_impact_evaluation
-from model_PE_agents import ActiveAgent
+from model_PE_agents import ActiveAgent, Coalition
 
 # imports for the policy context model
 from model_elec import Electricity
 
 # import other packages
 import pandas as pd
+import random
 
 def read_inputs_beliefs(res_aff, number, time):
 
@@ -49,7 +50,6 @@ AplusPL_param = [con_lvl, resources_spend_incr_agents]
 
 # ACF + Co parameters
 PC_interest = [0 for p in range(sce_number)] # issue number around which coalitions assemble
-PC_interest[2] = 1
 coa_creation_thresh = 0.15  # threshold belief difference to create coalitions
 coa_coherence_thresh = 0.10  # threshold belief difference to trigger coalition intra-actions
 coa_resources_share = 0.50  # amount of resources assigned to coalitions from agents in coalitions
@@ -68,8 +68,8 @@ Here go all the parameters that are needed to initialise the policy context mode
 '''for all scenarios'''
 
 # resources per affiliation agent out of 100
-res_aff = [[75, 25] for p in range(sce_number)]
-res_aff[2] = [10, 100]  # changed for scenario 2
+res_aff = [[100, 75] for p in range(sce_number)]
+res_aff[2] = [50, 100]  # changed for scenario 2
 
 # electorate representativeness per affiliation
 repr = [[25, 75] for p in range(sce_number)]
@@ -107,12 +107,8 @@ print("\n")
 ''' changes in the agent distribution '''
 for sce_i in range (sce_number):
 
-	print(sce_i)
-
 	# going through the different demand scenarios
 	for demand_ite in range(len(demand_growth)):
-
-		print(demand_ite)
 
 		PE_inputs = [PE_agents[sce_i], PE_aff[sce_i], res_aff[sce_i], repr[sce_i], goal_prof[sce_i], w_el_inf[sce_i]]
 
@@ -172,25 +168,27 @@ for sce_i in range (sce_number):
 					the policy emergence models
 					'''
 
-					# scenario 3 - change in policy core preferred states affiliation 0
-					if i == 3 and sce_i == 3:
+					# scenario 1 - change in preferred states
+					if i == 0 and sce_i == 1:
+						print(' doing this ')
 						# changing the electorate preferred states values based on the scenarios input
 						for agent in model_run_PE.schedule.agent_buffer(shuffled=True):
-							if isinstance(agent, ActiveAgent):
+							if isinstance(agent, ActiveAgent) and not isinstance(agent, Coalition):
 								for issue in range(model_run_PE.len_DC + model_run_PE.len_PC + model_run_PE.len_S):
 									if agent.affiliation == 0:
 										agent.issuetree[agent.unique_id][issue][1] = \
-											goal_prof_after[sce_i][agent.affiliation][1 + issue]
+											goal_prof_after[sce_i][agent.affiliation][1 + issue] \
+											+ (2 * random.random() - 1) / 100
+									if agent.affiliation == 1:
+										agent.issuetree[agent.unique_id][issue][1] = \
+											goal_prof_after[sce_i][agent.affiliation][1 + issue] \
+											+ (2 * random.random() - 1) / 100
 
-					# scenario 4 - change in secondary preferred states affiliation 0
-					if i == 3 and sce_i == 4:
-						# changing the electorate preferred states values based on the scenarios input
-						for agent in model_run_PE.schedule.agent_buffer(shuffled=True):
-							if isinstance(agent, ActiveAgent):
-								for issue in range(model_run_PE.len_DC + model_run_PE.len_PC + model_run_PE.len_S):
-									if agent.affiliation == 0:
-										agent.issuetree[agent.unique_id][issue][1] = \
-											goal_prof_after[sce_i][agent.affiliation][1 + issue]
+									if agent.issuetree[agent.unique_id][issue][1] > 1:
+										agent.issuetree[agent.unique_id][issue][1] = 1
+									if agent.issuetree[agent.unique_id][issue][1] < 0 or issue == 0:
+										# DC are not considered here so kept at 0
+										agent.issuetree[agent.unique_id][issue][1] = 0
 
 				# # checker code
 					# for agent in model_run_PE.schedule.agent_buffer(shuffled=False):

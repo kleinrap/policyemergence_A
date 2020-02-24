@@ -13,7 +13,7 @@
 \contentsline {subsection}{\numberline {8.1}The policy process model}{14}{subsection.8.1}
 \contentsline {paragraph}{The affiliations}{14}{section*.6}
 \contentsline {paragraph}{The actor distribution}{14}{section*.7}
-\contentsline {paragraph}{The actor preferred states}{14}{section*.8}
+\contentsline {paragraph}{The actor preferred states}{15}{section*.8}
 \contentsline {subsection}{\numberline {8.2}The policy process model}{16}{subsection.8.2}
 \contentsline {subsection}{\numberline {8.3}The hybrid model}{16}{subsection.8.3}
 \contentsline {section}{\numberline {9}Results}{16}{section.9}
