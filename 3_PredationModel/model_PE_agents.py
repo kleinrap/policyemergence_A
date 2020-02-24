@@ -204,10 +204,10 @@ class ActiveAgent(Agent):
         # consider only the causal relations related to the problem on the agenda
         if step == 'AS':
             for cb_choice in range(len_DC):
-                cb_of_interest.append(len_DC + len_PC + len_S + self.selected_PC * len_PC + cb_choice)
+                cb_of_interest.append(len_DC + len_PC + len_S + len_DC * self.selected_PC + cb_choice)
         if step == 'PF':
             for cb_choice in range(len_PC):
-                cb_of_interest.append(len_DC + len_PC + len_S + len_DC * len_PC + self.selected_S * len_S + cb_choice)
+                cb_of_interest.append(len_DC + len_PC + len_S + len_DC * len_PC + len_PC * self.selected_S + cb_choice)
         # print(cb_of_interest)
         # print(' ')
 
@@ -504,11 +504,12 @@ class Coalition(ActiveAgent):
         cb_of_interest = []
         # consider only the causal relations related to the problem on the agenda
         if step == 'AS':
+            print(self.selected_PC)
             for cb_choice in range(len_DC):
-                cb_of_interest.append(len_DC + len_PC + len_S + self.selected_PC * len_PC + cb_choice)
+                cb_of_interest.append(len_DC + len_PC + len_S + len_DC * self.selected_PC  + cb_choice)
         if step == 'PF':
             for cb_choice in range(len_PC):
-                cb_of_interest.append(len_DC + len_PC + len_S + len_DC * len_PC + self.selected_S * len_S + cb_choice)
+                cb_of_interest.append(len_DC + len_PC + len_S + len_DC * len_PC + len_PC * self.selected_S + cb_choice)
         # print(cb_of_interest)
 
         # selection of the issue of interest
@@ -574,7 +575,7 @@ class Coalition(ActiveAgent):
             coalition_goal = self.issuetree[self.model.number_activeagents][issue][1]
             agent_mem_goal = agent_mem.issuetree[agent_mem.unique_id][issue][1]
             if abs(coalition_goal - agent_mem_goal) > self.model.coa_coherence_thresh:
-                print('No coherence')
+                print('No coherence 0')
                 member_list_not_coherent.append(agent_mem)
 
             # considering the causal beliefs
@@ -582,7 +583,7 @@ class Coalition(ActiveAgent):
                 coalition_CR = self.issuetree[self.model.number_activeagents][cb][0]
                 agent_mem_CR = agent_mem.issuetree[agent_mem.unique_id][cb][0]
                 if abs(coalition_CR - agent_mem_CR) > self.model.coa_coherence_thresh:
-                    print('No coherence')
+                    print('No coherence 1')
                     if agent_mem not in member_list_not_coherent: # making sure not to add the same agent twice
                         member_list_not_coherent.append(agent_mem)
 

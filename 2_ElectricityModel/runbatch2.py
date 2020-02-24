@@ -116,7 +116,7 @@ for sce_i in range (sce_number):
 		for rep_runs in range(repetitions_runs):
 
 			# for model run tailoring
-			if sce_i >= 0:
+			if sce_i == 2 or sce_i == 1 and rep_runs >= 25:
 
 				print("PE_type:", PE_type[sce_i])
 				print('sce.:', sce_i)
