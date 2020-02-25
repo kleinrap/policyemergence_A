@@ -48,7 +48,6 @@ resources_spend_incr_agents = 0.10  # percentage of the resources spent by the a
 AplusPL_param = [con_lvl, resources_spend_incr_agents]
 
 # ACF + Co parameters
-
 PC_interest = [0 for p in range(sce_number)] # issue number around which coalitions assemble
 PC_interest[6] = 1
 PC_interest[7] = 2
@@ -56,6 +55,10 @@ coa_creation_thresh = 0.15  # threshold belief difference to create coalitions
 coa_coherence_thresh = 0.10  # threshold belief difference to trigger coalition intra-actions
 coa_resources_share = 0.50  # amount of resources assigned to coalitions from agents in coalitions
 resources_spend_incr_coal = 0.05  # percentage of the resources spent by the coalition for interactions
+
+# ACF + PK parameters
+PK_catchup = 0.20
+AplusPK_inputs = [PK_catchup]
 
 # parameters of the policy context model
 '''
@@ -126,7 +129,7 @@ for sce_i in range (sce_number):
 							  resources_spend_incr_coal]
 
 			# initialisation of the policy emergence model
-			model_run_PE = PolicyEmergenceSM(PE_type[sce_i], PE_inputs, AplusPL_param, AplusCo_inputs, 10, 10, input_LHS)
+			model_run_PE = PolicyEmergenceSM(PE_type[sce_i], PE_inputs, AplusPL_param, AplusCo_inputs, AplusPK_inputs, 10, 10, input_LHS)
 
 			print("PE_type:", PE_type[sce_i])
 			print('sce.:', sce_i)

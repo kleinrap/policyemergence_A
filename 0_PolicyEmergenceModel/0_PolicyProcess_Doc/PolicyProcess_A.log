@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.5)  19 FEB 2020 07:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.5)  25 FEB 2020 17:30
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -739,21 +739,32 @@ File: omscmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <10.95> not available
 (Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 482.
  [15]
-[16] [17]
+[16]
+Overfull \hbox (4.10944pt too wide) in paragraph at lines 548--549
+[]\OT1/cmr/m/it/10.95 Transmission of the ac-tual be-liefs: \OT1/cmr/m/n/10.95 
+The pol-icy mak-ers and en-trepreneurs
+ []
+
+[17]
+Overfull \hbox (0.94159pt too wide) in paragraph at lines 597--597
+ []\OT1/cmr/bx/n/10.95 Informing the ac-tual be-liefs of the pol-icy mak-ers an
+d en-trepreneurs[] 
+ []
+
 No file PolicyProcess_A.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 613.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 615.
 [18]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 613.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 615.
  (./PolicyProcess_A.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 613.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 613.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 615.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 615.
 Package rerunfilecheck Info: File `PolicyProcess_A.out' has not changed.
 (rerunfilecheck)             Checksum: FE57B5C20C9AA0ECE89A54FACC5F78C1;1504.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 613.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 615.
  ) 
 Here is how much of TeX's memory you used:
- 7914 strings out of 492995
- 116305 string characters out of 6132705
+ 7911 strings out of 492995
+ 116297 string characters out of 6132705
  212967 words of memory out of 5000000
  11235 multiletter control sequences out of 15000+600000
  11754 words of font info for 43 fonts, out of 8000000 for 9000
@@ -783,10 +794,10 @@ e/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr9.pfb></usr/local/texlive/2
 17/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/201
 7/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2017
 /texmf-dist/fonts/type1/public/amsfonts/cm/cmtt9.pfb>
-Output written on PolicyProcess_A.pdf (18 pages, 237151 bytes).
+Output written on PolicyProcess_A.pdf (18 pages, 239700 bytes).
 PDF statistics:
- 390 PDF objects out of 1000 (max. 8388607)
- 349 compressed objects within 4 object streams
- 134 named destinations out of 1000 (max. 500000)
+ 386 PDF objects out of 1000 (max. 8388607)
+ 345 compressed objects within 4 object streams
+ 131 named destinations out of 1000 (max. 500000)
  190 words of extra memory for PDF output out of 10000 (max. 10000000)
 

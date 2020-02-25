@@ -515,10 +515,10 @@ When considering partial knowledge, the actions between the agents are not chang
 The update of this knowledge is performed using the following equation:
 
 \begin{equation}
-B_{m} := B_{m} + (B_{n} - B_{m}). W_{gap}
+G_{m} := G_{m} + (G_{n} - G_{m}). W_{gap}
 \end{equation}
 
-where $B$ is the belief in question, $m$ is the agent who is updating his knowledge, $n$ is the actual belief of the other agent, $W_{gap}$ is a weighing constant that can be used to scale the speed at which knowledge is acquired through interactions. This equation applies equally for actual beliefs, preferred states and causal beliefs.
+where $G$ is the preferred state in question, $m$ is the agent who is updating his knowledge, $n$ is the actual belief of the other agent, $W_{gap}$ is a weighing constant that can be used to scale the speed at which knowledge is acquired through interactions. This equation applies equally for actual beliefs, preferred states and causal beliefs.
 
 %%%%%% end of the agent on agent interactions paragraph
 %%%%%%%%%%%%%%%% end of the actions and interactions subsection
@@ -535,31 +535,17 @@ The introduction of partial information sees the introduction of a new agent typ
 %%%%%%%%%%%%%%%%
 \subsection{The process}
 
-In the simplest model, we assume that the policy process followed is a two-step process. First the agenda setting step is performed, then, if an agenda has bene agreed on, comes the policy formulation step. This does not include the environment simulation that is outlined in the next section.
+The main changes to the process after the introduction of the partial information add-on are changes that happen in the initialisation step of the model. This is mostly focused in the way the actual beliefs of the agents are updated from the environment. The rest of the process is not affected by changes.
 
-The steps used to model this approach are then detailed as follows:
+The steps for the initialisation are given as:
 
 \begin{enumerate}
-\item Initialisation:
 	
-	\begin{enumerate}
-	\item \emph{Trigger of external events:} Any event that the modeller decides to implement are activated at this stage of the model cycle.
-	\item \emph{Update of the truth agent:} Information from the environment is used to inform the truth agent actual beliefs.
-	\item \emph{Electorate actions on policy makers}
-	\item \emph{Transmission of the actual beliefs:} The agents are informed about the environment from the truth agent.
-	\end{enumerate}
-	
-\item Agenda setting step:
-	\begin{enumerate}
-	\item \emph{Preferences calculation (issues):} Each agent calculates the preference for their deep core and policy core issues. Additionally, each agents selects an issue that (s)he will advocate for in his/her policy core issues based on the preferences.
-	\item \emph{Agenda selection}
-	\end{enumerate}
-	
-\item Policy formulation step:
-	\begin{enumerate}
-	\item \emph{Preferences calculation (policy instruments):} All agents update their preferences for their secondary beliefs based on the issue on the agenda. All agents then selects a policy instrument that (s)he will be advocating for.
-	\item \emph{Policy instrument implementation} 
-	\end{enumerate}
+\item \emph{Trigger of external events:} Any event that the modeller decides to implement are activated at this stage of the model cycle.
+\item \emph{Update of the truth agent:} Information from the environment is used to inform the truth agent actual beliefs.
+\item \emph{Update of the external parties:} The external parties inform themselves with the truth agent actual beliefs depending on their bias.
+\item \emph{Electorate actions on policy makers}
+\item \emph{Transmission of the actual beliefs:} The policy makers and entrepreneurs have their actual beliefs informed from the external parties depending on their bias.
 
 \end{enumerate}
 
@@ -569,11 +555,12 @@ The steps used to model this approach are then detailed as follows:
 \subsection{The agents}
 
 
-
 %%%%%%
 \paragraph{Active agents}
 
-One additional active agent is considered: the external party. It has the same attributes as all other agents but has different actions that it can perform.
+One additional active agent is considered: the external party. It has the same attributes as all other agents but has different actions that it can perform. Furthermore, throughout the agenda setting and the policy formulation, the external party acts like any other policy entrepreneur.
+
+The external parties see one additional parameter attached to each of the issues that are present within their belief system. This parameter, named as bias, is used to determine the bias of the agents towards specific issues. These are provided by the modeller. This parameter is provided on a scale from 0 to 5. If the agent has a bias of 0, that means that the agent has a bias for that issue and no update of that issue from the environment will affect his/her actual belief. At the other end of the scale, a bias of 0 will mean that the agent informs him/herself directly from the environment. The bias values in between means the agents follows more or less then information that is provided by the environment.
 
 %%%%%% end of the active agents paragraph
 %%%%%%%%%%%%%%%% end of the agents subsection
@@ -582,19 +569,34 @@ One additional active agent is considered: the external party. It has the same a
 %%%%%%%%%%%%%%%%
 \subsection{The actions and interactions}
 
-% preferences calculation
-% preferences selection
-% agenda selection
-% policy instrument selection
-% electorate influence
+% blanket influences
+% informing actual beliefs of external parties
+% informing actual beliefs of policy makers and entrepreneurs
 
-There are a number of actions and interactions that the agents can performed. We will first outline the actions that actors have to make for the system to work. This includes the calculation of the preferences. We will then outline the agenda and policy instrument selection for the entire policy arena. Finally, we outline how we conceptualise that the electorate influence the policy makers.
+There are three additional actions that are considered with the introduction of a partial information system. Two of this interactions are related to the informing of the actual beliefs of the external parties and then of the policy makers and entrepreneurs. The third is related to the interactions that the external parties can perform on other agents during the agenda setting and the policy formulation when they behave a lot like policy entrepreneurs.
 
 %%%%%%
-\paragraph{New actions}
+\paragraph{Informing the actual beliefs of the external parties}
 
-%%%%%% end of the new actions paragraph
+The equation that is used to inform the actual beliefs of the external parties from the truth agent is given as:
 
+\begin{equation}
+B_{m} := B_{m} + (B_{TA} - B_{m}) \cdot (W_{bias} * 0.2)
+\end{equation}
+
+where $B$ is the actual belief, $W_{bias}$ is the bias value for that specific issue, $m$ is the external party who is updating his/her knowledge and $TA$ is the actual belief of the truth agent.
+
+%%%%%% end of the informing the actual beliefs of the external parties paragraph
+
+%%%%%%
+\paragraph{Informing the actual beliefs of the policy makers and entrepreneurs}
+
+%%%%%% end of the informing the actual beliefs of the policy makers and entrepreneurs paragraph
+
+%%%%%%
+\paragraph{Blanket interactions}
+
+%%%%%% end of the blanket interactions paragraph
 %%%%%%%%%%%%%%%% end of the actions and interactions subsection
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% end of the formalisation (+PI) section
 
