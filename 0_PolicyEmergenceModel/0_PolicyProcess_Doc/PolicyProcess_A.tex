@@ -275,7 +275,7 @@ The policy makers are the agents that can selected a policy instrument at the en
 The policy makers are passively influenced by the electorate. Each electorate has a certain affiliation to which policy makers are also related. Each policy makers' issue preferred state will be influenced by their respective electorate. This happens as a passive effect where the preferred states of the policy makers slowly progress towards the issue aims of the electorate. The equation to calculate the change in the aim of the policy maker is given as follows:
 
 \begin{equation}
-G_{k} := G_{k} + \left(G_{El} - G_{k} \right) \cdot C_{i}
+G_{k} := G_{k} + \left(G_{El} - G_{k} \right) C_{i}
 \end{equation}
 
 where $El$ stands for electorate of same affiliation of the policy maker, $k$ is a policy maker, $C_i$ is a the constant influence that allows variation in the speed of the change of the preferred states of the agents.
@@ -359,7 +359,7 @@ Within the policy formulation interactions, we also take into account which agen
 Once the interaction has been selected, it needs to be performed. This is done using the following equation for a causal belief:
 
 \begin{equation}
-C_{m} := C_{m} + (C_{n} - C_{m}). R
+C_{m} := C_{m} + (C_{n} - C_{m}) R
 \end{equation}
 
 where $C$ stands for causal belief, $R$ for resources, $m$ for the agent being interacted upon and $n$ for the agent performing the interaction.
@@ -367,7 +367,7 @@ where $C$ stands for causal belief, $R$ for resources, $m$ for the agent being i
 And similarly for a preferred state interaction:
 
 \begin{equation}
-G_{m} := G_{m} + (G_{n} - G_{m}). R
+G_{m} := G_{m} + (G_{n} - G_{m}) R
 \end{equation}
 
 where $G$ stands for the preferred state.
@@ -515,7 +515,7 @@ When considering partial knowledge, the actions between the agents are not chang
 The update of this knowledge is performed using the following equation:
 
 \begin{equation}
-G_{m} := G_{m} + (G_{n} - G_{m}). W_{gap}
+G_{m} := G_{m} + (G_{n} - G_{m}) W_{gap}
 \end{equation}
 
 where $G$ is the preferred state in question, $m$ is the agent who is updating his knowledge, $n$ is the actual belief of the other agent, $W_{gap}$ is a weighing constant that can be used to scale the speed at which knowledge is acquired through interactions. This equation applies equally for actual beliefs, preferred states and causal beliefs.
@@ -578,10 +578,10 @@ There are three additional actions that are considered with the introduction of 
 %%%%%%
 \paragraph{Informing the actual beliefs of the external parties}
 
-The equation that is used to inform the actual beliefs of the external parties from the truth agent is given as:
+The informing of the external parties from the truth agent is based entirely on the biased parameter for each of the issues. The equation that is used is given as:
 
 \begin{equation}
-B_{m} := B_{m} + (B_{TA} - B_{m}) \cdot (W_{bias} * 0.2)
+B_{m} := B_{m} + (B_{TA} - B_{m}) (0.2 W_{bias})
 \end{equation}
 
 where $B$ is the actual belief, $W_{bias}$ is the bias value for that specific issue, $m$ is the external party who is updating his/her knowledge and $TA$ is the actual belief of the truth agent.
@@ -591,12 +591,57 @@ where $B$ is the actual belief, $W_{bias}$ is the bias value for that specific i
 %%%%%%
 \paragraph{Informing the actual beliefs of the policy makers and entrepreneurs}
 
+Informing the policy makers and entrepreneurs from the actual beliefs of the external parties is based on the political affiliation of the agents. Agents sharing similar affiliation will trust one another and update their beliefs according to what they see in the external parties belief system. In the case where the affiliation is different, then the agents will be more sceptical of the information and take it with a grain of salt, in modelling term this means they will partially change their actual beliefs based on what they observe in the external concerned parties. The amount of update is a modeller input parameter defined per affiliation pairs.
+
+\begin{equation}
+B_{m} := \frac{1}{n_{EP}} \sum_{k=0}^{n_{EP}} \left( B_{m} + (B_{k} - B_{m}) W_{aff} \right)
+\end{equation}
+
+where $B$ is the actual belief, $W_{aff}$ is the affiliation parameter, $m$ is the external party who is updating his/her knowledge and $n$ is the amount of external parties.
+
 %%%%%% end of the informing the actual beliefs of the policy makers and entrepreneurs paragraph
 
 %%%%%%
 \paragraph{Blanket interactions}
 
+The blanket interactions are similar to the interactions from the policy makers and entrepreneurs with one difference: they influence all actors in the system at the same time. This influence however is more limited as it is more diluted and less personal. The equations used to perform these blanket interactions are given as:
+
+\begin{equation}
+C_{m} := C_{m} + \frac{1}{n_{a}} (C_{n} - C_{m}) R
+\end{equation}
+
+where $C$ stands for causal belief, $R$ for resources, $m$ for the agent being interacted upon, $n$ for the agent performing the interaction, and $n_a$ is the number of agents in the subsystem.
+
+And similarly for a preferred state interaction:
+
+\begin{equation}
+G_{m} := G_{m} + \frac{1}{n_{a}}(G_{n} - G_{m}) R 
+\end{equation}
+
+where $G$ stands for the preferred state.
+
+And for the actual beliefs:
+
+\begin{equation}
+B_{m} := B_{m} + \frac{1}{n_{a}}(B_{n} - B_{m}) R 
+\end{equation}
+
+where $B$ stands for the actual beliefs.
+
 %%%%%% end of the blanket interactions paragraph
+
+%%%%%%
+\paragraph{Actual belief agent on agent interactions}
+
+The last interaction is added is one for the policy makers and entrepreneurs. Because actual beliefs are now subjective, agents can influence one another on these as well. Similarly to what was presented before, agents have a conflict level for these actual beliefs based on their differences in beliefs. This is used to select what interactions should be chosen between all three interactions (causal beliefs, actual beliefs and preferred states). The equation that is used to perform that influence is then given as follows: 
+
+\begin{equation}
+B_{m} := B_{m} + (B_{n} - B_{m}) R 
+\end{equation}
+
+where $B$ stands for actual belief, $R$ for resources, $m$ for the agent being interacted upon, and $n$ for the agent performing the interaction.
+
+%%%%%% end of the actual beliefs interactions paragraph
 %%%%%%%%%%%%%%%% end of the actions and interactions subsection
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% end of the formalisation (+PI) section
 

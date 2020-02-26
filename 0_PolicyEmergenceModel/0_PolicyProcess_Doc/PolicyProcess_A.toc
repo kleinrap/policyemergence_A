@@ -43,4 +43,5 @@
 \contentsline {subsection}{\numberline {6.3}The actions and interactions}{18}{subsection.6.3}
 \contentsline {paragraph}{Informing the actual beliefs of the external parties}{18}{section*.23}
 \contentsline {paragraph}{Informing the actual beliefs of the policy makers and entrepreneurs}{18}{section*.24}
-\contentsline {paragraph}{Blanket interactions}{18}{section*.25}
+\contentsline {paragraph}{Blanket interactions}{19}{section*.25}
+\contentsline {paragraph}{Actual belief agent on agent interactions}{19}{section*.26}
