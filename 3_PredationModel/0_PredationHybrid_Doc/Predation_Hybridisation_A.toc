@@ -12,6 +12,7 @@
 \contentsline {subsection}{\numberline {6.1}The +PL model}{6}{subsection.6.1}
 \contentsline {subsection}{\numberline {6.2}The +Co model}{7}{subsection.6.2}
 \contentsline {subsection}{\numberline {6.3}The +PK model}{8}{subsection.6.3}
+\contentsline {subsection}{\numberline {6.4}The +PI model}{9}{subsection.6.4}
 \contentsline {section}{\numberline {7}Initialisation of the model}{9}{section.7}
 \contentsline {subsection}{\numberline {7.1}The predation model}{9}{subsection.7.1}
 \contentsline {subsection}{\numberline {7.2}The policy process model}{11}{subsection.7.2}

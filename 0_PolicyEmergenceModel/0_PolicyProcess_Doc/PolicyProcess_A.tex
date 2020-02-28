@@ -557,7 +557,7 @@ The steps for the initialisation are given as:
 
 One additional active agent is considered: the external party. It has the same attributes as all other agents but has different actions that it can perform. Furthermore, throughout the agenda setting and the policy formulation, the external party acts like any other policy entrepreneur.
 
-The external parties see one additional parameter attached to each of the issues that are present within their belief system. This parameter, named as bias, is used to determine the bias of the agents towards specific issues. These are provided by the modeller. This parameter is provided on a scale from 0 to 5. If the agent has a bias of 0, that means that the agent has a bias for that issue and no update of that issue from the environment will affect his/her actual belief. At the other end of the scale, a bias of 0 will mean that the agent informs him/herself directly from the environment. The bias values in between means the agents follows more or less then information that is provided by the environment.
+The external parties see one additional parameter attached to each of the issues that are present within their belief system. This parameter, named as bias, is used to determine the bias of the agents towards specific issues. These are provided by the modeller. This parameter is provided on a scale from 0 to 5. If the agent has a bias of 0, that means that the agent has a bias for that issue and no update of that issue from the environment will affect his/her actual belief. At the other end of the scale, a bias of 5 will mean that the agent informs him/herself directly from the environment. The bias values in between means the agents follows more or less then information that is provided by the environment.
 
 %%%%%% end of the active agents paragraph
 %%%%%%%%%%%%%%%% end of the agents subsection
@@ -591,10 +591,12 @@ where $B$ is the actual belief, $W_{bias}$ is the bias value for that specific i
 Informing the policy makers and entrepreneurs from the actual beliefs of the external parties is based on the political affiliation of the agents. Agents sharing similar affiliation will trust one another and update their beliefs according to what they see in the external parties belief system. In the case where the affiliation is different, then the agents will be more sceptical of the information and take it with a grain of salt, in modelling term this means they will partially change their actual beliefs based on what they observe in the external concerned parties. The amount of update is a modeller input parameter defined per affiliation pairs.
 
 \begin{equation}
-B_{m} := \frac{1}{n_{EP}} \sum_{k=0}^{n_{EP}} \left( B_{m} + (B_{k} - B_{m}) W_{aff} \right)
+B_{m} :=  \left( B_{m} + \sum_{k=0}^{n_{EP}} \left(B_{k} - B_{m}\right) W_{aff} \right)
 \end{equation}
 
 where $B$ is the actual belief, $W_{aff}$ is the affiliation parameter, $m$ is the external party who is updating his/her knowledge and $n$ is the amount of external parties.
+
+The sum of all $W_{aff}$ for any agent should be 1
 
 %%%%%% end of the informing the actual beliefs of the policy makers and entrepreneurs paragraph
 

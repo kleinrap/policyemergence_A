@@ -89,7 +89,8 @@ class PolicyEmergenceSM(Model):
 	Simplest Model for the policy emergence model.
 	'''
 
-	def __init__(self, PE_type, SM_inputs, AplusPL_inputs, AplusCo_inputs, AplusPK_inputs, height=20, width=20, input_LHS=False):
+	def __init__(self, PE_type, SM_inputs, AplusPL_inputs, AplusCo_inputs, AplusPK_inputs, AplusPI_inputs,
+				 height=20, width=20, input_LHS=False):
 
 		self.height = height # height of the canvas
 		self.width = width # width of the canvas
@@ -138,6 +139,9 @@ class PolicyEmergenceSM(Model):
 		self.schedule = RandomActivation(self) # mesa random activation method
 		self.grid = SingleGrid(height, width, torus=True) # mesa grid creation method
 
+		# +PI parameters
+		self.AplusPI_inputs = AplusPI_inputs
+
 		# creation of the datacollector vector
 
 		if 'A+Co' in self.PE_type:
@@ -178,7 +182,7 @@ class PolicyEmergenceSM(Model):
 		self.len_S, self.len_PC, self.len_DC, self.len_CR = belief_tree_input() # setting up belief tree
 		self.policy_instruments, self.len_ins, self.PF_indices = policy_instrument_input() # setting up policy instruments
 		init_active_agents(self, self.len_S, self.len_PC, self.len_DC, self.len_CR, self.len_PC, self.len_ins,
-						   self.SM_inputs) # setting up active agents
+						   self.SM_inputs, self.AplusPI_inputs) # setting up active agents
 		init_electorate_agents(self, self.len_S, self.len_PC, self.len_DC, self.SM_inputs) # setting up passive agents
 		init_truth_agent(self, self.len_S, self.len_PC, self.len_DC, self.len_ins) # setting up truth agent
 
@@ -198,10 +202,14 @@ class PolicyEmergenceSM(Model):
 		self.KPIs = KPIs # saving the indicators
 
 		# 0. initialisation
-		self.module_interface_input(self.KPIs) # communicating the beliefs (indicators)
+		# communicating the actual beliefs from the truth agent to the active agents
+		if '+PI' not in self.PE_type:
+			self.module_interface_input(self.KPIs) # for when there is no +PI add-on
+		if '+PI' in self.PE_type:
+			self.moduel_interface_input_PI(self.KPIs) # for the +PI add-on
 		self.electorate_influence(self.w_el_influence) # electorate influence actions
 		if 'A+Co' in self.PE_type:
-			self.coalition_creation_algorithm()
+			self.coalition_creation_algorithm() # creation of the coalitions
 
 		# 1. agenda setting
 		self.agenda_setting()
@@ -223,7 +231,8 @@ class PolicyEmergenceSM(Model):
 	def module_interface_input(self, KPIs):
 
 		'''
-		The module interface input step consists of actions related to the module interface and the policy emergence model
+		The module interface input step consists of informing the actual beliefs from the KPIs to the truth agent
+		to the active agents
 		'''
 
 		len_DC = self.len_DC; len_PC = self.len_PC; len_S = self.len_S; len_ins = self.len_ins
@@ -245,6 +254,71 @@ class PolicyEmergenceSM(Model):
 				for insj in range(len_ins): # communicating the policy instruments impacts
 					agent.policytree[agent.unique_id][len_PC + insj][0:len_S] = truth_policytree[len_PC + insj]
 
+				for issue in range(len_DC + len_PC + len_S): # communicating the issue beliefs from the KPIs
+					agent.issuetree[agent.unique_id][issue][0] = truth_issuetree[issue]
+				self.preference_update(agent, agent.unique_id) # updating the preferences
+
+	def moduel_interface_input_PI(self, KPIs):
+
+		'''
+		The module interface input step consists of actions related to the module interface and the policy emergence model
+		'''
+
+		len_DC = self.len_DC; len_PC = self.len_PC; len_S = self.len_S; len_ins = self.len_ins
+
+		# saving the issue tree of the truth agent
+		for agent in self.schedule.agent_buffer(shuffled=True):
+			if isinstance(agent, TruthAgent):
+				agent.issuetree_truth = KPIs
+				truth_issuetree = agent.issuetree_truth
+				truth_policytree = agent.policytree_truth
+
+		# communicating the policy instrument impacts to all active agents
+		for agent in self.schedule.agent_buffer(shuffled=True):
+			if isinstance(agent, ActiveAgent) and not isinstance(agent, Coalition): # selecting only active agents
+				for insj in range(len_ins): # communicating the policy instruments impacts
+					agent.policytree[agent.unique_id][len_PC + insj][0:len_S] = truth_policytree[len_PC + insj]
+
+		# informing the external parties
+		ext_parties = []
+		for agent in self.schedule.agent_buffer(shuffled=True):
+			if isinstance(agent, ActiveAgent) and not isinstance(agent, Coalition): # selecting only active agents
+				if agent.agent_type == 'externalparty':
+					ext_parties.append(agent)
+					id = agent.unique_id
+					for issue in range(len_DC + len_PC + len_S):
+						agent.issuetree[id][issue][0] += (truth_issuetree[issue] - agent.issuetree[id][issue][0]) * \
+													  (agent.issuetree[id][issue][3] * 0.2)
+
+		# informing the policy makers and entrepreneurs
+		# todo - this
+		for agent in self.schedule.agent_buffer(shuffled=True):
+			if isinstance(agent, ActiveAgent) and not isinstance(agent, Coalition): # selecting only active agents
+				if agent.agent_type != 'externalparty':
+					id = agent.unique_id
+					for issue in range(len_DC + len_PC + len_S):
+						belief_update = 0
+						print('Before:', agent.issuetree[id][issue][0])
+						for agent_ep in ext_parties:
+							id_ep = agent_ep.unique_id
+							# todo - the outcome is correct atm
+							# todo - change the 0.5 which should be W-aff format
+							# todo - find another method than adding to 1 as it needs to take into account the
+							#  possibility of dozens of external parties
+							print('ep value:', agent_ep.issuetree[id_ep][issue][0])
+							belief_update += (agent_ep.issuetree[id_ep][issue][0] - agent.issuetree[id][issue][0]) * 0.5
+						print('Update:', belief_update)
+						agent.issuetree[id][issue][0] += belief_update
+						if agent.issuetree[id][issue][0] > 1:
+							agent.issuetree[id][issue][0] = 1
+						if agent.issuetree[id][issue][0] < 0:
+							agent.issuetree[id][issue][0] = 0
+						print('After:', agent.issuetree[id][issue][0])
+						print(' ')
+
+		# Transferring policy impact to active agents
+		for agent in self.schedule.agent_buffer(shuffled=True):
+			if isinstance(agent, ActiveAgent) and not isinstance(agent, Coalition): # selecting only active agents
 				for issue in range(len_DC + len_PC + len_S): # communicating the issue beliefs from the KPIs
 					agent.issuetree[agent.unique_id][issue][0] = truth_issuetree[issue]
 				self.preference_update(agent, agent.unique_id) # updating the preferences
@@ -613,7 +687,8 @@ class PolicyEmergenceSM(Model):
 		list_coalition_members = []
 		list_agents_2 = copy.copy(list_agents_1)
 		for i in range(len(list_agents_1)):
-			if list_agents_1[index][1] - self.coa_creation_thresh <= list_agents_1[i][1] <= list_agents_1[index][1] + self.coa_creation_thresh:
+			if list_agents_1[index][1] - self.coa_creation_thresh <= list_agents_1[i][1] <= list_agents_1[index][1] \
+					+ self.coa_creation_thresh:
 				list_coalition_members.append(list_agents_1[i][0])
 				list_agents_2.remove(list_agents_1[i])
 
@@ -626,14 +701,16 @@ class PolicyEmergenceSM(Model):
 			for i in range(len(list_agents_2)):
 				count = 0
 				for j in range(len(list_agents_2)):
-					if list_agents_2[i][1] - self.coa_creation_thresh <= list_agents_2[j][1] <= list_agents_2[i][1] + self.coa_creation_thresh:
+					if list_agents_2[i][1] - self.coa_creation_thresh <= list_agents_2[j][1] <= list_agents_2[i][1] \
+							+ self.coa_creation_thresh:
 						count += 1
 				list_coalition_number.append(count)
 			index = list_coalition_number.index(max(list_coalition_number)) # finding the grouping with the most member index
 
 			list_coalition_members = []
 			for i in range(len(list_agents_2)):
-				if list_agents_2[index][1] - self.coa_creation_thresh <= list_agents_2[i][1] <= list_agents_2[index][1] + self.coa_creation_thresh:
+				if list_agents_2[index][1] - self.coa_creation_thresh <= list_agents_2[i][1] <= \
+						list_agents_2[index][1] + self.coa_creation_thresh:
 					list_coalition_members.append(list_agents_2[i][0])
 
 			self.coalition_creation(1002, list_coalition_members) # creating the coalition with selected members

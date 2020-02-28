@@ -24,7 +24,7 @@ def policytree_creation(len_PC, len_S, len_PF, len_ins):
 	return policytree
 
 
-def init_active_agents(self, len_S, len_PC, len_DC, len_CR, len_PF, len_ins, SM_inputs):
+def init_active_agents(self, len_S, len_PC, len_DC, len_CR, len_PF, len_ins, SM_inputs, AplusPI_inputs):
 
 	'''Creation of the active policy agents'''
 
@@ -41,6 +41,13 @@ def init_active_agents(self, len_S, len_PC, len_DC, len_CR, len_PF, len_ins, SM_
 	aff_number = len(SM_PMs_aff) # initialising affiliation number
 
 	self.number_activeagents = SM_PMs + SM_PEs + SM_EPs # agent global properties
+
+	if len(AplusPI_inputs) > 0:
+		bias_profiles = AplusPI_inputs[0]
+		belief_profiles = AplusPI_inputs[1]
+	else:
+		bias_profiles = False
+		belief_profiles = False
 
 	# model issue tree structure
 	issuetree0 = [None]
@@ -163,11 +170,14 @@ def init_active_agents(self, len_S, len_PC, len_DC, len_CR, len_PF, len_ins, SM_
 
 			# introducing the issues
 			for k in range(len_DC + len_PC + len_S):
-				issuetree[unique_id][k] = [0, goal_profiles[i][k+1] + (2 * random.random() - 1) / 100, 0]
+				issuetree[unique_id][k] = [belief_profiles[i][k+1], goal_profiles[i][k+1] + (2 * random.random() - 1) / 100, 0]
 				if issuetree[unique_id][k][1] > 1:
 					issuetree[unique_id][k][1] = 1
 				if issuetree[unique_id][k][1] < 0 or k == 0: # DC are not considered here so kept at 0
 					issuetree[unique_id][k][1] = 0
+				# adding the bias values
+				issuetree[unique_id][k].append(bias_profiles[i][k+1])
+
 			# introduction of the causal relations
 			for k in range(len_DC*len_PC + len_PC * len_S):
 				issuetree[unique_id][len_DC + len_PC + len_S + k][0] = goal_profiles[i][len_DC + len_PC + len_S + k+1]
