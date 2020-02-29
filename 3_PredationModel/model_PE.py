@@ -329,6 +329,9 @@ class PolicyEmergenceSM(Model):
 					if agent.affiliation == 1: # affiliation 1
 						agent.resources = 0.01 * self.number_activeagents * self.resources_aff[1]/100
 					agent.resources_action = agent.resources  # assigning resources for the actions for both
+					if agent.agent_type == 'externalparty': # mulitply by two the resources of EPs for blanket actions
+						agent.resources *= 2
+						agent.resources_action *= 2
 		if 'A+Co' in self.PE_type: # attribution of the resources to coalitions
 			for coalition in self.schedule.agent_buffer(shuffled=False):
 				if isinstance(coalition, Coalition):
@@ -358,12 +361,12 @@ class PolicyEmergenceSM(Model):
 		if 'A+Co' in self.PE_type:
 			for coalition in self.schedule.agent_buffer(shuffled=True):
 				if isinstance(coalition, Coalition): # selecting only coalitions
-					coalition.interactions_intra_coalition('AS') # intra-coalition interactions
+					coalition.interactions_intra_coalition('AS', self.PI) # intra-coalition interactions
 
 		# active agent interactions (including coalitions)
 		if 'A+PL' in self.PE_type or 'A+Co' in self.PE_type:
 			for agent in self.schedule.agent_buffer(shuffled=True):
-				if isinstance(agent, ActiveAgent):  # selecting only active agents
+				if isinstance(agent, ActiveAgent):  # selecting PMs and PEs
 					agent.interactions('AS', self.PK, self.PI)
 
 		# active agent policy core selection (after agent interactions)
@@ -423,14 +426,14 @@ class PolicyEmergenceSM(Model):
 			for coalition in self.schedule.agent_buffer(shuffled=True):
 				if isinstance(coalition, Coalition): # selecting only active agents
 					# print('selected_PC', agent.selected_PC)
-					coalition.interactions_intra_coalition('PF')
+					coalition.interactions_intra_coalition('PF', self.PI)
 					# coalition.interactions('PF')
 
 		# active agent interactions
 		if 'A+PL' in self.PE_type or 'A+Co' in self.PE_type:
 			for agent in self.schedule.agent_buffer(shuffled=True):
-				if isinstance(agent, ActiveAgent):  # selecting only active agents
-					agent.interactions('PF', self.PK)
+				if isinstance(agent, ActiveAgent):  # selecting PMs and PEs
+					agent.interactions('PF', self.PK, self.PI)
 
 		# calculation of policy instruments preferences
 		selected_PI_list = []

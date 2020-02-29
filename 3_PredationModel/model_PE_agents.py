@@ -179,7 +179,7 @@ class ActiveAgent(Agent):
 
         """
         ACF+PL+Co
-        This function is used to perform the different agent/coalition interactions.
+        This function is used to perform the different agent/coalition interactions for PEs, PMs and EPs.
 
         The interactions that can be performed are on the preferred states and on the causal beliefs.
         All of the actions are first graded based on conflict levels. Then the action that has the highest grade is
@@ -188,20 +188,242 @@ class ActiveAgent(Agent):
 
         # print('Actions for', self.unique_id, step, self.resources, self.resources_action)
 
-        len_DC = self.model.len_DC; len_PC = self.model.len_PC; len_S = self.model.len_S
-
         if PK == True:
             PK_catchup = self.model.PK_catchup
 
+        # finding the actions that can be performed
+        cb_of_interest, issue, action_number = self.action_listing(step, PI)
+
+        # # assigning resources for the actions
+        # self.resources_action = self.resources
+
+        agent_targets = []
+        # agent selection when it is a PM or a PE
+        if not isinstance(self, Coalition) and self.agent_type != 'externalparty':
+            resources_spend_incr = self.model.resources_spend_incr_agents
+            for agents in self.model.schedule.agent_buffer(shuffled=True):
+                # making sure it is an active agent and not a coalition and not self
+                if isinstance(agents, ActiveAgent) and not isinstance(agents, Coalition) and agents != self:
+                    agent_targets.append(agents)
+
+        # agent selection when it is a coalition
+        if isinstance(self, Coalition):
+            resources_spend_incr = self.model.resources_spend_incr_coal
+            for agents in self.model.schedule.agent_buffer(shuffled=True):
+                if agents not in self.members and isinstance(agents, ActiveAgent) and not isinstance(agents, Coalition):
+                    agent_targets.append(agents)
+
+        if not isinstance(self, Coalition) and self.agent_type == 'externalparty':
+            resources_spend_incr = self.model.resources_spend_incr_agents * 4
+            agent_targets = []
+            for agents in self.model.schedule.agent_buffer(shuffled=True):
+                # making sure it is an active agent and not a coalition and not self
+                if isinstance(agents, ActiveAgent) and not isinstance(agents, Coalition) and agents != self:
+                    agent_targets.append(agents)
+
+        # making sure there are enough resources
+        while self.resources_action > 0.001 and len(agent_targets) > 0:
+
+            # performing normal actions (PMs, PEs and coalitions)
+            if self.agent_type != 'externalparty':
+
+                total_grade_list = [] # initialising the grade list
+                total_agent_list = [] # initialising the agent list
+
+                for target in agent_targets:  # going through the other agents
+                    total_agent_list.append(target.unique_id) # saving the agent considered (randomly selected)
+                    agent_type_bonus = self.agent_type_bonus_calc(target, step) # PM agent bonus
+
+                    # looking at causal beliefs
+                    for cb in cb_of_interest: # go through all causal beliefs of interest
+                        conflict_level, diff = self.conflict_level_calc('cb', cb, 0, target, PK)
+                        total_grade_list.append(conflict_level * abs(diff)/2 * agent_type_bonus)
+                        # the abs is needed to take care of the causal belief range of [-1, 1]
+                        # the /2 is used also due to a range twice as large as for the other interactions
+
+                    # looking the preferred states (aka goal)
+                    conflict_level, diff = self.conflict_level_calc('belief', issue, 1, target, PK) # conflict level
+                    total_grade_list.append(conflict_level * diff * agent_type_bonus)
+
+                    # looking for the actual beliefs (aka belief)
+                    if PI:
+                        conflict_level, diff = self.conflict_level_calc('belief', issue, 0, target, PK)  # conflict level
+                        total_grade_list.append(conflict_level * diff * agent_type_bonus)
+
+                # print('agents', len(total_agent_list), total_agent_list)
+                # print('grades', len(total_grade_list), total_grade_list)
+
+                # selecting the best graded interaction
+                best_action_index = total_grade_list.index(max(total_grade_list)) # index of interaction in the list
+                best_action_agent_id = total_agent_list[int(best_action_index/action_number)] # unique_id of interaction target
+                # print(round(max_best_action,3), best_action_index, int(best_action_index/action_number), best_action_agent_id)
+
+                best_action_type = best_action_index - action_number * int(best_action_index / action_number)
+                # selecting the action type: 0 is a causal belief action, 1 is a preferred state action
+                # for PI cases: 2 is an actual belief action
+
+                # performing the interaction
+                for target in agent_targets:  # going through the other agents
+                    tar_id = target.unique_id
+                    if tar_id == best_action_agent_id:  # making sure it is an active agent and not self
+
+                        param = 1 # parameter used to find the action to be implemented
+                        if PI:
+                            param += 1
+
+                        if best_action_type <= action_number - 1 - param: # action type: causal belief
+                            cb_choice = cb_of_interest[best_action_type]
+                            self.action_implementation(target, cb_choice, 0, 'cb', resources_spend_incr)
+                            if PK == True: # updating the partial knowledge of the agents
+                                self.PK_implementation(target, cb_choice, 0, 'cb', PK_catchup)
+
+                        if best_action_type == action_number - param: # action type: preferred state
+                            self.action_implementation(target, issue, 1, 'PS', resources_spend_incr)
+                            if PK == True: # updating the partial knowledge of the agents
+                                self.PK_implementation(target, issue, 1, 'PS', PK_catchup)
+
+                        if PI and best_action_type == action_number + 1 - param: # action type: actual belief
+                            self.action_implementation(target, issue, 0, 'PS', resources_spend_incr)
+                            if PK == True: # updating the partial knowledge of the agents
+                                self.PK_implementation(target, issue, 1, 'PS', PK_catchup)
+
+                        self.resources_action -= self.resources * resources_spend_incr # removing the action resources
+
+            # performing blanket actions (EPs)
+            if self.agent_type == 'externalparty':
+
+                total_grade_list = []  # initialising the grade list
+
+                # looking at causal beliefs
+                for cb in cb_of_interest:  # go through all causal beliefs of interest
+                    grade = 0
+                    for target in agent_targets:  # going through the other agents
+                        agent_type_bonus = self.agent_type_bonus_calc(target, step)  # PM agent bonus
+                        conflict_level, diff = self.conflict_level_calc('cb', cb, 0, target, PK)
+                        grade += conflict_level * abs(diff) / 2 * agent_type_bonus
+                        # the abs is needed to take care of the causal belief range of [-1, 1]
+                        # the /2 is used also due to a range twice as large as for the other interactions
+                total_grade_list.append(grade / len(agent_targets))
+
+                # looking the preferred states (aka goal)
+                grade = 0
+                for target in agent_targets:  # going through the other agents
+                    agent_type_bonus = self.agent_type_bonus_calc(target, step)  # PM agent bonus
+                    conflict_level, diff = self.conflict_level_calc('belief', issue, 1, target, PK)  # conflict level
+                    grade += conflict_level * diff * agent_type_bonus
+                total_grade_list.append(grade / len(agent_targets))
+
+                # looking for the actual beliefs (aka belief)
+                grade = 0
+                for target in agent_targets:  # going through the other agents
+                    agent_type_bonus = self.agent_type_bonus_calc(target, step)  # PM agent bonus
+                    conflict_level, diff = self.conflict_level_calc('belief', issue, 0, target, PK)  # conflict level
+                    grade += conflict_level * diff * agent_type_bonus
+                total_grade_list.append(grade / len(agent_targets))
+
+                # selecting the best graded interaction
+                best_action_index = total_grade_list.index(max(total_grade_list))  # index of interaction in the list
+                # print(best_action_index)
+
+                # performing the interaction
+                if best_action_index < len(cb_of_interest):  # action type: causal belief
+                    for target in agent_targets:  # going through the other agents
+                        cb_choice = cb_of_interest[best_action_index]
+                        self.action_implementation(target, cb_choice, 0, 'cb', resources_spend_incr, len(agent_targets))
+                        if PK == True:  # updating the partial knowledge of the agents
+                            self.PK_implementation(target, cb_choice, 0, 'cb', PK_catchup)
+
+                if best_action_index == len(cb_of_interest):  # action type: preferred state
+                    for target in agent_targets:  # going through the other agents
+                        self.action_implementation(target, issue, 1, 'PS', resources_spend_incr, len(agent_targets))
+                        if PK == True:  # updating the partial knowledge of the agents
+                            self.PK_implementation(target, issue, 1, 'PS', PK_catchup)
+
+                if best_action_index == len(cb_of_interest) + 1:  # action type: actual belief
+                    for target in agent_targets:  # going through the other agents
+                        self.action_implementation(target, issue, 0, 'PS', resources_spend_incr, len(agent_targets))
+                        if PK == True:  # updating the partial knowledge of the agents
+                            self.PK_implementation(target, issue, 0, 'PS', PK_catchup)
+
+                self.resources_action -= self.resources * resources_spend_incr  # removing the action resources
+
+        # print('End act for', self.unique_id, step, self.resources, self.resources_action)
+
+    def PK_implementation(self, target, issue, number, action, PK_catchup):
+
+        '''
+        This function is used to implement the partial knowledge catchup function after an action has been performed in
+        a +PK add-on scenario
+        :param target:
+        :param issue:
+        :param number:
+        :param action:
+        :param PK_catchup:
+        :return:
+        '''
+
+        tar_id = target.unique_id
+        self.issuetree[tar_id][issue][number] += \
+            (target.issuetree[tar_id][issue][number] - self.issuetree[tar_id][issue][number]) * PK_catchup
+        self.one_minus_one_check(self.issuetree[tar_id][issue][number], action)
+
+    def action_implementation(self, target, issue, number, action, resources_spend_incr, EP=False):
+
+        '''
+        This function is used to implement the actions that the agents have selected.
+        :param target:
+        :param issue:
+        :param number:
+        :param action:
+        :param resources_spend_incr:
+        :param EP:
+        :return:
+        '''
+
+        tar_id = target.unique_id
+        self_id = self.unique_id
+        if isinstance(self, Coalition): # in case there is a coalition in there
+            self_id = self.model.number_activeagents
+
+        # the case for blanket implementation
+        blanket = 1
+        if EP:
+            blanket = EP
+
+        target.issuetree[tar_id][issue][0] += \
+            (self.issuetree[self_id][issue][number] - target.issuetree[tar_id][issue][number]) \
+            * (self.resources * resources_spend_incr / blanket)
+        self.one_minus_one_check(target.issuetree[tar_id][issue][number], action)
+
+    def agent_type_bonus_calc(self, target, step):
+
+        agent_type_bonus = 1  # making sure policymakers are preferred for the PF interactions
+        if target.agent_type == 'policymaker' and step == 'PF':
+            agent_type_bonus = 1.1
+
+        return agent_type_bonus
+
+    def action_listing(self, step, PI):
+
+        '''
+        Function that is used to output the list of actions that can be performed by the agents.
+        :param step:
+        :param PI:
+        :return:
+        '''
+
+        len_DC = self.model.len_DC; len_PC = self.model.len_PC; len_S = self.model.len_S
+
+        action_number = 0
         # number of actions allowed in this step (causal beliefs, preferred states)
         if step == 'AS':
             action_number = len_DC + 1
-            if PI:
-                action_number = len_DC + 2 # adding the actual beliefs
         if step == 'PF':
             action_number = len_PC + 1
-            if PI:
-                action_number = len_PC + 2 # adding the actual beliefs
+
+        # adding the actual beliefs for +PI scenarios
+        if PI:
+            action_number += 1
 
         # selection of the cw of interest
         cb_of_interest = []
@@ -221,129 +443,7 @@ class ActiveAgent(Agent):
         if step == 'PF':
             issue = len_DC + len_PC + self.selected_S
 
-        # # assigning resources for the actions
-        # self.resources_action = self.resources
-
-        agent_targets = []
-        if not isinstance(self, Coalition):
-            resources_spend_incr = self.model.resources_spend_incr_agents
-            self_id = self.unique_id
-            agent_targets = []
-            for agents in self.model.schedule.agent_buffer(shuffled=True):
-                # making sure it is an active agent and not a coalition and not self
-                if isinstance(agents, ActiveAgent) and not isinstance(agents, Coalition) and agents != self:
-                    agent_targets.append(agents)
-
-        if isinstance(self, Coalition):
-            resources_spend_incr = self.model.resources_spend_incr_coal
-            self_id = self.model.number_activeagents
-            for agents in self.model.schedule.agent_buffer(shuffled=True):
-                if agents not in self.members and isinstance(agents, ActiveAgent) and not isinstance(agents, Coalition):
-                    agent_targets.append(agents)
-
-        # making sure there are enough resources
-        while self.resources_action > 0.001 and len(agent_targets) > 0:
-
-            total_grade_list = [] # initialising the grade list
-            total_agent_list = [] # initialising the agent list
-
-            for target in agent_targets:  # going through the other agents
-            # for target in self.model.schedule.agent_buffer(shuffled=True):  # going through the other agents
-                # if isinstance(target, ActiveAgent) and not isinstance(target, Coalition) \
-                #         and target != self:
-                total_agent_list.append(target.unique_id) # saving the agent considered (randomly selected)
-
-                agent_type_bonus = 1 # making sure policymakers are preferred for the PF interactions
-                if target.agent_type == 'policymaker' and step == 'PF':
-                    agent_type_bonus = 1.1
-
-                # looking at causal beliefs
-                for cb in cb_of_interest: # go through all causal beliefs of interest
-                    conflict_level, diff = self.conflict_level_calc('cb', cb, 0, target, PK)
-                    total_grade_list.append(conflict_level * abs(diff)/2 * agent_type_bonus)
-                    # the abs is needed to take care of the causal belief range of [-1, 1]
-                    # the /2 is used also due to a range twice as large as for the other interactions
-
-                # looking the preferred states (aka goal)
-                conflict_level, diff = self.conflict_level_calc('belief', issue, 1, target, PK) # conflict level
-                total_grade_list.append(conflict_level * diff * agent_type_bonus)
-
-                # looking for the actual beliefs (aka belief)
-                # todo - this
-                if PI:
-                    conflict_level, diff = self.conflict_level_calc('belief', issue, 0, target, PK)  # conflict level
-                    total_grade_list.append(conflict_level * diff * agent_type_bonus)
-
-            # print('agents', len(total_agent_list), total_agent_list)
-            # print('grades', len(total_grade_list), total_grade_list)
-
-            # selecting the best graded interaction
-            max_best_action = max(total_grade_list)
-            best_action_index = total_grade_list.index(max(total_grade_list)) # index of interaction in the list
-            best_action_agent_id = total_agent_list[int(best_action_index/action_number)] # unique_id of interaction target
-            print(max_best_action, best_action_index, int(best_action_index/action_number), best_action_agent_id)
-
-            best_action_type = best_action_index - action_number * int(best_action_index / action_number)
-            # selecting the action type: 0 is a causal belief action, 1 is a preferred state action
-            # for PI cases: 2 is an actual belief action
-
-            print('type', best_action_type)
-            print('action number', action_number)
-
-            # performing the interaction
-            for target in agent_targets:  # going through the other agents
-                tar_id = target.unique_id
-                if tar_id == best_action_agent_id:  # making sure it is an active agent and not self
-                    # print('Actor: #', self_id, ', target: #', tar_id)
-                    if best_action_type <= action_number - 1 - 1: # action type: causal belief
-                        cb_choice = cb_of_interest[best_action_type]
-                        target.issuetree[tar_id][cb_choice][0] += (self.issuetree[self_id][cb_choice][0] -
-                         target.issuetree[tar_id][cb_choice][0]) * (self.resources * resources_spend_incr)
-                        # -1+1 checks
-                        self.one_minus_one_check(target.issuetree[tar_id][cb_choice][0], 'cb')
-
-                        if PK == True: # updating the partial knowledge of the agents
-                            self.issuetree[tar_id][cb_choice][0] += \
-                                (target.issuetree[tar_id][cb_choice][0] - self.issuetree[tar_id][cb_choice][0]) * PK_catchup
-                            self.one_minus_one_check(self.issuetree[tar_id][cb_choice][0], 'cb')
-
-                    if best_action_type == action_number - 1: # action type: preferred state
-                        # print('Aff.', self.affiliation)
-                        # print('Acting:', self.issuetree[self_id][issue][1])
-                        # print('Bf:', target.issuetree[tar_id][issue][1])
-                        # print('Change', (self.issuetree[self_id][issue][1] -
-                        #      target.issuetree[tar_id][issue][1]) * (self.resources/100 * 0.1))
-                        target.issuetree[tar_id][issue][1] += (self.issuetree[self_id][issue][1] -
-                             target.issuetree[tar_id][issue][1]) * (self.resources * resources_spend_incr)
-                        self.one_minus_one_check(target.issuetree[tar_id][issue][1], 'PS')
-                        # print('Af:', target.issuetree[tar_id][issue][1])
-                        # print(' ')
-
-                        if PK == True: # updating the partial knowledge of the agents
-                            self.issuetree[tar_id][issue][1] += \
-                                (target.issuetree[tar_id][issue][1] - self.issuetree[tar_id][issue][1]) * PK_catchup
-                            self.one_minus_one_check(self.issuetree[tar_id][issue][1], 'PS')
-
-                    if PI and best_action_type == action_number: # action type: actual belief
-                        # print('Aff.', self.affiliation)
-                        # print('Acting:', self.issuetree[self_id][issue][1])
-                        # print('Bf:', target.issuetree[tar_id][issue][1])
-                        # print('Change', (self.issuetree[self_id][issue][1] -
-                        #      target.issuetree[tar_id][issue][1]) * (self.resources/100 * 0.1))
-                        target.issuetree[tar_id][issue][0] += (self.issuetree[self_id][issue][0] -
-                             target.issuetree[tar_id][issue][0]) * (self.resources * resources_spend_incr)
-                        self.one_minus_one_check(target.issuetree[tar_id][issue][0], 'PS')
-                        # print('Af:', target.issuetree[tar_id][issue][1])
-                        # print(' ')
-
-                        if PK == True: # updating the partial knowledge of the agents
-                            self.issuetree[tar_id][issue][0] += \
-                                (target.issuetree[tar_id][issue][1] - self.issuetree[tar_id][issue][0]) * PK_catchup
-                            self.one_minus_one_check(self.issuetree[tar_id][issue][0], 'PS')
-
-                    self.resources_action -= self.resources * resources_spend_incr # removing the action resources
-
-        # print('End act for', self.unique_id, step, self.resources, self.resources_action)
+        return cb_of_interest, issue, action_number
 
     def one_minus_one_check (self, value, belief_type):
 
@@ -518,7 +618,7 @@ class Coalition(ActiveAgent):
 
         self.selected_PC = None; self.selected_S = None; self.selected_PI = None  # selected issues and policies
 
-    def interactions_intra_coalition(self, step):
+    def interactions_intra_coalition(self, step, PI=False):
 
         """
         ACF+PL+Co (coalition version)
@@ -530,7 +630,6 @@ class Coalition(ActiveAgent):
         """
 
         len_DC = self.model.len_DC; len_PC = self.model.len_PC; len_S = self.model.len_S
-        action_number = len_DC + 1 # number of actions allowed in this step (causal beliefs, preferred states)
 
         # selection of the cw of interest
         cb_of_interest = []
@@ -550,7 +649,7 @@ class Coalition(ActiveAgent):
             issue = len_DC + len_PC + self.selected_S
 
         # creating the list of agents that are not in line with the coalition
-        member_list_not_coherent = self.coherence_check(issue, cb_of_interest)
+        member_list_not_coherent = self.coherence_check(issue, cb_of_interest, PI)
 
         # making sure there are enough resources
         # only 30% of the resources can be spent on intra-coalition actions
@@ -568,6 +667,7 @@ class Coalition(ActiveAgent):
             action_performed = False
 
             for agent_mem in member_list_not_coherent: # going through all the agents
+
                 # considering the preferred states - priority on actions of preferred states
                 coalition_goal = self.issuetree[self.model.number_activeagents][issue][1]
                 agent_mem_goal = agent_mem.issuetree[agent_mem.unique_id][issue][1]
@@ -575,7 +675,15 @@ class Coalition(ActiveAgent):
                     agent_mem_goal += (coalition_goal - agent_mem_goal) * (self.resources * 0.05)  # action
                     self.resources_action -= self.resources * 0.05  # removing the action resources
                     action_performed = True
-                    member_list_not_coherent = self.coherence_check(issue, cb_of_interest) # update the list
+
+                if PI:
+                    # considering the actual beliefs - priority over the causal beliefs
+                    coalition_belief = self.issuetree[self.model.number_activeagents][issue][0]
+                    agent_mem_belief = agent_mem.issuetree[agent_mem.unique_id][issue][0]
+                    if abs(coalition_belief - agent_mem_belief) > self.model.coa_coherence_thresh and action_performed is False:
+                        agent_mem_belief += (coalition_belief - agent_mem_belief) * (self.resources * 0.05)  # action
+                        self.resources_action -= self.resources * 0.05  # removing the action resources
+                        action_performed = True
 
                 # considering the causal beliefs
                 for cb in cb_of_interest:
@@ -585,9 +693,10 @@ class Coalition(ActiveAgent):
                         agent_mem_CR += (coalition_CR - agent_mem_CR) * (self.resources * 0.05) # action
                         self.resources_action -= self.resources * 0.05  # removing the action resources
                         action_performed = True
-                        member_list_not_coherent = self.coherence_check(issue, cb_of_interest)  # update the list
 
-    def coherence_check(self, issue, cb_of_interest):
+            member_list_not_coherent = self.coherence_check(issue, cb_of_interest, PI)  # update the list
+
+    def coherence_check(self, issue, cb_of_interest, PI):
 
         '''
         This function is used to check the coherence check. It returns an array filled with agents that are not close
@@ -608,6 +717,14 @@ class Coalition(ActiveAgent):
             if abs(coalition_goal - agent_mem_goal) > self.model.coa_coherence_thresh:
                 print('No coherence 0')
                 member_list_not_coherent.append(agent_mem)
+
+            # considering the actual beliefs
+            if PI:
+                coalition_belief = self.issuetree[self.model.number_activeagents][issue][0]
+                agent_mem_belief = agent_mem.issuetree[agent_mem.unique_id][issue][0]
+                if abs(coalition_belief - agent_mem_belief) > self.model.coa_coherence_thresh:
+                    print('No coherence 0')
+                    member_list_not_coherent.append(agent_mem)
 
             # considering the causal beliefs
             for cb in cb_of_interest:

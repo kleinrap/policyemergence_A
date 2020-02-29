@@ -32,10 +32,6 @@ Model types
         +PI: Partial information	['+PI'] - Add-on
 '''
 
-# todo for the +PI
-#  - add blanket interactions
-#  - add actual belief interactions for all agents
-
 # todo notes:
 #  - at the moment no agenda is ever created, after the introduction of the update of the active agents update
 #    the initialisation of the beliefs for the external parties is crucial to the selection of an agenda - worth mentionning
@@ -81,8 +77,9 @@ PE_agents[11][2] = 2 # adding external parties for the +PI scenario
 
 PE_PMs_aff_0 = [2, 1]  # policy maker distribution per affiliation
 PE_PEs_aff_0 = [4, 4]  # policy entrepreneur distribution per affiliation
-PE_EPs_aff_0 = [1, 1]  # external parties distribution per affiliation
+PE_EPs_aff_0 = [0, 0]  # external parties distribution per affiliation
 PE_aff = [[PE_PMs_aff_0, PE_PEs_aff_0, PE_EPs_aff_0] for p in range(sce_number)]
+PE_aff[11][2] = [1, 1]
 
 # input profile for preferred states
 '''
