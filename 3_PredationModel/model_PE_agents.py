@@ -196,8 +196,12 @@ class ActiveAgent(Agent):
         # number of actions allowed in this step (causal beliefs, preferred states)
         if step == 'AS':
             action_number = len_DC + 1
+            if PI:
+                action_number = len_DC + 2 # adding the actual beliefs
         if step == 'PF':
             action_number = len_PC + 1
+            if PI:
+                action_number = len_PC + 2 # adding the actual beliefs
 
         # selection of the cw of interest
         cb_of_interest = []
@@ -261,27 +265,30 @@ class ActiveAgent(Agent):
                     # the /2 is used also due to a range twice as large as for the other interactions
 
                 # looking the preferred states (aka goal)
-                conflict_level, diff = self.conflict_level_calc('belief', issue, 1, target, PK) # calculating the conflict level
+                conflict_level, diff = self.conflict_level_calc('belief', issue, 1, target, PK) # conflict level
                 total_grade_list.append(conflict_level * diff * agent_type_bonus)
 
                 # looking for the actual beliefs (aka belief)
                 # todo - this
                 if PI:
-                    print('PI')
-                    conflict_level, diff = self.conflict_level_calc('belief', issue, 0, target, PK)  # calculating the conflict level
+                    conflict_level, diff = self.conflict_level_calc('belief', issue, 0, target, PK)  # conflict level
                     total_grade_list.append(conflict_level * diff * agent_type_bonus)
 
-            # print('agents', total_agent_list)
-            # print('grades', total_grade_list)
+            # print('agents', len(total_agent_list), total_agent_list)
+            # print('grades', len(total_grade_list), total_grade_list)
 
             # selecting the best graded interaction
             max_best_action = max(total_grade_list)
             best_action_index = total_grade_list.index(max(total_grade_list)) # index of interaction in the list
             best_action_agent_id = total_agent_list[int(best_action_index/action_number)] # unique_id of interaction target
-            # print(max_best_action, best_action_index, int(best_action_index/action_number), best_action_agent_id)
+            print(max_best_action, best_action_index, int(best_action_index/action_number), best_action_agent_id)
 
             best_action_type = best_action_index - action_number * int(best_action_index / action_number)
-            # selecting the action type (0 is a causal belief action, 1 is a preferred state action)
+            # selecting the action type: 0 is a causal belief action, 1 is a preferred state action
+            # for PI cases: 2 is an actual belief action
+
+            print('type', best_action_type)
+            print('action number', action_number)
 
             # performing the interaction
             for target in agent_targets:  # going through the other agents
@@ -316,6 +323,23 @@ class ActiveAgent(Agent):
                             self.issuetree[tar_id][issue][1] += \
                                 (target.issuetree[tar_id][issue][1] - self.issuetree[tar_id][issue][1]) * PK_catchup
                             self.one_minus_one_check(self.issuetree[tar_id][issue][1], 'PS')
+
+                    if PI and best_action_type == action_number: # action type: actual belief
+                        # print('Aff.', self.affiliation)
+                        # print('Acting:', self.issuetree[self_id][issue][1])
+                        # print('Bf:', target.issuetree[tar_id][issue][1])
+                        # print('Change', (self.issuetree[self_id][issue][1] -
+                        #      target.issuetree[tar_id][issue][1]) * (self.resources/100 * 0.1))
+                        target.issuetree[tar_id][issue][0] += (self.issuetree[self_id][issue][0] -
+                             target.issuetree[tar_id][issue][0]) * (self.resources * resources_spend_incr)
+                        self.one_minus_one_check(target.issuetree[tar_id][issue][0], 'PS')
+                        # print('Af:', target.issuetree[tar_id][issue][1])
+                        # print(' ')
+
+                        if PK == True: # updating the partial knowledge of the agents
+                            self.issuetree[tar_id][issue][0] += \
+                                (target.issuetree[tar_id][issue][1] - self.issuetree[tar_id][issue][0]) * PK_catchup
+                            self.one_minus_one_check(self.issuetree[tar_id][issue][0], 'PS')
 
                     self.resources_action -= self.resources * resources_spend_incr # removing the action resources
 
