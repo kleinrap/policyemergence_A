@@ -33,11 +33,13 @@ Model types
 '''
 
 # todo for the +PI
-#  - add the W_aff parameter matrix
-#  - add update of actual beliefs for the other agents
-#  - remove the link direct to the agents for the +PI
 #  - add blanket interactions
 #  - add actual belief interactions for all agents
+
+# todo notes:
+#  - at the moment no agenda is ever created, after the introduction of the update of the active agents update
+#    the initialisation of the beliefs for the external parties is crucial to the selection of an agenda - worth mentionning
+#    in the discusion
 
 # running parameters
 total_ticks = 1600
@@ -127,6 +129,8 @@ for i in range(sce_number):
     else:
         bias_inputs.append(read_inputs(res_aff, i, 'bias'))
         belief_inputs.append(read_inputs(res_aff, i, 'belief'))
+# aff.   same,different
+w_aff = [1.0, 0.75] # trust affiliation matrix
 # AplusPI_inputs = [] # in case there is no +PI model
 
 
@@ -154,8 +158,7 @@ for sce_i in range (sce_number):
 
             AplusCo_inputs = [PC_interest[sce_i], coa_creation_thresh, coa_coherence_thresh, coa_resources_share,
                               resources_spend_incr_coal]
-
-            AplusPI_inputs = [bias_inputs[sce_i], belief_inputs[sce_i]]
+            AplusPI_inputs = [bias_inputs[sce_i], belief_inputs[sce_i], w_aff]
 
             # initialisation of the policy emergence model
             model_run_PE = PolicyEmergenceSM(PE_type[sce_i], PE_inputs, AplusPL_param, AplusCo_inputs, AplusPK_inputs,

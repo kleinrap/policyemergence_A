@@ -175,7 +175,7 @@ class ActiveAgent(Agent):
         self.selected_PI = PI_pref_list.index(min(PI_pref_list))
         self.selected_PI = self.model.PF_indices[self.model.agenda_PF][self.selected_PI]
 
-    def interactions(self, step, PK=False):
+    def interactions(self, step, PK=False, PI=False):
 
         """
         ACF+PL+Co
@@ -263,6 +263,14 @@ class ActiveAgent(Agent):
                 # looking the preferred states (aka goal)
                 conflict_level, diff = self.conflict_level_calc('belief', issue, 1, target, PK) # calculating the conflict level
                 total_grade_list.append(conflict_level * diff * agent_type_bonus)
+
+                # looking for the actual beliefs (aka belief)
+                # todo - this
+                if PI:
+                    print('PI')
+                    conflict_level, diff = self.conflict_level_calc('belief', issue, 0, target, PK)  # calculating the conflict level
+                    total_grade_list.append(conflict_level * diff * agent_type_bonus)
+
             # print('agents', total_agent_list)
             # print('grades', total_grade_list)
 
@@ -504,7 +512,6 @@ class Coalition(ActiveAgent):
         cb_of_interest = []
         # consider only the causal relations related to the problem on the agenda
         if step == 'AS':
-            print(self.selected_PC)
             for cb_choice in range(len_DC):
                 cb_of_interest.append(len_DC + len_PC + len_S + len_DC * self.selected_PC  + cb_choice)
         if step == 'PF':

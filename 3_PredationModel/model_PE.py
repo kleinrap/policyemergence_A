@@ -140,7 +140,11 @@ class PolicyEmergenceSM(Model):
 		self.grid = SingleGrid(height, width, torus=True) # mesa grid creation method
 
 		# +PI parameters
+		self.PI = False
 		self.AplusPI_inputs = AplusPI_inputs
+		if '+PI' in self.PE_type:
+			self.PI = True
+			self.w_aff = AplusPI_inputs[2]
 
 		# creation of the datacollector vector
 
@@ -202,14 +206,16 @@ class PolicyEmergenceSM(Model):
 		self.KPIs = KPIs # saving the indicators
 
 		# 0. initialisation
-		# communicating the actual beliefs from the truth agent to the active agents
+		# informing the actual beliefs
 		if '+PI' not in self.PE_type:
 			self.module_interface_input(self.KPIs) # for when there is no +PI add-on
 		if '+PI' in self.PE_type:
 			self.moduel_interface_input_PI(self.KPIs) # for the +PI add-on
-		self.electorate_influence(self.w_el_influence) # electorate influence actions
+		# electorate influence actions
+		self.electorate_influence(self.w_el_influence)
+		# creation of the coalitions
 		if 'A+Co' in self.PE_type:
-			self.coalition_creation_algorithm() # creation of the coalitions
+			self.coalition_creation_algorithm()
 
 		# 1. agenda setting
 		self.agenda_setting()
@@ -289,39 +295,29 @@ class PolicyEmergenceSM(Model):
 					for issue in range(len_DC + len_PC + len_S):
 						agent.issuetree[id][issue][0] += (truth_issuetree[issue] - agent.issuetree[id][issue][0]) * \
 													  (agent.issuetree[id][issue][3] * 0.2)
+					self.preference_update(agent, agent.unique_id)  # updating the preferences
 
 		# informing the policy makers and entrepreneurs
-		# todo - this
 		for agent in self.schedule.agent_buffer(shuffled=True):
 			if isinstance(agent, ActiveAgent) and not isinstance(agent, Coalition): # selecting only active agents
 				if agent.agent_type != 'externalparty':
 					id = agent.unique_id
 					for issue in range(len_DC + len_PC + len_S):
 						belief_update = 0
-						print('Before:', agent.issuetree[id][issue][0])
 						for agent_ep in ext_parties:
 							id_ep = agent_ep.unique_id
-							# todo - the outcome is correct atm
-							# todo - change the 0.5 which should be W-aff format
-							# todo - find another method than adding to 1 as it needs to take into account the
-							#  possibility of dozens of external parties
-							print('ep value:', agent_ep.issuetree[id_ep][issue][0])
-							belief_update += (agent_ep.issuetree[id_ep][issue][0] - agent.issuetree[id][issue][0]) * 0.5
-						print('Update:', belief_update)
-						agent.issuetree[id][issue][0] += belief_update
+							# considering affiliations trust
+							if agent_ep.affiliation == agent.affiliation:
+								w_aff = self.w_aff[0]
+							if agent_ep.affiliation != agent.affiliation:
+								w_aff = self.w_aff[1]
+							belief_update += (agent_ep.issuetree[id_ep][issue][0] - agent.issuetree[id][issue][0]) * w_aff
+						agent.issuetree[id][issue][0] += belief_update / len(ext_parties)
 						if agent.issuetree[id][issue][0] > 1:
 							agent.issuetree[id][issue][0] = 1
 						if agent.issuetree[id][issue][0] < 0:
 							agent.issuetree[id][issue][0] = 0
-						print('After:', agent.issuetree[id][issue][0])
-						print(' ')
-
-		# Transferring policy impact to active agents
-		for agent in self.schedule.agent_buffer(shuffled=True):
-			if isinstance(agent, ActiveAgent) and not isinstance(agent, Coalition): # selecting only active agents
-				for issue in range(len_DC + len_PC + len_S): # communicating the issue beliefs from the KPIs
-					agent.issuetree[agent.unique_id][issue][0] = truth_issuetree[issue]
-				self.preference_update(agent, agent.unique_id) # updating the preferences
+					self.preference_update(agent, agent.unique_id)  # updating the preferences
 
 	def resources_distribution(self):
 
@@ -368,7 +364,7 @@ class PolicyEmergenceSM(Model):
 		if 'A+PL' in self.PE_type or 'A+Co' in self.PE_type:
 			for agent in self.schedule.agent_buffer(shuffled=True):
 				if isinstance(agent, ActiveAgent):  # selecting only active agents
-					agent.interactions('AS', self.PK)
+					agent.interactions('AS', self.PK, self.PI)
 
 		# active agent policy core selection (after agent interactions)
 		if 'A+PL' in self.PE_type or 'A+Co' in self.PE_type:
@@ -381,7 +377,7 @@ class PolicyEmergenceSM(Model):
 		selected_PC_list = []
 		number_ActiveAgents = 0
 		for agent in self.schedule.agent_buffer(shuffled=False):
-			if isinstance(agent, ActiveAgent):  # considering only policy makers
+			if isinstance(agent, ActiveAgent) and not isinstance(agent, Coalition):  # considering only policy makers
 				selected_PC_list.append(agent.selected_PC)
 				number_ActiveAgents += 1
 
@@ -448,7 +444,6 @@ class PolicyEmergenceSM(Model):
 
 		# finding the most common policy instrument and its frequency
 		d = defaultdict(int)
-		print(selected_PI_list)
 		for i in selected_PI_list:
 			d[i] += 1
 		result = max(d.items(), key=lambda x: x[1])
