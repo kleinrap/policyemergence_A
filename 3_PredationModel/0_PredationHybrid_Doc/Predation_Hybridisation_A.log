@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.5)  28 FEB 2020 15:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2018.1.5)  3 MAR 2020 14:52
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -765,7 +765,7 @@ Overfull \hbox (8.70602pt too wide) in paragraph at lines 176--177
 ithin the ACF+PL
  []
 
-[5] [6] [7] [8]
+[5] [6] [7] [8] [9]
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
@@ -775,7 +775,10 @@ LaTeX Warning: `!h' float specifier changed to `!ht'.
 
 LaTeX Warning: `!h' float specifier changed to `!ht'.
 
-[9] [10]
+
+LaTeX Warning: `!h' float specifier changed to `!ht'.
+
+[10] [11] [12]
 Package epstopdf Info: Source file: <figures/PE_PL_PCGoals_+PL.eps>
 (epstopdf)                    date: 2020-02-07 14:17:11
 (epstopdf)                    size: 3492618 bytes
@@ -785,14 +788,14 @@ Package epstopdf Info: Source file: <figures/PE_PL_PCGoals_+PL.eps>
 (epstopdf)                    size: 11269363 bytes
 (epstopdf)             Command: <repstopdf --outfile=figures/PE_PL_PCGoals_+PL-
 eps-converted-to.pdf figures/PE_PL_PCGoals_+PL.eps>
-(epstopdf)             \includegraphics on input line 437.
+(epstopdf)             \includegraphics on input line 471.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/PE_PL_PCGoals_+PL-eps-converted-to.pdf, id=182, 1084.05pt x 1084.05pt>
+<figures/PE_PL_PCGoals_+PL-eps-converted-to.pdf, id=191, 1084.05pt x 1084.05pt>
 File: figures/PE_PL_PCGoals_+PL-eps-converted-to.pdf Graphic file (type pdf)
 <use figures/PE_PL_PCGoals_+PL-eps-converted-to.pdf>
 Package pdftex.def Info: figures/PE_PL_PCGoals_+PL-eps-converted-to.pdf used on
- input line 437.
+ input line 471.
 (pdftex.def)             Requested size: 370.49881pt x 370.4909pt.
 Package epstopdf Info: Source file: <figures/PE_PL_PCSelected_+PL.eps>
 (epstopdf)                    date: 2020-02-07 14:18:24
@@ -803,16 +806,16 @@ Package epstopdf Info: Source file: <figures/PE_PL_PCSelected_+PL.eps>
 (epstopdf)                    size: 19160 bytes
 (epstopdf)             Command: <repstopdf --outfile=figures/PE_PL_PCSelected_+
 PL-eps-converted-to.pdf figures/PE_PL_PCSelected_+PL.eps>
-(epstopdf)             \includegraphics on input line 444.
+(epstopdf)             \includegraphics on input line 478.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/PE_PL_PCSelected_+PL-eps-converted-to.pdf, id=183, 1084.05pt x 1084.05
+<figures/PE_PL_PCSelected_+PL-eps-converted-to.pdf, id=192, 1084.05pt x 1084.05
 pt>
 File: figures/PE_PL_PCSelected_+PL-eps-converted-to.pdf Graphic file (type pdf)
 
  <use figures/PE_PL_PCSelected_+PL-eps-converted-to.pdf>
 Package pdftex.def Info: figures/PE_PL_PCSelected_+PL-eps-converted-to.pdf used
- on input line 444.
+ on input line 478.
 (pdftex.def)             Requested size: 370.49881pt x 370.4909pt.
 Package epstopdf Info: Source file: <figures/PE_PL_SGoals_+PL.eps>
 (epstopdf)                    date: 2020-02-07 13:47:48
@@ -823,15 +826,15 @@ pdf>
 (epstopdf)                    size: 11224286 bytes
 (epstopdf)             Command: <repstopdf --outfile=figures/PE_PL_SGoals_+PL-e
 ps-converted-to.pdf figures/PE_PL_SGoals_+PL.eps>
-(epstopdf)             \includegraphics on input line 451.
+(epstopdf)             \includegraphics on input line 485.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/PE_PL_SGoals_+PL-eps-converted-to.pdf, id=184, 1084.05pt x 1084.05pt>
+<figures/PE_PL_SGoals_+PL-eps-converted-to.pdf, id=193, 1084.05pt x 1084.05pt>
 File: figures/PE_PL_SGoals_+PL-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/PE_PL_SGoals_+PL-eps-converted-to.pdf>
 Package pdftex.def Info: figures/PE_PL_SGoals_+PL-eps-converted-to.pdf used on 
-input line 451.
+input line 485.
 (pdftex.def)             Requested size: 370.49881pt x 370.4909pt.
 Package epstopdf Info: Source file: <figures/PE_PL_SSelected_+PL.eps>
 (epstopdf)                    date: 2020-02-07 14:20:51
@@ -842,15 +845,15 @@ to.pdf>
 (epstopdf)                    size: 17031 bytes
 (epstopdf)             Command: <repstopdf --outfile=figures/PE_PL_SSelected_+P
 L-eps-converted-to.pdf figures/PE_PL_SSelected_+PL.eps>
-(epstopdf)             \includegraphics on input line 458.
+(epstopdf)             \includegraphics on input line 492.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/PE_PL_SSelected_+PL-eps-converted-to.pdf, id=185, 1084.05pt x 1084.05p
+<figures/PE_PL_SSelected_+PL-eps-converted-to.pdf, id=194, 1084.05pt x 1084.05p
 t>
 File: figures/PE_PL_SSelected_+PL-eps-converted-to.pdf Graphic file (type pdf)
  <use figures/PE_PL_SSelected_+PL-eps-converted-to.pdf>
 Package pdftex.def Info: figures/PE_PL_SSelected_+PL-eps-converted-to.pdf used 
-on input line 458.
+on input line 492.
 (pdftex.def)             Requested size: 370.49881pt x 370.4909pt.
 Package epstopdf Info: Source file: <figures/PE_PI_selection_+PL.eps>
 (epstopdf)                    date: 2020-02-07 14:49:04
@@ -861,15 +864,15 @@ to.pdf>
 (epstopdf)                    size: 22468 bytes
 (epstopdf)             Command: <repstopdf --outfile=figures/PE_PI_selection_+P
 L-eps-converted-to.pdf figures/PE_PI_selection_+PL.eps>
-(epstopdf)             \includegraphics on input line 465.
+(epstopdf)             \includegraphics on input line 499.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/PE_PI_selection_+PL-eps-converted-to.pdf, id=186, 1084.05pt x 1084.05p
+<figures/PE_PI_selection_+PL-eps-converted-to.pdf, id=195, 1084.05pt x 1084.05p
 t>
 File: figures/PE_PI_selection_+PL-eps-converted-to.pdf Graphic file (type pdf)
  <use figures/PE_PI_selection_+PL-eps-converted-to.pdf>
 Package pdftex.def Info: figures/PE_PI_selection_+PL-eps-converted-to.pdf used 
-on input line 465.
+on input line 499.
 (pdftex.def)             Requested size: 370.49881pt x 370.4909pt.
 Package epstopdf Info: Source file: <figures/Predation_Q1_popsWolfSheep_+PL.eps
 >
@@ -881,16 +884,16 @@ Package epstopdf Info: Source file: <figures/Predation_Q1_popsWolfSheep_+PL.eps
 (epstopdf)                    size: 2990286 bytes
 (epstopdf)             Command: <repstopdf --outfile=figures/Predation_Q1_popsW
 olfSheep_+PL-eps-converted-to.pdf figures/Predation_Q1_popsWolfSheep_+PL.eps>
-(epstopdf)             \includegraphics on input line 472.
+(epstopdf)             \includegraphics on input line 506.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/Predation_Q1_popsWolfSheep_+PL-eps-converted-to.pdf, id=187, 1084.05pt
+<figures/Predation_Q1_popsWolfSheep_+PL-eps-converted-to.pdf, id=196, 1084.05pt
  x 867.24pt>
 File: figures/Predation_Q1_popsWolfSheep_+PL-eps-converted-to.pdf Graphic file 
 (type pdf)
  <use figures/Predation_Q1_popsWolfSheep_+PL-eps-converted-to.pdf>
 Package pdftex.def Info: figures/Predation_Q1_popsWolfSheep_+PL-eps-converted-t
-o.pdf used on input line 472.
+o.pdf used on input line 506.
 (pdftex.def)             Requested size: 370.49881pt x 296.39273pt.
 Package epstopdf Info: Source file: <figures/Predation_Q1_popsGrass_+PL.eps>
 (epstopdf)                    date: 2020-02-07 14:30:33
@@ -901,16 +904,16 @@ verted-to.pdf>
 (epstopdf)                    size: 1701571 bytes
 (epstopdf)             Command: <repstopdf --outfile=figures/Predation_Q1_popsG
 rass_+PL-eps-converted-to.pdf figures/Predation_Q1_popsGrass_+PL.eps>
-(epstopdf)             \includegraphics on input line 479.
+(epstopdf)             \includegraphics on input line 513.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/Predation_Q1_popsGrass_+PL-eps-converted-to.pdf, id=188, 1084.05pt x 8
+<figures/Predation_Q1_popsGrass_+PL-eps-converted-to.pdf, id=197, 1084.05pt x 8
 67.24pt>
 File: figures/Predation_Q1_popsGrass_+PL-eps-converted-to.pdf Graphic file (typ
 e pdf)
  <use figures/Predation_Q1_popsGrass_+PL-eps-converted-to.pdf>
 Package pdftex.def Info: figures/Predation_Q1_popsGrass_+PL-eps-converted-to.pd
-f used on input line 479.
+f used on input line 513.
 (pdftex.def)             Requested size: 370.49881pt x 296.39273pt.
 Package epstopdf Info: Source file: <figures/PE_PL_PCGoals_+Co.eps>
 (epstopdf)                    date: 2020-02-07 16:15:51
@@ -921,15 +924,15 @@ Package epstopdf Info: Source file: <figures/PE_PL_PCGoals_+Co.eps>
 (epstopdf)                    size: 9499482 bytes
 (epstopdf)             Command: <repstopdf --outfile=figures/PE_PL_PCGoals_+Co-
 eps-converted-to.pdf figures/PE_PL_PCGoals_+Co.eps>
-(epstopdf)             \includegraphics on input line 486.
+(epstopdf)             \includegraphics on input line 520.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/PE_PL_PCGoals_+Co-eps-converted-to.pdf, id=189, 1084.05pt x 867.24pt>
+<figures/PE_PL_PCGoals_+Co-eps-converted-to.pdf, id=198, 1084.05pt x 867.24pt>
 File: figures/PE_PL_PCGoals_+Co-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/PE_PL_PCGoals_+Co-eps-converted-to.pdf>
 Package pdftex.def Info: figures/PE_PL_PCGoals_+Co-eps-converted-to.pdf used on
- input line 486.
+ input line 520.
 (pdftex.def)             Requested size: 370.49881pt x 296.39273pt.
 Package epstopdf Info: Source file: <figures/PE_PL_PCSelected_+Co.eps>
 (epstopdf)                    date: 2020-02-07 16:30:34
@@ -940,16 +943,16 @@ Package epstopdf Info: Source file: <figures/PE_PL_PCSelected_+Co.eps>
 (epstopdf)                    size: 18134 bytes
 (epstopdf)             Command: <repstopdf --outfile=figures/PE_PL_PCSelected_+
 Co-eps-converted-to.pdf figures/PE_PL_PCSelected_+Co.eps>
-(epstopdf)             \includegraphics on input line 493.
+(epstopdf)             \includegraphics on input line 527.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/PE_PL_PCSelected_+Co-eps-converted-to.pdf, id=190, 1084.05pt x 939.51p
+<figures/PE_PL_PCSelected_+Co-eps-converted-to.pdf, id=199, 1084.05pt x 939.51p
 t>
 File: figures/PE_PL_PCSelected_+Co-eps-converted-to.pdf Graphic file (type pdf)
 
  <use figures/PE_PL_PCSelected_+Co-eps-converted-to.pdf>
 Package pdftex.def Info: figures/PE_PL_PCSelected_+Co-eps-converted-to.pdf used
- on input line 493.
+ on input line 527.
 (pdftex.def)             Requested size: 370.49881pt x 321.09212pt.
 Package epstopdf Info: Source file: <figures/PE_PL_SGoals_+Co.eps>
 (epstopdf)                    date: 2020-02-07 16:17:59
@@ -960,15 +963,15 @@ pdf>
 (epstopdf)                    size: 9462512 bytes
 (epstopdf)             Command: <repstopdf --outfile=figures/PE_PL_SGoals_+Co-e
 ps-converted-to.pdf figures/PE_PL_SGoals_+Co.eps>
-(epstopdf)             \includegraphics on input line 500.
+(epstopdf)             \includegraphics on input line 534.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/PE_PL_SGoals_+Co-eps-converted-to.pdf, id=191, 1084.05pt x 867.24pt>
+<figures/PE_PL_SGoals_+Co-eps-converted-to.pdf, id=200, 1084.05pt x 867.24pt>
 File: figures/PE_PL_SGoals_+Co-eps-converted-to.pdf Graphic file (type pdf)
 
 <use figures/PE_PL_SGoals_+Co-eps-converted-to.pdf>
 Package pdftex.def Info: figures/PE_PL_SGoals_+Co-eps-converted-to.pdf used on 
-input line 500.
+input line 534.
 (pdftex.def)             Requested size: 370.49881pt x 296.39273pt.
 Package epstopdf Info: Source file: <figures/PE_PL_SSelected_+Co.eps>
 (epstopdf)                    date: 2020-02-07 16:39:57
@@ -979,15 +982,15 @@ to.pdf>
 (epstopdf)                    size: 15473 bytes
 (epstopdf)             Command: <repstopdf --outfile=figures/PE_PL_SSelected_+C
 o-eps-converted-to.pdf figures/PE_PL_SSelected_+Co.eps>
-(epstopdf)             \includegraphics on input line 507.
+(epstopdf)             \includegraphics on input line 541.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/PE_PL_SSelected_+Co-eps-converted-to.pdf, id=192, 1084.05pt x 867.24pt
+<figures/PE_PL_SSelected_+Co-eps-converted-to.pdf, id=201, 1084.05pt x 867.24pt
 >
 File: figures/PE_PL_SSelected_+Co-eps-converted-to.pdf Graphic file (type pdf)
  <use figures/PE_PL_SSelected_+Co-eps-converted-to.pdf>
 Package pdftex.def Info: figures/PE_PL_SSelected_+Co-eps-converted-to.pdf used 
-on input line 507.
+on input line 541.
 (pdftex.def)             Requested size: 370.49881pt x 296.39273pt.
 Package epstopdf Info: Source file: <figures/PE_PI_selection_+Co.eps>
 (epstopdf)                    date: 2020-02-07 16:20:20
@@ -998,15 +1001,15 @@ to.pdf>
 (epstopdf)                    size: 22175 bytes
 (epstopdf)             Command: <repstopdf --outfile=figures/PE_PI_selection_+C
 o-eps-converted-to.pdf figures/PE_PI_selection_+Co.eps>
-(epstopdf)             \includegraphics on input line 514.
+(epstopdf)             \includegraphics on input line 548.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/PE_PI_selection_+Co-eps-converted-to.pdf, id=193, 1084.05pt x 867.24pt
+<figures/PE_PI_selection_+Co-eps-converted-to.pdf, id=202, 1084.05pt x 867.24pt
 >
 File: figures/PE_PI_selection_+Co-eps-converted-to.pdf Graphic file (type pdf)
  <use figures/PE_PI_selection_+Co-eps-converted-to.pdf>
 Package pdftex.def Info: figures/PE_PI_selection_+Co-eps-converted-to.pdf used 
-on input line 514.
+on input line 548.
 (pdftex.def)             Requested size: 370.49881pt x 296.39273pt.
 Package epstopdf Info: Source file: <figures/Predation_Q1_popsWolfSheep_+Co.eps
 >
@@ -1018,16 +1021,16 @@ Package epstopdf Info: Source file: <figures/Predation_Q1_popsWolfSheep_+Co.eps
 (epstopdf)                    size: 2431960 bytes
 (epstopdf)             Command: <repstopdf --outfile=figures/Predation_Q1_popsW
 olfSheep_+Co-eps-converted-to.pdf figures/Predation_Q1_popsWolfSheep_+Co.eps>
-(epstopdf)             \includegraphics on input line 521.
+(epstopdf)             \includegraphics on input line 555.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/Predation_Q1_popsWolfSheep_+Co-eps-converted-to.pdf, id=194, 1084.05pt
+<figures/Predation_Q1_popsWolfSheep_+Co-eps-converted-to.pdf, id=203, 1084.05pt
  x 867.24pt>
 File: figures/Predation_Q1_popsWolfSheep_+Co-eps-converted-to.pdf Graphic file 
 (type pdf)
  <use figures/Predation_Q1_popsWolfSheep_+Co-eps-converted-to.pdf>
 Package pdftex.def Info: figures/Predation_Q1_popsWolfSheep_+Co-eps-converted-t
-o.pdf used on input line 521.
+o.pdf used on input line 555.
 (pdftex.def)             Requested size: 370.49881pt x 296.39273pt.
 Package epstopdf Info: Source file: <figures/Predation_Q1_popsGrass_+Co.eps>
 (epstopdf)                    date: 2020-02-07 15:29:14
@@ -1038,36 +1041,36 @@ verted-to.pdf>
 (epstopdf)                    size: 1383627 bytes
 (epstopdf)             Command: <repstopdf --outfile=figures/Predation_Q1_popsG
 rass_+Co-eps-converted-to.pdf figures/Predation_Q1_popsGrass_+Co.eps>
-(epstopdf)             \includegraphics on input line 528.
+(epstopdf)             \includegraphics on input line 562.
 Package epstopdf Info: Output file is already uptodate.
 
-<figures/Predation_Q1_popsGrass_+Co-eps-converted-to.pdf, id=195, 1084.05pt x 8
+<figures/Predation_Q1_popsGrass_+Co-eps-converted-to.pdf, id=204, 1084.05pt x 8
 67.24pt>
 File: figures/Predation_Q1_popsGrass_+Co-eps-converted-to.pdf Graphic file (typ
 e pdf)
  <use figures/Predation_Q1_popsGrass_+Co-eps-converted-to.pdf>
 Package pdftex.def Info: figures/Predation_Q1_popsGrass_+Co-eps-converted-to.pd
-f used on input line 528.
+f used on input line 562.
 (pdftex.def)             Requested size: 370.49881pt x 296.39273pt.
 
 No file Predation_Hybridisation_A.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 541.
-[11] [12 <./figures/PE_PL_PCGoals_+PL-eps-converted-to.pdf>] [13 <./figures/PE_
-PL_PCSelected_+PL-eps-converted-to.pdf>] [14 <./figures/PE_PL_SGoals_+PL-eps-co
-nverted-to.pdf>] [15 <./figures/PE_PL_SSelected_+PL-eps-converted-to.pdf>]
-[16 <./figures/PE_PI_selection_+PL-eps-converted-to.pdf>] [17 <./figures/Predat
-ion_Q1_popsWolfSheep_+PL-eps-converted-to.pdf>] [18 <./figures/Predation_Q1_pop
-sGrass_+PL-eps-converted-to.pdf>] [19 <./figures/PE_PL_PCGoals_+Co-eps-converte
-d-to.pdf>] [20 <./figures/PE_PL_PCSelected_+Co-eps-converted-to.pdf>] [21 <./fi
-gures/PE_PL_SGoals_+Co-eps-converted-to.pdf>] [22 <./figures/PE_PL_SSelected_+C
-o-eps-converted-to.pdf>] [23 <./figures/PE_PI_selection_+Co-eps-converted-to.pd
-f>] [24 <./figures/Predation_Q1_popsWolfSheep_+Co-eps-converted-to.pdf>]
-[25 <./figures/Predation_Q1_popsGrass_+Co-eps-converted-to.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 541.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 575.
+[13] [14 <./figures/PE_PL_PCGoals_+PL-eps-converted-to.pdf>] [15 <./figures/PE_
+PL_PCSelected_+PL-eps-converted-to.pdf>] [16 <./figures/PE_PL_SGoals_+PL-eps-co
+nverted-to.pdf>] [17 <./figures/PE_PL_SSelected_+PL-eps-converted-to.pdf>]
+[18 <./figures/PE_PI_selection_+PL-eps-converted-to.pdf>] [19 <./figures/Predat
+ion_Q1_popsWolfSheep_+PL-eps-converted-to.pdf>] [20 <./figures/Predation_Q1_pop
+sGrass_+PL-eps-converted-to.pdf>] [21 <./figures/PE_PL_PCGoals_+Co-eps-converte
+d-to.pdf>] [22 <./figures/PE_PL_PCSelected_+Co-eps-converted-to.pdf>] [23 <./fi
+gures/PE_PL_SGoals_+Co-eps-converted-to.pdf>] [24 <./figures/PE_PL_SSelected_+C
+o-eps-converted-to.pdf>] [25 <./figures/PE_PI_selection_+Co-eps-converted-to.pd
+f>] [26 <./figures/Predation_Q1_popsWolfSheep_+Co-eps-converted-to.pdf>]
+[27 <./figures/Predation_Q1_popsGrass_+Co-eps-converted-to.pdf>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 575.
 
 (./Predation_Hybridisation_A.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 541.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 541.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 575.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 575.
 Package rerunfilecheck Info: File `Predation_Hybridisation_A.out' has not chang
 ed.
 (rerunfilecheck)             Checksum: 6610809A46DF240BCFF97EDEEC65DD6C;1098.
@@ -1075,26 +1078,27 @@ ed.
 
 LaTeX Warning: There were multiply-defined labels.
 
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 541.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 575.
  ) 
 Here is how much of TeX's memory you used:
- 8240 strings out of 492995
- 122801 string characters out of 6132705
- 224672 words of memory out of 5000000
- 11564 multiletter control sequences out of 15000+600000
- 12919 words of font info for 50 fonts, out of 8000000 for 9000
+ 8244 strings out of 492995
+ 122839 string characters out of 6132705
+ 231716 words of memory out of 5000000
+ 11565 multiletter control sequences out of 15000+600000
+ 13278 words of font info for 51 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  36i,9n,39p,673b,484s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
-></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><
-/usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></u
-sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></us
-r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></usr
-/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
-Output written on Predation_Hybridisation_A.pdf (25 pages, 50133297 bytes).
+></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pf
+b></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb>
+</usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></
+usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></u
+sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.pfb></us
+r/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb>
+Output written on Predation_Hybridisation_A.pdf (27 pages, 50146449 bytes).
 PDF statistics:
- 782 PDF objects out of 1000 (max. 8388607)
- 328 compressed objects within 4 object streams
- 95 named destinations out of 1000 (max. 500000)
+ 795 PDF objects out of 1000 (max. 8388607)
+ 338 compressed objects within 4 object streams
+ 97 named destinations out of 1000 (max. 500000)
  215 words of extra memory for PDF output out of 10000 (max. 10000000)
 

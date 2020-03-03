@@ -42,13 +42,15 @@ total_ticks = 1600
 interval_tick = 100
 run_tick = int(total_ticks/interval_tick)
 warmup_tick = interval_tick
-sce_number = 12 # total number of scenarios
+sce_number = 17 # total number of scenarios
 
 # batch run parameters
 repetitions_runs = 50
 
-PE_type = [['SM'], ['A+PL'], ['A+PL'], ['A+PL'], ['A+PL'], ['A+Co'], ['A+Co'], ['A+Co'], ['A+Co'],
-           ['A+PL', '+PK'], ['A+Co', '+PK'], ['A+Co', '+PI']]
+PE_type = [['SM'], ['A+PL'], ['A+PL'], ['A+PL'], ['A+PL'], # +PL
+           ['A+Co'], ['A+Co'], ['A+Co'], ['A+Co'], # +Co
+           ['A+PL', '+PK'], ['A+Co', '+PK'], # +PK
+           ['A+PL', '+PI'], ['A+Co', '+PI'], ['A+PL', '+PI'], ['A+PL', '+PI'], ['A+PL', '+PI'], ['A+PL', '+PI']] # +PI
 
 # parameters of the policy context model
 '''
@@ -127,7 +129,10 @@ for i in range(sce_number):
         bias_inputs.append(read_inputs(res_aff, i, 'bias'))
         belief_inputs.append(read_inputs(res_aff, i, 'belief'))
 # aff.   same,different
-w_aff = [1.0, 0.75] # trust affiliation matrix
+w_aff = [[1.0, 0.75] for p in range(sce_number)] # trust affiliation matrix
+print(w_aff, len(w_aff))
+w_aff[14] = [1.0, 0] # changing scenario 14 to remove inter-affiliation communications
+w_aff[16] = [1.0, 0] # changing scenario 14 to remove inter-affiliation communications
 # AplusPI_inputs = [] # in case there is no +PI model
 
 
@@ -142,7 +147,7 @@ for sce_i in range (sce_number):
     for rep_runs in range(repetitions_runs):
 
         # for model run tailoring
-        if sce_i == 11:
+        if sce_i >= 11:
 
             print("PE_type:", PE_type[sce_i])
             print('sce.:', sce_i)
@@ -155,7 +160,7 @@ for sce_i in range (sce_number):
 
             AplusCo_inputs = [PC_interest[sce_i], coa_creation_thresh, coa_coherence_thresh, coa_resources_share,
                               resources_spend_incr_coal]
-            AplusPI_inputs = [bias_inputs[sce_i], belief_inputs[sce_i], w_aff]
+            AplusPI_inputs = [bias_inputs[sce_i], belief_inputs[sce_i], w_aff[sce_i]]
 
             # initialisation of the policy emergence model
             model_run_PE = PolicyEmergenceSM(PE_type[sce_i], PE_inputs, AplusPL_param, AplusCo_inputs, AplusPK_inputs,

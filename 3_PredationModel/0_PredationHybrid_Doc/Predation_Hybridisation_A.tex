@@ -278,6 +278,29 @@ The partial knowledge model is only partially tested both with the benchmark pol
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{The +PI model}
 
+There are a number of elements that need to be taken into account when considering the +PI add-on. These are enumerated below:
+
+\begin{itemize}
+\item Bias values for the different affiliations
+\item Starting actual beliefs for the different affiliations
+\item Influence weights between affiliations
+\end{itemize}
+
+Each of these elements have an impact on one another. For example if an external party has a full bias for a certain issue, then the actual belief with which that agent is initiated will be crucial as it will remain constant throughout the entire simulation. The influence weights go on to impact how the information is transferred throughout the system as well.
+
+The goals of the experiments for the +PI add-on is to show the impact of this add-on on the rest of the model and on policy change at large. The issue remains that this is an add-on that can allow for a large amount of variability and would require dozens of different experiments to test. Here, only a limited set of such experiments are designed. The interaction between +PI and +PK add-ons is considered beyond the scope of these experiments. For most of the scenarios, the experiments are performed with the +PL model to make it easier to analyse, this remove the complexity of having the coalitions to look as well.
+
+\begin{itemize}
+\item Scenario 11 - Communications between affiliations (+PL) - With affiliation 1 not getting proper information on the wolves - normal initial beliefs
+\item Scenario 12 - Communications between affiliations (+Co) - With affiliation 1 not getting proper information on the wolves  - normal initial beliefs
+\item Scenario 13 - Communications between affiliations (+PL) - With affiliation 1 not getting proper information on the wolves - unreasonable initial beliefs
+\item Scenario 14 - No communications between affiliations (+PL) - With affiliation 1 not getting proper information on the wolves  - normal initial beliefs
+\item Scenario 15 - Communications between affiliations (+PL) - With affiliation 1 not getting proper information on the sheep  - normal initial beliefs
+\item Scenario 16 - No communications between affiliations (+PL) - With affiliation 1 not getting proper information on the sheep  - normal initial beliefs
+\end{itemize}
+
+Note that the current process considers mostly extreme cases. The bias levels are either full or empty, there is no in between. Such studies could be performed for specific cases but are not considered here. This is because there are just too many options to be tested. The idea with these experiments is only to test how the model can behave in the extreme. Furthermore, testing less 
+
 % max sheep: [0, 500]
 % max wolves: [0, 500]
 % mass grass patches: [2500]
@@ -297,19 +320,19 @@ The partial knowledge model is only partially tested both with the benchmark pol
 											&  {\bfseries S2}	
 													&  {\bfseries S3}  	\\ 
 			& Sheep	& Wolves	& Grass	& Sheep	& Wolves	& Grass 	\\
-			&		&		&		& growth	& growth	& growth	\\ \hline \hline \hline
-\multicolumn{7}{|c|}{ {\bfseries Scenario 0/1/2/5/6/7/8/9/10}}				\\ \hline \hline	
+			&		&		&		& growth	& growth	& growth	\\ \hline \hline
+\multicolumn{7}{|c|}{ {\bfseries Scenario 0-2/5-16}}						\\ \cline{2-6}	
 \multicolumn{7}{|c|}{Affiliation 0 - Pro sheep}							\\ \hline 
 Value		& 400	& 50		& 2000	& 75		& -50	& 200	\\ \hline
 Norm.		& 0.80	& 0.10	& 0.80	& 0.88	& 0.25	& 0.70	\\ \hline
 \multicolumn{7}{|c|}{Affiliation 1 - Pro wolves}							\\ \hline 
 Value		& 200	& 175	& 1700	& 50		& 25		& 120	\\ \hline
-Norm.		& 0.40	& 0.35	& 0.68	& 0.75	& 0.63	& 0.62	\\ \hline
-\multicolumn{7}{|c|}{ {\bfseries Scenario 3 (after)}}						\\ \hline \hline	
+Norm.		& 0.40	& 0.35	& 0.68	& 0.75	& 0.63	& 0.62	\\ \hline \hline
+\multicolumn{7}{|c|}{ {\bfseries Scenario 3 (after)}}						\\ \cline{2-6}
 \multicolumn{7}{|c|}{Affiliation 0 - Pro sheep}							\\ \hline 
 Value		& 50	 	& 50		& 250	& 75		& -50	& 200	\\ \hline
 Norm.		& 0.10	& 0.10	& 0.10	& 0.88	& 0.25	& 0.70	\\ \hline
-\multicolumn{7}{|c|}{ {\bfseries Scenario 4 (after)}}						\\ \hline \hline	
+\multicolumn{7}{|c|}{ {\bfseries Scenario 4 (after)}}						\\ \cline{2-6}	
 \multicolumn{7}{|c|}{Affiliation 0 - Pro sheep}							\\ \hline 
 Value		& 400	& 50		& 2000	& -80	& -50	& 200	\\ \hline
 Norm.		& 0.80	& 0.10	& 0.80	& 0.10	& 0.25	& 0.70	\\ \hline
@@ -324,7 +347,7 @@ Norm.		& 0.80	& 0.10	& 0.80	& 0.10	& 0.25	& 0.70	\\ \hline
 \begin{center}
 \begin{tabular}{ |c|c|c|c|}
 \hline
-\multicolumn{4}{|c|}{ {\bfseries Scenario 0/1/2/3/4/5/6/7/8/9/10}}	
+\multicolumn{4}{|c|}{ {\bfseries Scenario 0-10}}	
 								\\ \hline \hline
 	& PC1	& PC2	& PC3		\\ \hline
 -S1 	& 1.00	& 0.75	&-0.75		\\ \hline
@@ -339,11 +362,11 @@ Norm.		& 0.80	& 0.10	& 0.80	& 0.10	& 0.25	& 0.70	\\ \hline
 
 \begin{table}[h!]
 \begin{center}
-\begin{tabular}{ |l||c|c||c|c||c|c||c|c||c|c| } 
+\begin{tabular}{ |l|c|c||c|c| } 
 \hline
  {\bfseries Scenarios}
- 				& \multicolumn{2}{|c||}{ {\bfseries 0/1/3/4/5/6/7/8}}	
-						& \multicolumn{2}{|c||}{ {\bfseries 2}}	
+ 				& \multicolumn{2}{|c||}{ {\bfseries 0/1-16}}	
+						& \multicolumn{2}{|c|}{ {\bfseries 2}}	
 														\\ \hline \hline
 Affiliations			& 0	& 1	& 0	& 1		\\ \hline
 Policy makers 		& 2	& 1	& 2	& 1		\\ \hline
@@ -368,14 +391,25 @@ Resources		& 75	& 25	& 10	& 100	\\ \hline
 											&  {\bfseries S2}	
 													&  {\bfseries S3}  	\\ 
 			& Sheep	& Wolves	& Grass	& Sheep	& Wolves	& Grass 	\\
-			&		&		&		& growth	& growth	& growth	\\ \hline \hline \hline
-\multicolumn{7}{|c|}{ {\bfseries Scenario 11}}				\\ \hline \hline	
+			&		&		&		& growth	& growth	& growth	\\ \hline \hline
+\multicolumn{7}{|c|}{ {\bfseries  \emph{Bias values}}}						\\ \cline{2-6}	
+\multicolumn{7}{|c|}{ {\bfseries Scenario 11-14}}							\\ \hline	
 Affiliation 0	& 5		& 0		& 5		& 5		& 0		& 5		\\ \hline
-Affiliation 1	& 5		& 5		& 5		& 5		& 5		& 5		\\ \hline
+Affiliation 1	& 5		& 5		& 5		& 5		& 5		& 5		\\ \hline 
+\multicolumn{7}{|c|}{ {\bfseries Scenario 15-16}}							\\ \hline
+Affiliation 0	& 0		& 5		& 5		& 0		& 5		& 5		\\ \hline
+Affiliation 1	& 5		& 5		& 5		& 5		& 5		& 5		\\ \hline \hline
 
+\multicolumn{7}{|c|}{ {\bfseries  \emph{Initial actual beliefs}}}				\\ \cline{2-6}	
+\multicolumn{7}{|c|}{ {\bfseries Scenario 11-12/14-16}}					\\ \hline	
+Affiliation 0	& 0.30	& 0.10	& 0.50	& 0.70 	& 0.45	& 0.40	\\ \hline
+Affiliation 1	& 0.30	& 0.10	& 0.50	& 0.70	& 0.45	& 0.40	\\ \hline
+\multicolumn{7}{|c|}{ {\bfseries Scenario 13}}							\\ \hline	
+Affiliation 0	& 0.30	& 0.70	& 0.50	& 0.70 	& 0.95	& 0.40	\\ \hline
+Affiliation 1	& 0.30	& 0.10	& 0.50	& 0.70	& 0.45	& 0.40	\\ \hline
 \end{tabular}
 \end{center}
-\caption{Biased values for the external parties for the +PI add-on scenarios. For a value of 5, the external party informs itself directly from the truth agent. For a value of 0, the external party does not change its beliefs.}
+\caption{Biased values for the external parties and initial actual beliefs for the agents for the +PI add-on scenarios. For a value of 5, the external party informs itself directly from the truth agent. For a value of 0, the external party does not change its beliefs.}
 \label{tab:biasPI}
 \end{table}
 
