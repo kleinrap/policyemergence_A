@@ -71,6 +71,7 @@ repr = [[25, 75] for p in range(sce_number)]
 w_el_inf = [0 for p in range(sce_number)]
 
 '''actor distribution'''
+'''actor distribution'''
 PE_PMs_0 = 3  # number of policy makers
 PE_PEs_0 = 8  # number of policy entrepreneurs
 PE_EPs_0 = 0  # number of external parties
@@ -141,7 +142,7 @@ for i in range(sce_number):
 # aff.   same,different
 w_aff = [[1.0, 0.75] for p in range(sce_number)] # trust affiliation matrix
 w_aff[14] = [1.0, 0] # changing scenario 14 to remove inter-affiliation communications
-w_aff[16] = [1.0, 0] # changing scenario 16 to remove inter-affiliation communications
+w_aff[16] = [1.0, 0] # changing scenario 14 to remove inter-affiliation communications
 # AplusPI_inputs = [] # in case there is no +PI model
 
 
@@ -156,7 +157,7 @@ for sce_i in range(sce_number):
     for rep_runs in range(repetitions_runs):
 
         # for model run tailoring
-        if sce_i >= 11:
+        if sce_i == 11 or sce_i == 12:
 
             print("PE_type:", PE_type[sce_i])
             print('sce.:', sce_i)
