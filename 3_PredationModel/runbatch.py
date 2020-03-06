@@ -148,15 +148,18 @@ w_aff[16] = [1.0, 0] # changing scenario 16 to remove inter-affiliation communic
 print("\n")
 # running a number of scenarios
 ''' changes in the agent distribution '''
-for sce_i in range(sce_number):
+# running a number of repetitions per experiment
+for rep_runs in range(repetitions_runs):
 
-    PE_inputs = [PE_agents[sce_i], PE_aff[sce_i], res_aff[sce_i], repr[sce_i], goal_prof[sce_i], w_el_inf[sce_i]]
+    for sce_i in range(sce_number):
 
-    # running a number of repetitions per experiment
-    for rep_runs in range(repetitions_runs):
+        PE_inputs = [PE_agents[sce_i], PE_aff[sce_i], res_aff[sce_i], repr[sce_i], goal_prof[sce_i], w_el_inf[sce_i]]
+
+    # # running a number of repetitions per experiment
+    # for rep_runs in range(repetitions_runs):
 
         # for model run tailoring
-        if sce_i >= 11:
+        if sce_i == 11:
 
             print("PE_type:", PE_type[sce_i])
             print('sce.:', sce_i)

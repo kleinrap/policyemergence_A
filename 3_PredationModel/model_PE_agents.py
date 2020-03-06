@@ -389,11 +389,13 @@ class ActiveAgent(Agent):
         blanket = 1
         if EP:
             blanket = EP
-
-        target.issuetree[tar_id][issue][0] += \
+        # print('Before:', target.issuetree[tar_id][issue][number])
+        target.issuetree[tar_id][issue][number] += \
             (self.issuetree[self_id][issue][number] - target.issuetree[tar_id][issue][number]) \
             * (self.resources * resources_spend_incr / blanket)
         self.one_minus_one_check(target.issuetree[tar_id][issue][number], action)
+        # print('After:', target.issuetree[tar_id][issue][number])
+        # print(' ')
 
     def agent_type_bonus_calc(self, target, step):
 
